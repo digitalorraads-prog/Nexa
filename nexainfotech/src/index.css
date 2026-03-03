@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Michroma&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import "tailwindcss";
+
+/* Body */
+body {
+  font-family: 'Cinzel', serif;
+  background-color: #0c0c16;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ===================================== */
+/* 🔥 GLOBAL PREMIUM SCROLLBAR (FULL) 🔥 */
+/* ===================================== */
+
+/* Chrome, Edge, Safari */
+html::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: #0c0c16;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #00f5ff, #158eb0);
+  border-radius: 20px;
+  border: 2px solid #0c0c16;
+  transition: all 0.3s ease;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #00d4ff, #0ea5e9);
+}
+
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #00f5ff #0c0c16;
+}
+
+
+/* ===================================== */
+/* 🔹 DROPDOWN CUSTOM SCROLLBAR        */
+/* ===================================== */
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #00f5ff, #158eb0);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #00d4ff, #0ea5e9);
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #00f5ff rgba(255, 255, 255, 0.05);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-slide-up {
+  opacity: 0;
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.delay-700 {
+  animation-delay: 0.7s;
+}
+
+.delay-1000 {
+  animation-delay: 1s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes zoomIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.animate-fadeIn { animation: fadeIn 1s ease-out; }
+.animate-slideUp { animation: slideUp 1s ease-out; }
+.animate-zoomIn { animation: zoomIn 1s ease-out; }
