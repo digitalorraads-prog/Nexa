@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "../../../Protected/axiosPublic"; // 👈 axios instance use karo
+import axios from "../../../Protected/axios"; // 👈 Use the instance with withCredentials: true
 import { useNavigate } from "react-router-dom";
 
 export default function AdminLogin() {
