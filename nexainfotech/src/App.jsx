@@ -8,7 +8,7 @@ import NotFound from "./Pages/NotFound";
 import Navbar from "./Component/layout/Navbar";
 import Footer from "./Component/layout/Footer";
 import Blog from "./Component/sections/blogs/Blog";
-import AddBlogForm from "./Component/Sections/Blogs/AddBlogForm";
+import AddBlogForm from "./Component/sections/blogs/AddBlogForm";
 import ServicesPage from "./Pages/ServicesPage";
 import ServiceDetails from "./Pages/ServiceDetails";
 import UpdateBlogPage from "./Pages/UpdateBlogPage";
