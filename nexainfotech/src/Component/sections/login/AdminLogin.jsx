@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "../../../Protected/axios"; // 👈 axios instance use karo
+import axios from "../../../Protected/axiosPublic"; // 👈 axios instance use karo
 import { useNavigate } from "react-router-dom";
 
 export default function AdminLogin() {
@@ -29,10 +29,10 @@ export default function AdminLogin() {
 
     try {
       const response = await axios.post("/api/admin/login", formData);
-      
+
       // You could store user data in context/localStorage if needed
       // localStorage.setItem("admin", JSON.stringify(response.data.user));
-      
+
       alert("Login Successful ✅");
       navigate("/admin/dashboard");
 
@@ -47,7 +47,7 @@ export default function AdminLogin() {
       } else {
         setError("Login failed. Please try again.");
       }
-      
+
       // You can keep the alert or remove it since we have error state
       // alert("Invalid Credentials ❌");
     } finally {
@@ -58,7 +58,7 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0c0c16] px-6 text-white">
       <div className="w-full max-w-5xl grid md:grid-cols-2 bg-[#111827] rounded-3xl shadow-2xl overflow-hidden">
-        
+
         {/* Left side - Login Form */}
         <div className="p-12 flex flex-col justify-center">
           <h2 className="text-3xl font-bold mb-6">
@@ -116,7 +116,7 @@ export default function AdminLogin() {
 
             {/* Optional: Forgot password link */}
             <div className="text-center mt-4">
-              <button 
+              <button
                 type="button"
                 onClick={() => alert("Please contact admin to reset password")}
                 className="text-sm text-gray-400 hover:text-cyan-400 transition"
