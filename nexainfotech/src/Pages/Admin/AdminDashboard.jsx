@@ -13,20 +13,20 @@ function AdminDashboardPage() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-      
+
         const response = await axios.get("/api/admin/check-auth");
-      
-        
+
+
         if (response.data.authenticated) {
           setAdminEmail(response.data.admin?.email || "Admin");
-        
+
         } else {
           console.log("User not authenticated, redirecting to login");
           navigate("/admin/login");
         }
       } catch (error) {
         console.error("Auth check failed:", error);
-        
+
         // Agar error 401 hai to bhi login pe bhejo
         if (error.response?.status === 401) {
           navigate("/admin/login");
@@ -38,7 +38,7 @@ function AdminDashboardPage() {
         setAuthChecking(false);
       }
     };
-    
+
     checkAuth();
   }, [navigate]);
 
@@ -46,22 +46,18 @@ function AdminDashboardPage() {
     setLoading(true);
     try {
       console.log("Logging out...");
-      const response = await axios.post("/admin/logout");
+      const response = await axios.post("/api/admin/logout");
       console.log("Logout response:", response.data);
-      
-      if (response.data.success) {
-        // Clear any local storage
-        localStorage.removeItem("navbarItems");
-        localStorage.removeItem("user");
-        
-        // Redirect to login
-        navigate("/admin/login");
-      } else {
-        alert("Logout failed: " + response.data.message);
-      }
+
+      // Clear any local storage
+      localStorage.removeItem("navbarItems");
+      localStorage.removeItem("user");
+
+      // Redirect to login
+      navigate("/admin/login");
     } catch (error) {
       console.error("Logout error:", error);
-      
+
       // Agar network error hai to bhi force logout kar do
       if (error.code === 'ERR_NETWORK') {
         alert("Network error. Logging out locally.");
@@ -96,28 +92,28 @@ function AdminDashboardPage() {
             Admin <span className="text-cyan-400">Dashboard</span>
           </h1>
           <p className="text-gray-400 mt-2">
-            Welcome back, <span className="text-cyan-400">{adminEmail}</span>! 
+            Welcome back, <span className="text-cyan-400">{adminEmail}</span>!
             Manage your website content from here.
           </p>
         </div>
-        
+
         {/* Logout Button */}
         <button
           onClick={handleLogout}
           disabled={loading}
           className="flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg font-medium transition disabled:opacity-50"
         >
-          <svg 
-            className="w-5 h-5" 
-            fill="none" 
-            stroke="currentColor" 
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
             viewBox="0 0 24 24"
           >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              strokeWidth={2} 
-              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" 
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
             />
           </svg>
           {loading ? "Logging out..." : "Logout"}
@@ -126,43 +122,43 @@ function AdminDashboardPage() {
 
       {/* Dashboard Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <DashboardCard 
-          title="Manage Blogs" 
-          link="/admin/manage-blogs" 
+        <DashboardCard
+          title="Manage Blogs"
+          link="/admin/manage-blogs"
           description="Edit or delete existing blog posts"
           icon="📚"
         />
-        <DashboardCard 
-          title="Manage Contacts" 
-          link="/admin/contact" 
+        <DashboardCard
+          title="Manage Contacts"
+          link="/admin/contact"
           description="View and respond to contact inquiries"
           icon="📧"
         />
 
-        <DashboardCard 
-          title="Manage Services" 
-          link="/admin/services" 
+        <DashboardCard
+          title="Manage Services"
+          link="/admin/services"
           description="Update or remove existing services"
           icon="🛠️"
         />
 
-        <DashboardCard 
-          title="Edit Navbar" 
-          link="/admin/navbar-editor" 
+        <DashboardCard
+          title="Edit Navbar"
+          link="/admin/navbar-editor"
           description="Customize navigation menu items"
           icon="🔗"
         />
-        <DashboardCard 
-          title="Manage Portfolio" 
-          link="/admin/manage-portfolio" 
+        <DashboardCard
+          title="Manage Portfolio"
+          link="/admin/manage-portfolio"
           description="Organize your portfolio items"
           icon="🖼️"
         />
-        <DashboardCard 
-        title="Hero Section Manager"
-        link="/admin/hero"
-        description="Update the hero section content and images"
-        icon="🎬"
+        <DashboardCard
+          title="Hero Section Manager"
+          link="/admin/hero"
+          description="Update the hero section content and images"
+          icon="🎬"
         />
         <DashboardCard
           title="Pages Editor"
@@ -189,10 +185,10 @@ function DashboardCard({ title, link, description, icon }) {
     >
       <div className="flex items-start justify-between mb-4">
         <span className="text-3xl">{icon}</span>
-        <svg 
-          className="w-5 h-5 text-gray-500 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" 
-          fill="none" 
-          stroke="currentColor" 
+        <svg
+          className="w-5 h-5 text-gray-500 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all"
+          fill="none"
+          stroke="currentColor"
           viewBox="0 0 24 24"
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
