@@ -28,6 +28,7 @@ import PortfolioManagePage from "./Pages/Admin/PortfolioManagePage";
 import AdminNavbarEditor from "./Pages/Admin/AdminNavbarEditor";
 import DigitalMarketingPage from "./Pages/DigitalMarketingPage";
 import ManagePages from "./Pages/Admin/ManagePages";
+import HeroManager from "./Pages/Admin/HeroManager";
 
 function AdminLoginWrapper() {
   const [status, setStatus] = useState("loading");
