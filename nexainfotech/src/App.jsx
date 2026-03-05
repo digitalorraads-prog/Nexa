@@ -26,12 +26,9 @@ import AdminServiceList from "./Pages/Admin/AdminServiceList";
 import PortfolioAddPage from "./Pages/Admin/PortfolioAddPage";
 import PortfolioManagePage from "./Pages/Admin/PortfolioManagePage";
 import AdminNavbarEditor from "./Pages/Admin/AdminNavbarEditor";
-import HeroManager from "./Pages/Admin/HeroManager";
-// import DigitalMarketing from "./Component/sections/digitalMarketing/DigitalMarketing";
 import DigitalMarketingPage from "./Pages/DigitalMarketingPage";
 import ManagePages from "./Pages/Admin/ManagePages";
 
-/* 🔥 LOGIN VALIDATION WRAPPER */
 function AdminLoginWrapper() {
   const [status, setStatus] = useState("loading");
 
@@ -59,7 +56,6 @@ function App() {
       <Navbar />
 
       <Routes>
-        {/* ================= PUBLIC ROUTES ================= */}
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/blog" element={<Blog />} />
@@ -82,7 +78,6 @@ function App() {
 
         <Route path="/contact" element={<ContactPage />} />
 
-        {/* ================= ADMIN LOGIN ================= */}
         <Route path="/admin/login" element={<AdminLoginWrapper />} />
 
         {/* ================= ADMIN PROTECTED ROUTES ================= */}
@@ -194,7 +189,6 @@ function App() {
           }
         />
 
-        {/* ================= 404 ================= */}
         <Route path="*" element={<NotFound />} />
       </Routes>
 
