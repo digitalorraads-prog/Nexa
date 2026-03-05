@@ -7,7 +7,7 @@ import AboutPage from "./Pages/AboutPage";
 import NotFound from "./Pages/NotFound";
 import Navbar from "./Component/layout/Navbar";
 import Footer from "./Component/layout/Footer";
-import Blog from "./Component/Sections/Blogs/Blog";
+import Blog from "./Component/sections/blogs/Blog";
 import AddBlogForm from "./Component/Sections/Blogs/AddBlogForm";
 import ServicesPage from "./Pages/ServicesPage";
 import ServiceDetails from "./Pages/ServiceDetails";
@@ -61,7 +61,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/blog" element={<Blog />} />
-        
+
         <Route
           path="/services/digital-marketing"
           element={<DigitalMarketingPage />}
