@@ -1,12 +1,12 @@
 import React from 'react'
-import Blog from '../Component/sections/Blogs/Blog'
+import Blog from '../Component/sections/blogs/Blog'
 
-function Blogpage() {
+function BlogPage() {
   return (
     <div>
-    <Blog />
+      <Blog />
     </div>
   )
 }
 
-export default Blogpage
+export default BlogPage

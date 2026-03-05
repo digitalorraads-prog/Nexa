@@ -4,7 +4,7 @@ import PortfolioSection from '../Component/sections/Portfolio/PortfolioSection'
 function PortfolioPage() {
   return (
     <div>
-        <PortfolioSection/>
+      <PortfolioSection />
     </div>
   )
 }

@@ -1,12 +1,12 @@
 import React from 'react'
-import SingleBlog from '../Component/Sections/Blogs/SingleBlog'
+import SingleBlog from '../Component/sections/blogs/SingleBlog'
 
-function SingleBlogePage() {
+function SingleBlogPage() {
   return (
     <div>
-        <SingleBlog />
+      <SingleBlog />
     </div>
   )
 }
 
-export default SingleBlogePage
+export default SingleBlogPage

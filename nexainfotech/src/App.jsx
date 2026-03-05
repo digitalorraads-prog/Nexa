@@ -12,8 +12,10 @@ import AddBlogForm from "./Component/sections/blogs/AddBlogForm";
 import ServicesPage from "./Pages/ServicesPage";
 import ServiceDetails from "./Pages/ServiceDetails";
 import UpdateBlogPage from "./Pages/UpdateBlogPage";
-import SingleBlogePage from "./Pages/SingleBlogePage";
+import SingleBlogPage from "./Pages/SingleBlogPage";
 import ContactPage from "./Pages/ContactPage";
+import GalleryPage from "./Pages/GalleryPage";
+import PortfolioPage from "./Pages/PortfolioPage";
 import AdminContactsPage from "./Pages/Admin/AdminContactsPage";
 import AdminLoginPage from "./Pages/Admin/AdminLoginPage";
 import AdminDashboard from "./Pages/Admin/AdminDashboard";
@@ -66,7 +68,9 @@ function App() {
           path="/services/digital-marketing"
           element={<DigitalMarketingPage />}
         />
-        <Route path="/blog/:id" element={<SingleBlogePage />} />
+        <Route path="/blog/:id" element={<SingleBlogPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/services" element={<ServicesPage />} />
 
         <Route path="/:slug" element={<ServiceDetails />} />
