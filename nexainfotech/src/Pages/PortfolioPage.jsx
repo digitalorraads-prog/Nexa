@@ -1,10 +1,9 @@
-import React from 'react'
-import PortfolioSection from '../Component/sections/Portfolio/PortfolioSection'
+import HomePortfolioSection from '../Component/sections/Portfolio/HomePortfolioSection'
 
 function PortfolioPage() {
   return (
-    <div>
-      <PortfolioSection />
+    <div className="pt-20">
+      <HomePortfolioSection />
     </div>
   )
 }

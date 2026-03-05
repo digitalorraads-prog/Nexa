@@ -1,5 +1,5 @@
 import React from 'react'
-import PhotoGallery from '../Component/sections/gallery/PhotoGallery'
+import PhotoGallery from '../Component/sections/Gallery/PhotoGallery'
 
 function GalleryPage() {
   return (

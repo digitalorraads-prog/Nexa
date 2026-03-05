@@ -1,5 +1,5 @@
 import React from 'react'
-import UpdateGallery from '../Component/sections/gallery/UpdateGallery'
+import UpdateGallery from '../Component/sections/Gallery/UpdateGallery'
 
 function UpdateGalleryPage() {
   return (
