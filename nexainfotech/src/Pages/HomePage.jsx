@@ -1,11 +1,11 @@
-import HeroSection from "../Component/Sections/Home/HeroSection";
-import ServicesRibbon from "../Component/Sections/Services/ServicesRibbon";
-import WhyChooseUs from "../Component/Sections/Home/WhyChooseUs";
-// import Services from "../Component/Sections/Services/Services";
-import Pricing from "../Component/Sections/Home/Pricing";
-import TestimonialsSection from "../Component/Sections/Home/TestimonialsSection";
-import OurExperts from "../Component/Sections/Home/OurExperts";
-import CallToAction from "../Component/Sections/Home/CallToAction";
+import HeroSection from "../Component/sections/home/HeroSection";
+import ServicesRibbon from "../Component/sections/services/ServicesRibbon";
+import WhyChooseUs from "../Component/sections/home/WhyChooseUs";
+// import Services from "../Component/sections/services/Services";
+import Pricing from "../Component/sections/home/Pricing";
+import TestimonialsSection from "../Component/sections/home/TestimonialsSection";
+import OurExperts from "../Component/sections/home/OurExperts";
+import CallToAction from "../Component/sections/home/CallToAction";
 import HomePortfolioSection from "../Component/sections/Portfolio/HomePortfolioSection";
 import ServicesLocation from "../Component/sections/services/ServicesLocation";
 
@@ -15,9 +15,9 @@ function HomePage() {
     <div className="pt-10">
       <HeroSection />
       <ServicesRibbon />
-      <ServicesLocation/>
+      <ServicesLocation />
       <WhyChooseUs />
-      <HomePortfolioSection/>
+      <HomePortfolioSection />
       <Pricing />
       <TestimonialsSection />
       <OurExperts />

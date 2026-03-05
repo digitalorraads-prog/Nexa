@@ -4,7 +4,7 @@ import UpdateGallery from '../Component/sections/gallery/UpdateGallery'
 function UpdateGalleryPage() {
   return (
     <div>
-        <UpdateGallery/>
+      <UpdateGallery />
     </div>
   )
 }

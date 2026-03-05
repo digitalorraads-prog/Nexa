@@ -1,4 +1,4 @@
-import NotFoundSection from "../Component/Sections/NotfoundSection";
+import NotFoundSection from "../Component/sections/NotfoundSection";
 
 function NotFound() {
   return (

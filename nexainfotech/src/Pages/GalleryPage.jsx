@@ -3,9 +3,9 @@ import PhotoGallery from '../Component/sections/gallery/PhotoGallery'
 
 function GalleryPage() {
   return (
-  <div>
-    <PhotoGallery/>
-  </div>
+    <div>
+      <PhotoGallery />
+    </div>
   )
 }
 

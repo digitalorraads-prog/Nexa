@@ -3,15 +3,15 @@ import { useParams, Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import axios from "../Protected/axiosPublic"; // ✅ Correct - using custom axios instance
 import HeroSection from "../Component/sections/home/HeroSection";
-import WhyChooseUs from "../Component/Sections/Home/WhyChooseUs";
-import ServicesRibbon from "../Component/Sections/Services/ServicesRibbon";
+import WhyChooseUs from "../Component/sections/home/WhyChooseUs";
+import ServicesRibbon from "../Component/sections/services/ServicesRibbon";
 import HomePortfolioSection from "../Component/sections/Portfolio/HomePortfolioSection";
-import Pricing from "../Component/Sections/Home/Pricing";
-import OurExperts from "../Component/Sections/Home/OurExperts";
-import CallToAction from "../Component/Sections/Home/CallToAction";
-import TestimonialsSection from "../Component/Sections/Home/TestimonialsSection";
+import Pricing from "../Component/sections/home/Pricing";
+import OurExperts from "../Component/sections/home/OurExperts";
+import CallToAction from "../Component/sections/home/CallToAction";
+import TestimonialsSection from "../Component/sections/home/TestimonialsSection";
 import CaseStudies from "../Component/sections/services/CaseStudies";
-import { 
+import {
   HomeIcon,
   ChevronRightIcon,
   MapPinIcon,
@@ -60,7 +60,7 @@ export default function ServiceDetails() {
   // Construct full slug from params
   const getFullSlug = () => {
     const { slug, city, serviceName, subService, "*": restPath } = params;
-    
+
     if (city && serviceName) {
       return subService ? `${city}/${serviceName}/${subService}` : `${city}/${serviceName}`;
     } else if (slug && restPath) {
@@ -81,7 +81,7 @@ export default function ServiceDetails() {
       try {
         setLoading(true);
         const fullSlug = getFullSlug();
-        
+
         if (!fullSlug) {
           setError("Invalid service URL");
           setLoading(false);
@@ -90,7 +90,7 @@ export default function ServiceDetails() {
 
         // ✅ Fixed: Using axios with relative path
         const response = await axios.get(`/api/services/slug/${encodeURIComponent(fullSlug)}`);
-        
+
         if (response.data.success) {
           setService(response.data.data);
           setError(null);
@@ -119,12 +119,12 @@ export default function ServiceDetails() {
   // Function to render formatted text with HTML
   const renderFormattedText = (text) => {
     if (!text) return null;
-    
+
     // Replace **text** with <strong>text</strong>
     let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-cyan-400">$1</strong>');
     // Replace *text* with <em>text</em>
     formattedText = formattedText.replace(/\*(.*?)\*/g, '<em class="text-gray-300 italic">$1</em>');
-    
+
     return <span dangerouslySetInnerHTML={{ __html: formattedText }} />;
   };
 
@@ -137,7 +137,7 @@ export default function ServiceDetails() {
             <div className="absolute inset-0 border-4 border-cyan-500/30 rounded-full animate-ping"></div>
             <div className="absolute inset-2 border-4 border-blue-500/30 rounded-full animate-ping animation-delay-300"></div>
           </div>
-          
+
           {/* Main spinner */}
           <div className="relative w-32 h-32 mx-auto mb-8">
             <div className="absolute inset-0 border-4 border-cyan-500/20 rounded-full"></div>
@@ -145,7 +145,7 @@ export default function ServiceDetails() {
             <div className="absolute inset-4 border-4 border-blue-500/20 rounded-full"></div>
             <div className="absolute inset-4 border-4 border-blue-500 border-t-transparent rounded-full animate-spin animation-delay-150"></div>
           </div>
-          
+
           <p className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 text-lg font-medium animate-pulse">
             Loading Your Service Experience
           </p>
@@ -160,7 +160,7 @@ export default function ServiceDetails() {
         <div className="text-center max-w-md px-4 relative">
           {/* Decorative elements */}
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 blur-3xl -z-10"></div>
-          
+
           <div className="relative">
             <div className="text-8xl mb-6 animate-bounce">🔮</div>
             <h2 className="text-4xl font-bold mb-4">
@@ -172,19 +172,19 @@ export default function ServiceDetails() {
             <p className="text-gray-400 mb-8 text-lg">
               {error || "The service you're looking for has vanished into the digital void..."}
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
-                to="/services" 
+              <Link
+                to="/services"
                 className="group relative inline-flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-8 py-4 rounded-xl font-semibold transition-all transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25 overflow-hidden"
               >
                 <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform"></span>
                 <span className="relative">Explore Services</span>
                 <ArrowRightIcon className="w-5 h-5 relative group-hover:translate-x-1 transition-transform" />
               </Link>
-              
-              <Link 
-                to="/" 
+
+              <Link
+                to="/"
                 className="group inline-flex items-center justify-center gap-2 bg-gray-800/50 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold transition-all hover:bg-gray-800 border border-gray-700"
               >
                 <HomeIcon className="w-5 h-5" />
@@ -198,7 +198,7 @@ export default function ServiceDetails() {
   }
 
   const slugParts = parseSlugParts();
-  
+
   // HeroSection props
   const heroProps = {
     customTitle: service.pageTitle,
@@ -234,12 +234,12 @@ export default function ServiceDetails() {
             <Link to="/services" className="text-gray-400 hover:text-cyan-400 transition-colors">
               Services
             </Link>
-            
+
             {slugParts.map((part, index) => (
               <div key={index} className="flex items-center space-x-3">
                 <ChevronRightIcon className="w-4 h-4 text-gray-600" />
                 <span className={
-                  index === slugParts.length - 1 
+                  index === slugParts.length - 1
                     ? "bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent font-semibold"
                     : "text-gray-400"
                 }>
@@ -268,9 +268,9 @@ export default function ServiceDetails() {
                     <span className="text-white font-bold text-lg">{location}</span>
                   </div>
                 </div>
-                
+
                 <div className="w-px h-10 bg-white/10 hidden md:block"></div>
-                
+
                 <div className="flex items-center gap-3">
                   <WrenchScrewdriverIcon className="w-6 h-6 text-blue-400" />
                   <div>
@@ -279,7 +279,7 @@ export default function ServiceDetails() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Quick Stats */}
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
@@ -287,8 +287,8 @@ export default function ServiceDetails() {
                   <span className="text-white">4.9</span>
                   <span className="text-gray-400">(250+ reviews)</span>
                 </div>
-                <Link 
-                  to="/contact" 
+                <Link
+                  to="/contact"
                   className="group flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-all hover:shadow-lg hover:shadow-cyan-500/25"
                 >
                   <PhoneIcon className="w-4 h-4" />
@@ -301,34 +301,32 @@ export default function ServiceDetails() {
       )}
 
       {/* Enhanced Hero Section with Floating Elements */}
-      <section 
+      <section
         ref={el => sectionRefs.current['hero'] = el}
         data-section="hero"
-        className={`relative z-10 transition-all duration-1000 transform ${
-          isVisible['hero'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-        }`}
+        className={`relative z-10 transition-all duration-1000 transform ${isVisible['hero'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+          }`}
       >
-        <HeroSection 
+        <HeroSection
           customTitle={service.pageTitle}
           customDescription={service.miniDescription}
           customButtons={heroProps.customButtons}
           useApi={false}
         />
       </section>
-     
+
       {/* Rich Content Section with Modern Layout */}
       {(service.heroHeading?.text || service.heroParagraphs?.length > 0 || service.heroImage) && (
         <section className="relative z-10 py-24 overflow-hidden">
           {/* Background Elements */}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/5 to-transparent"></div>
-          
+
           <div className="container mx-auto px-5">
-            <div 
+            <div
               ref={el => sectionRefs.current['content'] = el}
               data-section="content"
-              className={`transition-all duration-1000 delay-200 transform ${
-                isVisible['content'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-              }`}
+              className={`transition-all duration-1000 delay-200 transform ${isVisible['content'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                }`}
             >
               <div className={`grid ${service.heroImage ? 'lg:grid-cols-2 gap-16' : 'grid-cols-1'} items-start`}>
                 {/* Content Side */}
@@ -361,7 +359,7 @@ export default function ServiceDetails() {
                       className="relative group"
                     >
                       <div className="absolute -left-4 top-0 w-1 h-0 bg-gradient-to-b from-cyan-500 to-blue-500 group-hover:h-full transition-all duration-500"></div>
-                      <p 
+                      <p
                         className="text-gray-300 text-lg leading-relaxed pl-6"
                         style={{
                           color: para.color || '#d1d5db',
@@ -387,7 +385,7 @@ export default function ServiceDetails() {
                         <ArrowRightIcon className="w-5 h-5 relative group-hover:translate-x-2 transition-transform" />
                       </Link>
                     )}
-                    
+
                     <Link
                       to="/portfolio"
                       className="group inline-flex items-center gap-3 bg-white/5 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold transition-all hover:bg-white/10 border border-white/10"
@@ -404,7 +402,7 @@ export default function ServiceDetails() {
                     {/* Decorative elements */}
                     <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500"></div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent rounded-2xl z-10"></div>
-                    
+
                     {/* Main image */}
                     <div className="relative transform group-hover:scale-105 transition-all duration-700">
                       <img
@@ -415,7 +413,7 @@ export default function ServiceDetails() {
                           e.target.src = 'https://via.placeholder.com/800x600?text=Service+Image';
                         }}
                       />
-                      
+
                       {/* Floating badge */}
                       <div className="absolute -bottom-6 -left-6 bg-gradient-to-r from-cyan-500 to-blue-500 p-4 rounded-xl shadow-2xl transform group-hover:rotate-3 transition-transform">
                         <div className="flex items-center gap-3">
@@ -439,17 +437,17 @@ export default function ServiceDetails() {
       <div className="relative z-10 space-y-16">
         <ServicesLocation />
         <WhyChooseUs />
-        
+
         {/* Enhanced CallToAction */}
-        <CallToAction 
+        <CallToAction
           location={isLocationBased ? `in ${location}` : "for Your Business"}
           title={`Ready to Transform Your ${serviceType} Business`}
-          description={isLocationBased 
+          description={isLocationBased
             ? `Let's create powerful digital strategies for your ${serviceType.toLowerCase()} business in ${location} that drive real growth and exceed expectations`
             : "Let's create powerful digital strategies that drive real growth and exceed expectations"}
           buttonText={service.buttonText || "Start Your Journey"}
         />
-        
+
         <CaseStudies />
         <HomePortfolioSection />
         <Pricing />
