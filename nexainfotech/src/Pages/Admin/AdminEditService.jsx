@@ -1,6 +1,6 @@
 // done
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../Protected/axios"; // ✅ Correct - using custom axios instance
 import { useParams, useNavigate } from "react-router-dom";
 import {
   PencilIcon,
@@ -116,7 +116,7 @@ export default function AdminEditService() {
   const fetchService = async () => {
     try {
       setActiveButton('fetching');
-      const res = await axios.get(`http://localhost:5000/api/services/${id}`);
+      const res = await axios.get(`/api/services/${id}`);
 
       if (res.data.success && res.data.data) {
         const service = res.data.data;
@@ -227,7 +227,7 @@ export default function AdminEditService() {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/services/upload-image',
+        '/api/services/upload-image',
         formData,
         {
           headers: {
@@ -503,7 +503,7 @@ export default function AdminEditService() {
       }
 
       const res = await axios.put(
-        `http://localhost:5000/api/services/update/${id}`,
+        `/api/services/update/${id}`,
         formData,
         {
           headers: {
@@ -543,7 +543,7 @@ export default function AdminEditService() {
 
     try {
       setActiveButton('delete');
-      const res = await axios.delete(`http://localhost:5000/api/services/delete/${id}`);
+      const res = await axios.delete(`/api/services/delete/${id}`);
 
       if (res.data.success) {
         showNotification('Service deleted successfully', 'success');
