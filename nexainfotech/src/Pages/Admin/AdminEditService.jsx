@@ -490,6 +490,7 @@ export default function AdminEditService() {
       formData.append('buttonText', form.buttonText || "");
       formData.append('heroHeading', JSON.stringify(form.heroHeading));
       formData.append('heroParagraphs', JSON.stringify(form.heroParagraphs));
+      formData.append('heroImage', form.heroImage || "");
       formData.append('heroImageAlt', form.heroImageAlt || "");
 
       if (slugType === 'nested') {

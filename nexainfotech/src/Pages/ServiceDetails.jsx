@@ -36,6 +36,7 @@ export default function ServiceDetails() {
   const [error, setError] = useState(null);
   const [isVisible, setIsVisible] = useState({});
   const sectionRefs = useRef({});
+
   const getFullSlug = () => {
     const { slug, city, serviceName, subService, "*": restPath } = params;
     if (city && serviceName) {
@@ -46,10 +47,12 @@ export default function ServiceDetails() {
       return slug;
     }
   };
+
   const parseSlugParts = () => {
     if (!service?.slug) return [];
     return service.slug.split('/');
   };
+
   useEffect(() => {
     const fetchService = async () => {
       try {
@@ -76,12 +79,14 @@ export default function ServiceDetails() {
     };
     fetchService();
   }, [params]);
+
   const formatPart = (part) => {
     return part
       .split('-')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   };
+
   const renderFormattedText = (text) => {
     if (!text) return null;
     let formattedText = text
@@ -92,6 +97,7 @@ export default function ServiceDetails() {
       .replace(/<a href="(.*?)" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline">(.*?)<\/a>/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 hover:underline decoration-cyan-400 underline-offset-4 transition-all font-medium">$2</a>');
     return <span dangerouslySetInnerHTML={{ __html: formattedText }} />;
   };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#050508] flex items-center justify-center relative overflow-hidden">
@@ -113,6 +119,7 @@ export default function ServiceDetails() {
       </div>
     );
   }
+
   if (error || !service) {
     return (
       <div className="min-h-screen bg-[#050508] flex items-center justify-center">
@@ -136,10 +143,12 @@ export default function ServiceDetails() {
       </div>
     );
   }
+
   const slugParts = parseSlugParts();
   const location = slugParts.length > 1 ? formatPart(slugParts[0]) : null;
   const serviceType = formatPart(slugParts[slugParts.length > 1 ? 1 : 0]);
   const isLocationBased = slugParts.length > 1;
+
   return (
     <div className="bg-[#050508] min-h-screen text-gray-200 selection:bg-cyan-500/30 overflow-x-hidden">
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
@@ -147,6 +156,7 @@ export default function ServiceDetails() {
         <div className="absolute bottom-[-20%] right-[-10%] w-[1000px] h-[1000px] bg-blue-600/[0.07] rounded-full blur-[150px] animate-[pulse_15s_ease-in-out_infinite_reverse] delay-2000"></div>
         <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.015] mix-blend-overlay"></div>
       </div>
+
       <AnimatePresence>
         {isLocationBased && (
           <motion.div
@@ -200,6 +210,7 @@ export default function ServiceDetails() {
           </motion.div>
         )}
       </AnimatePresence>
+
       <section className="relative z-10">
         <HeroSection
           customTitle={service.pageTitle}
@@ -208,6 +219,7 @@ export default function ServiceDetails() {
           useApi={false}
         />
       </section>
+
       {(service.heroHeading?.text || service.heroParagraphs?.length > 0 || service.heroImage) && (
         <section className="relative z-10 py-32 lg:py-6 overflow-hidden">
           <div className="container mx-auto px-5 lg:px-10">
@@ -287,6 +299,7 @@ export default function ServiceDetails() {
           </div>
         </section>
       )}
+
       <div className="relative z-10">
         <WhyChooseUs />
         <CallToAction
@@ -301,6 +314,7 @@ export default function ServiceDetails() {
         <TestimonialsSection />
         <OurExperts />
       </div>
+
       <motion.div
         initial={{ opacity: 0, scale: 0 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -311,6 +325,7 @@ export default function ServiceDetails() {
           <ChatBubbleLeftRightIcon className="w-9 h-9 relative z-10" />
         </Link>
       </motion.div>
+
       <style jsx>{`
         @keyframes spin-slow {
           from { transform: rotate(0deg); }
