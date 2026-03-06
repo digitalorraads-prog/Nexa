@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import { 
+import {
   PencilIcon,
   DocumentTextIcon,
   ArrowLeftIcon,
@@ -16,11 +16,13 @@ import {
   PhotoIcon,
   PaintBrushIcon,
   ItalicIcon,
+  ComputerDesktopIcon,
   UnderlineIcon,
   CloudArrowUpIcon,
   XMarkIcon,
   CheckCircleIcon,
-  ExclamationCircleIcon
+  ExclamationCircleIcon,
+
 } from '@heroicons/react/24/outline';
 
 export default function AdminEditService() {
@@ -33,7 +35,7 @@ export default function AdminEditService() {
   const [autoGenerateSlug, setAutoGenerateSlug] = useState(true);
   const [slugType, setSlugType] = useState('simple');
   const [originalData, setOriginalData] = useState(null);
-  
+
   // New states for better UX
   const [showLinkModal, setShowLinkModal] = useState(false);
   const [currentLinkIndex, setCurrentLinkIndex] = useState(null);
@@ -115,14 +117,14 @@ export default function AdminEditService() {
     try {
       setActiveButton('fetching');
       const res = await axios.get(`http://localhost:5000/api/services/${id}`);
-      
+
       if (res.data.success && res.data.data) {
         const service = res.data.data;
-        
+
         // Check if slug is nested (contains '/')
         const isNested = service.slug && service.slug.includes('/');
         const { city, serviceName } = isNested ? parseNestedSlug(service.slug) : {};
-        
+
         setOriginalData(service);
         setForm({
           pageTitle: service.pageTitle || "",
@@ -151,12 +153,12 @@ export default function AdminEditService() {
           heroImage: service.heroImage || "",
           heroImageAlt: service.heroImageAlt || ""
         });
-        
+
         setSlugType(isNested ? 'nested' : 'simple');
-        
+
         const generatedSlug = generateSlug(service.pageTitle || "");
         setAutoGenerateSlug(!isNested && service.slug === generatedSlug);
-        
+
         showNotification('Service loaded successfully', 'success');
       } else {
         showNotification('Service not found', 'error');
@@ -164,7 +166,7 @@ export default function AdminEditService() {
       }
     } catch (error) {
       console.error("Error fetching service:", error);
-      
+
       if (error.response?.status === 401) {
         navigate("/admin/login");
       } else if (error.response?.status === 404) {
@@ -181,12 +183,12 @@ export default function AdminEditService() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     if (name === "pageTitle" && autoGenerateSlug && slugType === 'simple') {
-      setForm({ 
-        ...form, 
+      setForm({
+        ...form,
         pageTitle: value,
-        slug: generateSlug(value) 
+        slug: generateSlug(value)
       });
     } else if ((name === "city" || name === "serviceName") && slugType === 'nested') {
       const newForm = { ...form, [name]: value };
@@ -222,7 +224,7 @@ export default function AdminEditService() {
 
     setUploading(true);
     setActiveButton('uploading');
-    
+
     try {
       const response = await axios.post(
         'http://localhost:5000/api/services/upload-image',
@@ -312,7 +314,7 @@ export default function AdminEditService() {
 
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
-    
+
     if (start === end) {
       showNotification('Please select some text first', 'warning');
       return;
@@ -323,28 +325,28 @@ export default function AdminEditService() {
     const afterText = form.heroParagraphs[index].text.substring(end);
 
     let formattedText = selectedText;
-    
-    switch(formatType) {
+
+    switch (formatType) {
       case 'link':
         setCurrentLinkIndex(index);
-        setLinkData({ 
-          url: 'https://', 
+        setLinkData({
+          url: 'https://',
           text: selectedText,
-          useSelectedText: true 
+          useSelectedText: true
         });
         setShowLinkModal(true);
         return;
-        
+
       case 'italic':
         formattedText = `<em>${selectedText}</em>`;
         showNotification('Italic applied ✓', 'success');
         break;
-        
+
       case 'underline':
         formattedText = `<u>${selectedText}</u>`;
         showNotification('Underline applied ✓', 'success');
         break;
-        
+
       case 'color':
         const color = prompt("Enter color code (e.g., #ff0000):", "#ff0000");
         if (color) {
@@ -357,13 +359,13 @@ export default function AdminEditService() {
     }
 
     const newText = beforeText + formattedText + afterText;
-    
+
     const updatedParagraphs = [...form.heroParagraphs];
     updatedParagraphs[index] = {
       ...updatedParagraphs[index],
       text: newText
     };
-    
+
     setForm({
       ...form,
       heroParagraphs: updatedParagraphs
@@ -392,23 +394,23 @@ export default function AdminEditService() {
 
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
-    
+
     const selectedText = form.heroParagraphs[currentLinkIndex].text.substring(start, end);
     const beforeText = form.heroParagraphs[currentLinkIndex].text.substring(0, start);
     const afterText = form.heroParagraphs[currentLinkIndex].text.substring(end);
 
     const linkText = linkData.useSelectedText ? selectedText : linkData.text;
-    
+
     const formattedText = `<a href="${linkData.url}" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline">${linkText}</a>`;
 
     const newText = beforeText + formattedText + afterText;
-    
+
     const updatedParagraphs = [...form.heroParagraphs];
     updatedParagraphs[currentLinkIndex] = {
       ...updatedParagraphs[currentLinkIndex],
       text: newText
     };
-    
+
     setForm({
       ...form,
       heroParagraphs: updatedParagraphs
@@ -440,7 +442,7 @@ export default function AdminEditService() {
   const toggleSlugType = () => {
     const newType = slugType === 'simple' ? 'nested' : 'simple';
     setSlugType(newType);
-    
+
     if (newType === 'simple') {
       setForm({
         ...form,
@@ -482,7 +484,7 @@ export default function AdminEditService() {
 
     try {
       const formData = new FormData();
-      
+
       formData.append('pageTitle', form.pageTitle);
       formData.append('miniDescription', form.miniDescription || "");
       formData.append('buttonText', form.buttonText || "");
@@ -515,7 +517,7 @@ export default function AdminEditService() {
       }
     } catch (error) {
       console.error("Update Error:", error);
-      
+
       if (error.response?.status === 401) {
         navigate("/admin/login");
       } else if (error.response?.status === 400) {
@@ -541,7 +543,7 @@ export default function AdminEditService() {
     try {
       setActiveButton('delete');
       const res = await axios.delete(`http://localhost:5000/api/services/delete/${id}`);
-      
+
       if (res.data.success) {
         showNotification('Service deleted successfully', 'success');
         setTimeout(() => navigate("/admin/services"), 1500);
@@ -591,14 +593,14 @@ export default function AdminEditService() {
             <LinkIcon className="w-5 h-5" />
             Add Link
           </h3>
-          
+
           <div className="space-y-4">
             <div>
               <label className="block text-gray-400 mb-2 text-sm">URL</label>
               <input
                 type="url"
                 value={linkData.url}
-                onChange={(e) => setLinkData({...linkData, url: e.target.value})}
+                onChange={(e) => setLinkData({ ...linkData, url: e.target.value })}
                 placeholder="https://example.com"
                 className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-cyan-400 transition"
                 autoFocus
@@ -612,7 +614,7 @@ export default function AdminEditService() {
                   <input
                     type="radio"
                     checked={linkData.useSelectedText}
-                    onChange={() => setLinkData({...linkData, useSelectedText: true})}
+                    onChange={() => setLinkData({ ...linkData, useSelectedText: true })}
                     className="text-cyan-400"
                   />
                   <span>Use selected text: "<span className="text-cyan-400">{linkData.text}</span>"</span>
@@ -621,7 +623,7 @@ export default function AdminEditService() {
                   <input
                     type="radio"
                     checked={!linkData.useSelectedText}
-                    onChange={() => setLinkData({...linkData, useSelectedText: false})}
+                    onChange={() => setLinkData({ ...linkData, useSelectedText: false })}
                     className="text-cyan-400"
                   />
                   <span>Custom text</span>
@@ -630,7 +632,7 @@ export default function AdminEditService() {
                   <input
                     type="text"
                     value={linkData.text}
-                    onChange={(e) => setLinkData({...linkData, text: e.target.value})}
+                    onChange={(e) => setLinkData({ ...linkData, text: e.target.value })}
                     placeholder="Enter link text"
                     className="w-full p-2 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white mt-2 focus:outline-none focus:border-cyan-400 transition"
                   />
@@ -676,172 +678,184 @@ export default function AdminEditService() {
     <>
       <Notification />
       <LinkModal />
-      
-      <section className="bg-[#0f0f1a] min-h-screen text-white pt-20 pb-10 px-5">
+
+      <section className="bg-gradient-to-br from-[#050508] via-[#0a0a16] to-[#050508] min-h-screen text-white pt-20 pb-10 px-5 relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-[100px] animate-pulse pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-600/10 rounded-full blur-[100px] animate-pulse delay-1000 pointer-events-none"></div>
+
         {/* Header with Back Button */}
-        <div className="max-w-4xl mx-auto mb-6">
+        <div className="max-w-4xl mx-auto mb-6 relative z-10">
           <button
             onClick={() => navigate("/admin/services")}
-            className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition mb-4 group"
+            className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition-all duration-300 mb-6 group bg-white/5 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 hover:border-cyan-500/30 shadow-lg w-fit"
           >
-            <ArrowLeftIcon className="w-5 h-5 group-hover:-translate-x-1 transition" />
-            Back to Services
+            <ArrowLeftIcon className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+            <span className="font-medium tracking-wide">Back to Services</span>
           </button>
-          
-          <div className="flex items-center justify-between">
+
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div>
-              <h1 className="text-4xl font-bold text-cyan-400 mb-2 flex items-center gap-3">
-                <PencilIcon className="w-10 h-10" />
-                Edit Service
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-4">
+                <PencilIcon className="w-4 h-4 text-cyan-400" />
+                <span className="text-sm font-semibold text-cyan-400 tracking-wide uppercase">Service Editor</span>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 mb-4">
+                Edit Service Config
               </h1>
-              <p className="text-gray-400">Update your service information and rich content</p>
+              <p className="text-gray-400 text-lg">Modify your service settings and rich visual content.</p>
             </div>
-            
+
             {/* Delete Button */}
             <button
               onClick={handleDelete}
               disabled={activeButton === 'delete'}
-              className={`bg-red-500/10 hover:bg-red-500/20 text-red-400 p-3 rounded-lg transition border border-red-500/20 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed ${activeButton === 'delete' ? 'animate-pulse' : ''}`}
+              className={`bg-red-500/10 hover:bg-red-500/20 text-red-500 p-4 rounded-xl transition-all border border-red-500/20 hover:border-red-500/50 hover:shadow-[0_0_20px_rgba(239,68,68,0.2)] disabled:opacity-50 disabled:cursor-not-allowed group ${activeButton === 'delete' ? 'animate-pulse' : ''}`}
               title="Delete Service"
             >
-              <TrashIcon className="w-6 h-6" />
+              <TrashIcon className="w-6 h-6 group-hover:scale-110 transition-transform" />
             </button>
           </div>
         </div>
 
         {/* Main Form */}
-        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-6">
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-8 relative z-10">
           {/* Basic Info Card */}
-          <div className="bg-[#1a1a2e] rounded-2xl border border-gray-800 p-6 md:p-8 space-y-6">
-            
+          <div className="bg-[#0a0a16]/80 backdrop-blur-2xl rounded-3xl border border-white/10 p-6 md:p-8 space-y-8 shadow-[0_8px_30px_rgb(0,0,0,0.5)] relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-600"></div>
+
             {/* Page Title */}
-            <div>
-              <label className="block text-gray-400 mb-2 font-medium">
-                Page Title <span className="text-red-500">*</span>
+            <div className="group">
+              <label className="block text-gray-300 font-semibold mb-2 group-focus-within:text-cyan-400 transition-colors">
+                Page Title <span className="text-cyan-500">*</span>
               </label>
-              <input
-                name="pageTitle"
-                value={form.pageTitle}
-                onChange={handleChange}
-                placeholder="e.g., Digital Marketing Services in New York"
-                className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition"
-                required
-              />
+              <div className="relative">
+                <input
+                  name="pageTitle"
+                  value={form.pageTitle}
+                  onChange={handleChange}
+                  placeholder="e.g., Premium Web Development in London"
+                  className="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all shadow-inner"
+                  required
+                />
+              </div>
+              <p className="text-gray-500 text-sm mt-2 flex items-center gap-1.5 ">
+                <SparklesIcon className="w-3.5 h-3.5" /> Core heading for the service page
+              </p>
             </div>
 
             {/* URL Type Toggle */}
-            <div className="flex gap-2 p-1 bg-[#0f0f1a] rounded-lg border border-gray-700">
+            <div className="flex gap-3 p-1.5 bg-white/5 rounded-xl border border-white/10">
               <button
                 type="button"
                 onClick={toggleSlugType}
-                className={`flex-1 py-2 px-4 rounded-lg transition flex items-center justify-center gap-2 ${
-                  slugType === 'simple' 
-                    ? 'bg-cyan-600 text-white' 
-                    : 'text-gray-400 hover:text-white'
-                }`}
+                className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 ${slugType === 'simple'
+                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
+                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  }`}
               >
                 <LinkIcon className="w-4 h-4" />
-                Simple URL
+                Simple Static URL
               </button>
               <button
                 type="button"
                 onClick={toggleSlugType}
-                className={`flex-1 py-2 px-4 rounded-lg transition flex items-center justify-center gap-2 ${
-                  slugType === 'nested' 
-                    ? 'bg-cyan-600 text-white' 
-                    : 'text-gray-400 hover:text-white'
-                }`}
+                className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 ${slugType === 'nested'
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg shadow-purple-500/25'
+                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  }`}
               >
                 <BuildingOfficeIcon className="w-4 h-4" />
-                Location Based
+                Dynamic Location URL
               </button>
             </div>
 
             {/* Nested URL Fields */}
             {slugType === 'nested' ? (
-              <div className="space-y-4 border-t border-gray-700 pt-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-gray-400 mb-2 font-medium">
-                      City <span className="text-red-500">*</span>
+              <div className="space-y-5 border-t border-white/10 pt-6 mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="group">
+                    <label className="block text-gray-300 font-semibold mb-2 group-focus-within:text-purple-400 transition-colors">
+                      City / Location <span className="text-purple-500">*</span>
                     </label>
                     <input
                       name="city"
                       value={form.city}
                       onChange={handleChange}
-                      placeholder="e.g., new-york"
-                      className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition"
+                      placeholder="e.g., london"
+                      className="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
                       required={slugType === 'nested'}
                     />
                   </div>
-                  <div>
-                    <label className="block text-gray-400 mb-2 font-medium">
-                      Service <span className="text-red-500">*</span>
+                  <div className="group">
+                    <label className="block text-gray-300 font-semibold mb-2 group-focus-within:text-purple-400 transition-colors">
+                      Service Namespace <span className="text-purple-500">*</span>
                     </label>
                     <input
                       name="serviceName"
                       value={form.serviceName}
                       onChange={handleChange}
-                      placeholder="e.g., digital-marketing"
-                      className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition"
+                      placeholder="e.g., enterprise-seo"
+                      className="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
                       required={slugType === 'nested'}
                     />
                   </div>
                 </div>
-                <p className="text-gray-500 text-sm">
-                  URL will be: <span className="text-cyan-400">yoursite.com/{form.city || 'city'}/{form.serviceName || 'service'}</span>
-                </p>
+                <div className="bg-purple-500/10 border border-purple-500/20 rounded-xl p-4 flex items-center gap-3">
+                  <GlobeAltIcon className="w-5 h-5 text-purple-400 flex-shrink-0" />
+                  <p className="text-gray-300 text-sm">
+                    Target URL structure: <span className="text-white font-mono font-bold">/services/{form.city || '[city]'}/{form.serviceName || '[service]'}</span>
+                  </p>
+                </div>
               </div>
             ) : (
               /* Simple Slug Field with Toggle */
-              <div className="border-t border-gray-700 pt-4">
-                <div className="flex items-center justify-between mb-2">
-                  <label className="block text-gray-400 font-medium">
-                    URL Slug <span className="text-red-500">*</span>
+              <div className="border-t border-white/10 pt-6 mt-6">
+                <div className="flex items-center justify-between mb-3">
+                  <label className="block text-gray-300 font-semibold">
+                    URL Slug <span className="text-cyan-500">*</span>
                   </label>
                   <button
                     type="button"
                     onClick={toggleSlugMode}
-                    className={`text-sm px-3 py-1 rounded-full transition ${
-                      autoGenerateSlug 
-                        ? 'bg-cyan-600 text-white' 
-                        : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                    }`}
+                    className={`text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-md transition-all ${autoGenerateSlug
+                      ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/30'
+                      : 'bg-white/10 text-gray-400 hover:bg-white/20 hover:text-white'
+                      }`}
                   >
-                    {autoGenerateSlug ? 'Auto' : 'Manual'}
+                    {autoGenerateSlug ? 'Auto Sync' : 'Manual Edit'}
                   </button>
                 </div>
-                
-                <div className="relative">
+
+                <div className="relative group">
                   <input
                     name="slug"
                     value={form.slug}
                     onChange={handleChange}
                     disabled={autoGenerateSlug}
                     placeholder={autoGenerateSlug ? "Auto-generated from title" : "Enter custom slug"}
-                    className={`w-full p-3 pl-10 ${
-                      autoGenerateSlug 
-                        ? 'bg-gray-800 text-gray-400 cursor-not-allowed' 
-                        : 'bg-[#0f0f1a] text-white'
-                    } border border-gray-700 rounded-lg placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition`}
+                    className={`w-full p-4 pl-12 ${autoGenerateSlug
+                      ? 'bg-black/20 text-gray-500 cursor-not-allowed border-white/5'
+                      : 'bg-white/5 text-white border-white/10 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500'
+                      } border rounded-xl placeholder-gray-600 focus:outline-none transition-all`}
                     required={!autoGenerateSlug && slugType === 'simple'}
                   />
-                  <LinkIcon className="w-5 h-5 text-gray-500 absolute left-3 top-3.5" />
+                  <LinkIcon className={`w-5 h-5 absolute left-4 top-4 transition-colors ${autoGenerateSlug ? 'text-gray-600' : 'text-cyan-500'}`} />
                 </div>
-                
-                <div className="flex justify-between mt-1">
+
+                <div className="flex justify-between items-center mt-2">
                   <p className="text-gray-500 text-sm">
-                    {autoGenerateSlug 
-                      ? "Slug automatically generated from title" 
-                      : "Customize the URL for this service"}
+                    {autoGenerateSlug
+                      ? "Automatically mirrors the page title."
+                      : "Define a clean, SEO-friendly identifier."}
                   </p>
                   {!autoGenerateSlug && (
                     <button
                       type="button"
-                      onClick={() => setForm({...form, slug: generateSlug(form.pageTitle)})}
-                      className="text-cyan-400 text-sm hover:text-cyan-300 transition"
+                      onClick={() => setForm({ ...form, slug: generateSlug(form.pageTitle) })}
+                      className="text-cyan-400 text-sm hover:text-cyan-300 font-medium transition"
                     >
-                      Generate from title
+                      Regenerate
                     </button>
                   )}
                 </div>
@@ -850,30 +864,34 @@ export default function AdminEditService() {
 
             {/* URL Preview */}
             {(form.slug || (form.city && form.serviceName)) && (
-              <div className={`bg-gradient-to-r p-4 rounded-lg border ${
-                originalData?.slug !== (slugType === 'nested' ? generateNestedSlug() : form.slug)
-                  ? 'from-yellow-500/10 to-orange-500/10 border-yellow-500/30' 
-                  : 'from-cyan-500/10 to-blue-500/10 border-cyan-500/30'
-              }`}>
-                <div className="flex items-center gap-2 text-gray-400 text-sm mb-2">
+              <div className={`p-4 lg:p-5 rounded-xl border backdrop-blur-md transition-all ${originalData?.slug !== (slugType === 'nested' ? generateNestedSlug() : form.slug)
+                ? 'bg-gradient-to-r from-yellow-900/40 to-orange-900/30 border-yellow-500/30 shadow-[0_4px_20px_rgba(234,179,8,0.15)]'
+                : 'bg-gradient-to-r from-cyan-900/30 to-blue-900/30 border-cyan-500/20'
+                }`}>
+                <div className={`flex items-center gap-2 text-sm font-semibold mb-2 uppercase tracking-wide ${originalData?.slug !== (slugType === 'nested' ? generateNestedSlug() : form.slug) ? 'text-yellow-400' : 'text-cyan-300'
+                  }`}>
                   <GlobeAltIcon className="w-4 h-4" />
-                  <span>Live URL Preview:</span>
+                  <span>Live URL Preview</span>
                 </div>
-                <div className="flex items-center gap-2 flex-wrap">
-                  <code className="text-gray-500 text-sm">yoursite.com/</code>
-                  <code className="text-cyan-400 font-mono text-sm font-bold bg-[#0f0f1a] px-2 py-1 rounded break-all">
-                    {slugType === 'nested' 
+                <div className="flex items-center flex-wrap">
+                  <span className="text-gray-400 text-base">yoursite.com/services/</span>
+                  <span className={`font-mono text-base font-bold underline decoration-2 underline-offset-4 break-all ${originalData?.slug !== (slugType === 'nested' ? generateNestedSlug() : form.slug)
+                    ? 'text-yellow-300 decoration-yellow-500/50'
+                    : 'text-white decoration-cyan-500/50'
+                    }`}>
+                    {slugType === 'nested'
                       ? (form.city && form.serviceName ? `${form.city}/${form.serviceName}` : form.slug)
                       : form.slug}
-                  </code>
+                  </span>
                 </div>
-                
+
                 {originalData?.slug !== (slugType === 'nested' ? generateNestedSlug() : form.slug) && (
-                  <div className="flex items-center gap-2 mt-2 text-yellow-500 text-xs bg-yellow-500/10 p-2 rounded">
-                    <ExclamationTriangleIcon className="w-4 h-4 flex-shrink-0" />
+                  <div className="flex items-start gap-3 mt-4 text-yellow-200 text-sm bg-yellow-500/20 p-3 rounded-lg border border-yellow-500/30">
+                    <ExclamationTriangleIcon className="w-5 h-5 flex-shrink-0 text-yellow-500 mt-0.5" />
                     <div>
-                      <p>URL will change from: <code className="font-mono">yoursite.com/{originalData?.slug}</code></p>
-                      <p className="text-gray-400 mt-1">This may affect existing links to this service.</p>
+                      <p className="font-semibold mb-1">URL Path Modification Detected</p>
+                      <p>Current active URL is: <code className="font-mono bg-black/40 px-1.5 py-0.5 rounded text-white">{originalData?.slug}</code></p>
+                      <p className="text-yellow-400/80 mt-1">Warning: Changing the path will cause incoming static links to 404 unless routed via .htaccess or similar.</p>
                     </div>
                   </div>
                 )}
@@ -881,506 +899,612 @@ export default function AdminEditService() {
             )}
 
             {/* Mini Description */}
-            <div>
-              <label className="block text-gray-400 mb-2 font-medium">
-                Mini Description
+            <div className="group">
+              <label className="block text-gray-300 font-semibold mb-2 group-focus-within:text-cyan-400 transition-colors">
+                Sub Headline Definition
               </label>
               <textarea
                 name="miniDescription"
                 value={form.miniDescription}
                 onChange={handleChange}
-                placeholder="Brief description about this service (max 200 characters)"
-                rows="4"
+                placeholder="Briefly pitch what this service covers..."
+                rows="3"
                 maxLength="200"
-                className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition resize-none"
+                className="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all resize-none shadow-inner"
               />
-              <div className="flex justify-end mt-1">
-                <span className={`text-sm ${
-                  form.miniDescription.length >= 180 
-                    ? 'text-yellow-500' 
-                    : form.miniDescription.length >= 150 
-                      ? 'text-orange-500' 
-                      : 'text-gray-500'
-                }`}>
-                  {form.miniDescription.length}/200 characters
+              <div className="flex justify-between mt-2">
+                <p className="text-gray-500 text-sm flex items-center gap-1.5"><SparklesIcon className="w-3.5 h-3.5" /> Appears right beneath the title</p>
+                <span className={`text-sm font-mono ${form.miniDescription.length >= 180
+                  ? 'text-red-400 font-bold'
+                  : form.miniDescription.length >= 150
+                    ? 'text-yellow-400 font-bold'
+                    : 'text-gray-500'
+                  }`}>
+                  {form.miniDescription.length}/200
                 </span>
               </div>
             </div>
 
             {/* Button Text */}
-            <div>
-              <label className="block text-gray-400 mb-2 font-medium">
-                Button Text
+            <div className="group border-t border-white/10 pt-6 mt-6">
+              <label className="block text-gray-300 font-semibold mb-2 group-focus-within:text-cyan-400 transition-colors">
+                Call To Action Button Text
               </label>
               <input
                 name="buttonText"
                 value={form.buttonText}
                 onChange={handleChange}
                 placeholder="e.g., Learn More, Get Started, Contact Us"
-                className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition"
+                className="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all shadow-inner"
               />
+              <p className="text-gray-500 text-sm mt-2">
+                Action text displayed on the primary interaction button.
+              </p>
             </div>
           </div>
 
           {/* Rich Text Editor Card */}
-          <div className="bg-[#1a1a2e] rounded-2xl border border-gray-800 p-6 md:p-8 space-y-8">
-            <h2 className="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-3 border-b border-gray-700 pb-4">
-              <PaintBrushIcon className="w-6 h-6" />
-              Rich Content
-            </h2>
+          <div className="bg-[#0a0a16]/80 backdrop-blur-2xl rounded-3xl border border-white/10 p-6 md:p-8 space-y-10 shadow-[0_8px_30px_rgb(0,0,0,0.5)] relative overflow-hidden mt-8">
+            <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-purple-500 to-pink-600"></div>
+
+            <div className="flex items-center gap-4 border-b border-white/10 pb-6">
+              <div className="p-3 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-xl border border-purple-500/30">
+                <PaintBrushIcon className="w-6 h-6 text-purple-400" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-white">Visual Content Studio</h2>
+                <p className="text-gray-400 text-sm mt-1">Design the hero section and rich text areas</p>
+              </div>
+            </div>
 
             {/* Heading Section */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-white">Main Heading</h3>
-              
-              <div>
-                <label className="block text-gray-400 mb-2 text-sm">Heading Text</label>
+            <div className="space-y-6 bg-white/5 rounded-2xl p-6 border border-white/5">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 rounded-lg bg-pink-500/20 flex items-center justify-center border border-pink-500/30">
+                  <span className="text-pink-400 font-bold font-mono">H</span>
+                </div>
+                <h3 className="text-lg font-bold text-white">Hero Heading Configuration</h3>
+              </div>
+
+              <div className="group">
+                <label className="block text-gray-300 font-semibold mb-2 group-focus-within:text-pink-400 transition-colors">
+                  Primary Display Text
+                </label>
                 <input
                   type="text"
                   value={form.heroHeading.text}
                   onChange={(e) => handleHeadingChange('text', e.target.value)}
-                  placeholder="Enter main heading..."
-                  className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white"
+                  placeholder="Enter a captivating headline..."
+                  className="w-full p-4 bg-[#050508] border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition-all font-medium text-lg"
                 />
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div>
-                  <label className="block text-gray-400 mb-2 text-sm">Type</label>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 pt-4">
+                <div className="space-y-2">
+                  <label className="block text-gray-400 text-sm font-medium">Tag Type</label>
                   <select
                     value={form.heroHeading.type}
                     onChange={(e) => handleHeadingChange('type', e.target.value)}
-                    className="w-full p-2 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white"
+                    className="w-full p-3 bg-[#050508] border border-white/10 rounded-lg text-gray-200 focus:outline-none focus:border-pink-500 transition-colors cursor-pointer"
                   >
-                    <option value="h1">Heading 1</option>
+                    <option value="h1">Heading 1 (SEO Primary)</option>
                     <option value="h2">Heading 2</option>
                     <option value="h3">Heading 3</option>
                     <option value="h4">Heading 4</option>
                   </select>
                 </div>
 
-                <div>
-                  <label className="block text-gray-400 mb-2 text-sm">Color</label>
-                  <input
-                    type="color"
-                    value={form.heroHeading.color}
-                    onChange={(e) => handleHeadingChange('color', e.target.value)}
-                    className="w-full h-10 bg-[#0f0f1a] border border-gray-700 rounded-lg"
-                  />
+                <div className="space-y-2">
+                  <label className="block text-gray-400 text-sm font-medium">Text Color</label>
+                  <div className="relative flex items-center">
+                    <input
+                      type="color"
+                      value={form.heroHeading.color}
+                      onChange={(e) => handleHeadingChange('color', e.target.value)}
+                      className="w-10 h-10 rounded cursor-pointer bg-transparent border-0 p-0"
+                    />
+                    <span className="ml-3 font-mono text-gray-300 uppercase text-sm">{form.heroHeading.color}</span>
+                  </div>
                 </div>
 
-                <div>
-                  <label className="block text-gray-400 mb-2 text-sm">Font Size</label>
+                <div className="space-y-2">
+                  <label className="block text-gray-400 text-sm font-medium">Size Preset</label>
                   <select
                     value={form.heroHeading.fontSize}
                     onChange={(e) => handleHeadingChange('fontSize', e.target.value)}
-                    className="w-full p-2 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white"
+                    className="w-full p-3 bg-[#050508] border border-white/10 rounded-lg text-gray-200 focus:outline-none focus:border-pink-500 transition-colors cursor-pointer"
                   >
-                    <option value="32px">Small (32px)</option>
-                    <option value="40px">Medium (40px)</option>
-                    <option value="48px">Large (48px)</option>
-                    <option value="56px">Extra Large (56px)</option>
-                    <option value="64px">Huge (64px)</option>
+                    <option value="32px">Compact (32px)</option>
+                    <option value="40px">Standard (40px)</option>
+                    <option value="48px">Prominent (48px)</option>
+                    <option value="56px">Display (56px)</option>
+                    <option value="64px">Massive (64px)</option>
                   </select>
                 </div>
 
-                <div>
-                  <label className="block text-gray-400 mb-2 text-sm">Alignment</label>
+                <div className="space-y-2">
+                  <label className="block text-gray-400 text-sm font-medium">Alignment</label>
                   <select
                     value={form.heroHeading.alignment}
                     onChange={(e) => handleHeadingChange('alignment', e.target.value)}
-                    className="w-full p-2 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white"
+                    className="w-full p-3 bg-[#050508] border border-white/10 rounded-lg text-gray-200 focus:outline-none focus:border-pink-500 transition-colors cursor-pointer"
                   >
-                    <option value="left">Left</option>
-                    <option value="center">Center</option>
-                    <option value="right">Right</option>
+                    <option value="left" className="text-left">Left Aligned</option>
+                    <option value="center" className="text-center">Center Aligned</option>
+                    <option value="right" className="text-right">Right Aligned</option>
                   </select>
                 </div>
               </div>
             </div>
 
             {/* Paragraphs Section */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-white">Paragraphs</h3>
+            <div className="space-y-6 bg-white/5 rounded-2xl p-6 border border-white/5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center border border-cyan-500/30">
+                    <span className="text-cyan-400 font-bold font-serif italic">P</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-white">Rich Body Content</h3>
+                    <p className="text-gray-400 text-xs mt-0.5">Add formatting and styling to paragraphs</p>
+                  </div>
+                </div>
                 <button
                   type="button"
                   onClick={addParagraph}
-                  className="bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded-lg text-sm flex items-center gap-2 transition hover:scale-105"
+                  className="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 px-4 py-2 rounded-xl text-sm font-medium flex items-center justify-center gap-2 transition-all hover:shadow-[0_0_15px_rgba(6,182,212,0.2)]"
                 >
-                  <span>+</span> Add Paragraph
+                  <span className="text-lg leading-none">+</span> Add Paragraph Block
                 </button>
               </div>
 
-              {form.heroParagraphs.map((para, index) => (
-                <div key={index} className="bg-[#0f0f1a] p-4 rounded-lg border border-gray-700 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-cyan-400 text-sm">Paragraph {index + 1}</span>
-                    {form.heroParagraphs.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => removeParagraph(index)}
-                        className="text-red-400 hover:text-red-300 text-sm transition hover:scale-110"
-                      >
-                        Remove
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Formatting Toolbar */}
-                  <div className="flex gap-2 p-2 bg-[#1a1a2e] rounded-lg border border-gray-700">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const textarea = document.getElementById(`edit-paragraph-${index}`);
-                        if (textarea && textarea.selectionStart === textarea.selectionEnd) {
-                          showNotification('Select some text first', 'warning');
-                        } else {
-                          applyFormatting(index, 'link');
-                        }
-                      }}
-                      className={`p-2 hover:bg-gray-700 rounded transition relative group active:scale-95 ${
-                        activeButton === 'link' ? 'bg-cyan-600 scale-95' : ''
-                      }`}
-                      title="Insert Link"
-                    >
-                      <LinkIcon className="w-4 h-4" />
-                      <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none border border-gray-700">
-                        Add Link (Ctrl+K)
-                      </span>
-                    </button>
-                    
-                    <button
-                      type="button"
-                      onClick={() => applyFormatting(index, 'italic')}
-                      className={`p-2 hover:bg-gray-700 rounded transition relative group active:scale-95 ${
-                        activeButton === 'italic' ? 'bg-cyan-600 scale-95' : ''
-                      }`}
-                      title="Italic"
-                    >
-                      <ItalicIcon className="w-4 h-4" />
-                      <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none border border-gray-700">
-                        Italic (Ctrl+I)
-                      </span>
-                    </button>
-                    
-                    <button
-                      type="button"
-                      onClick={() => applyFormatting(index, 'underline')}
-                      className={`p-2 hover:bg-gray-700 rounded transition relative group active:scale-95 ${
-                        activeButton === 'underline' ? 'bg-cyan-600 scale-95' : ''
-                      }`}
-                      title="Underline"
-                    >
-                      <UnderlineIcon className="w-4 h-4" />
-                      <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none border border-gray-700">
-                        Underline (Ctrl+U)
-                      </span>
-                    </button>
-                    
-                    <button
-                      type="button"
-                      onClick={() => applyFormatting(index, 'color')}
-                      className={`p-2 hover:bg-gray-700 rounded transition relative group active:scale-95 ${
-                        activeButton === 'color' ? 'bg-cyan-600 scale-95' : ''
-                      }`}
-                      title="Text Color"
-                    >
-                      <PaintBrushIcon className="w-4 h-4" />
-                      <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none border border-gray-700">
-                        Text Color
-                      </span>
-                    </button>
-                  </div>
-
-                  {/* Editable textarea for HTML */}
-                  <textarea
-                    id={`edit-paragraph-${index}`}
-                    value={para.text}
-                    onChange={(e) => handleParagraphChange(index, 'text', e.target.value)}
-                    placeholder={`Enter paragraph ${index + 1} text with HTML tags...`}
-                    rows="4"
-                    className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white font-mono text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
-                  />
-
-                  {/* Preview of formatted text */}
-                  <div className="min-h-[100px] p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white overflow-auto">
-                    <p className="text-xs text-gray-400 mb-2">Preview:</p>
-                    <div
-                      style={{
-                        color: para.color,
-                        fontSize: para.fontSize,
-                        fontWeight: para.fontWeight,
-                        fontStyle: para.fontStyle,
-                        textDecoration: para.textDecoration
-                      }}
-                      dangerouslySetInnerHTML={{ 
-                        __html: para.text
-                          .replace(/<em>(.*?)<\/em>/g, '<em>$1</em>')
-                          .replace(/<u>(.*?)<\/u>/g, '<u>$1</u>')
-                          .replace(/<a href="(.*?)" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline">(.*?)<\/a>/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline">$2</a>')
-                          .replace(/<span style="color:(.*?)">(.*?)<\/span>/g, '<span style="color:$1">$2</span>')
-                      }}
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <div>
-                      <label className="block text-gray-400 mb-1 text-xs">Color</label>
-                      <input
-                        type="color"
-                        value={para.color}
-                        onChange={(e) => handleParagraphChange(index, 'color', e.target.value)}
-                        className="w-full h-8 bg-[#0f0f1a] border border-gray-700 rounded"
-                      />
+              <div className="space-y-6">
+                {form.heroParagraphs.map((para, index) => (
+                  <div key={index} className="bg-[#050508] rounded-xl border border-white/10 overflow-hidden group/block transition-all hover:border-white/20">
+                    {/* Block Header */}
+                    <div className="flex items-center justify-between bg-white/[0.02] px-4 py-3 border-b border-white/5">
+                      <div className="flex items-center gap-2">
+                        <span className="flex items-center justify-center w-6 h-6 rounded bg-white/10 text-xs font-bold text-gray-400">{index + 1}</span>
+                        <span className="text-gray-400 text-sm font-medium">Text Block</span>
+                      </div>
+                      {form.heroParagraphs.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeParagraph(index)}
+                          className="text-red-400/70 hover:text-red-400 text-sm font-medium transition-colors flex items-center gap-1 opacity-0 group-hover/block:opacity-100"
+                        >
+                          <TrashIcon className="w-4 h-4" /> Remove
+                        </button>
+                      )}
                     </div>
-                    <div>
-                      <label className="block text-gray-400 mb-1 text-xs">Font Size</label>
-                      <select
-                        value={para.fontSize}
-                        onChange={(e) => handleParagraphChange(index, 'fontSize', e.target.value)}
-                        className="w-full p-1 bg-[#0f0f1a] border border-gray-700 rounded text-white text-sm"
-                      >
-                        <option value="14px">Small (14px)</option>
-                        <option value="16px">Normal (16px)</option>
-                        <option value="18px">Large (18px)</option>
-                        <option value="20px">Extra Large (20px)</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-gray-400 mb-1 text-xs">Font Weight</label>
-                      <select
-                        value={para.fontWeight}
-                        onChange={(e) => handleParagraphChange(index, 'fontWeight', e.target.value)}
-                        className="w-full p-1 bg-[#0f0f1a] border border-gray-700 rounded text-white text-sm"
-                      >
-                        <option value="normal">Normal</option>
-                        <option value="bold">Bold</option>
-                        <option value="300">Light</option>
-                        <option value="500">Medium</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-gray-400 mb-1 text-xs">Style</label>
-                      <select
-                        value={para.fontStyle}
-                        onChange={(e) => handleParagraphChange(index, 'fontStyle', e.target.value)}
-                        className="w-full p-1 bg-[#0f0f1a] border border-gray-700 rounded text-white text-sm"
-                      >
-                        <option value="normal">Normal</option>
-                        <option value="italic">Italic</option>
-                      </select>
+
+                    <div className="p-4 space-y-4">
+                      {/* Formatting Toolbar - Sticky */}
+                      <div className="sticky top-4 z-10 flex flex-wrap gap-2 p-1.5 bg-[#0a0a16]/90 backdrop-blur-xl rounded-lg border border-white/10 shadow-lg shadow-black/50 w-fit">
+                        <div className="flex items-center gap-1 border-r border-white/10 pr-2 mr-1">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const textarea = document.getElementById(`edit-paragraph-${index}`);
+                              if (textarea && textarea.selectionStart === textarea.selectionEnd) {
+                                showNotification('Highlight text to link first', 'warning');
+                              } else {
+                                applyFormatting(index, 'link');
+                              }
+                            }}
+                            className={`p-2 hover:bg-white/10 rounded-md transition-all relative group active:scale-95 ${activeButton === 'link' ? 'bg-cyan-500/20 text-cyan-400' : 'text-gray-300'}`}
+                            title="Insert Link (Ctrl+K)"
+                          >
+                            <LinkIcon className="w-4 h-4" />
+                          </button>
+                        </div>
+
+                        <div className="flex items-center gap-1 border-r border-white/10 pr-2 mr-1">
+                          <button
+                            type="button"
+                            onClick={() => applyFormatting(index, 'italic')}
+                            className={`p-2 hover:bg-white/10 rounded-md transition-all relative group active:scale-95 ${activeButton === 'italic' ? 'bg-cyan-500/20 text-cyan-400' : 'text-gray-300'}`}
+                          >
+                            <ItalicIcon className="w-4 h-4" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => applyFormatting(index, 'underline')}
+                            className={`p-2 hover:bg-white/10 rounded-md transition-all relative group active:scale-95 ${activeButton === 'underline' ? 'bg-cyan-500/20 text-cyan-400' : 'text-gray-300'}`}
+                          >
+                            <UnderlineIcon className="w-4 h-4" />
+                          </button>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => applyFormatting(index, 'color')}
+                          className={`p-2 hover:bg-white/10 rounded-md transition-all relative group active:scale-95 flex items-center gap-2 ${activeButton === 'color' ? 'bg-cyan-500/20 text-cyan-400' : 'text-gray-300'}`}
+                        >
+                          <span className="w-4 h-4 rounded-full border border-gray-500" style={{ background: 'linear-gradient(45deg, #f87171, #60a5fa, #34d399)' }}></span>
+                          <span className="text-xs font-medium pr-1">Color</span>
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        {/* Editor side */}
+                        <div className="space-y-2">
+                          <label className="text-gray-400 text-xs font-bold uppercase tracking-wider">Source HTML</label>
+                          <textarea
+                            id={`edit-paragraph-${index}`}
+                            value={para.text}
+                            onChange={(e) => handleParagraphChange(index, 'text', e.target.value)}
+                            placeholder="Craft your paragraph here..."
+                            rows="6"
+                            className="w-full p-4 bg-black/40 border border-white/5 rounded-xl text-gray-300 font-mono text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 transition-all resize-none shadow-inner leading-relaxed"
+                          />
+                        </div>
+
+                        {/* Preview side */}
+                        <div className="space-y-2 flex flex-col">
+                          <label className="text-gray-400 text-xs font-bold uppercase tracking-wider">Live Render</label>
+                          <div className="flex-1 p-5 bg-[#0a0a16] border border-white/5 rounded-xl text-white overflow-auto shadow-inner relative flex items-center justify-center">
+                            {para.text ? (
+                              <div
+                                className="w-full"
+                                style={{
+                                  color: para.color,
+                                  fontSize: para.fontSize,
+                                  fontWeight: para.fontWeight,
+                                  fontStyle: para.fontStyle,
+                                  textDecoration: para.textDecoration,
+                                  lineHeight: '1.7'
+                                }}
+                                dangerouslySetInnerHTML={{
+                                  __html: para.text
+                                    .replace(/<em>(.*?)<\/em>/g, '<em class="italic">$1</em>')
+                                    .replace(/<u>(.*?)<\/u>/g, '<u class="underline decoration-cyan-500/50 underline-offset-4">$1</u>')
+                                    .replace(/<a href="(.*?)" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline">(.*?)<\/a>/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 hover:underline decoration-cyan-400 underline-offset-4 transition-colors font-medium">$2</a>')
+                                    .replace(/<span style="color:(.*?)">(.*?)<\/span>/g, '<span style="color:$1">$2</span>')
+                                }}
+                              />
+                            ) : (
+                              <p className="text-gray-600 italic text-center text-sm absolute inset-0 flex items-center justify-center">Output will render here</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Paragraph Styling Controls */}
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-white/5 mt-4">
+                        <div className="space-y-1.5">
+                          <label className="block text-gray-400 text-xs font-medium uppercase min-w-[max-content]">Base Color</label>
+                          <div className="relative flex items-center bg-black/30 rounded-lg p-1 border border-white/5">
+                            <input
+                              type="color"
+                              value={para.color}
+                              onChange={(e) => handleParagraphChange(index, 'color', e.target.value)}
+                              className="w-8 h-8 rounded cursor-pointer bg-transparent border-0 p-0"
+                            />
+                            <span className="ml-2 font-mono text-gray-400 text-xs truncate">{para.color}</span>
+                          </div>
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="block text-gray-400 text-xs font-medium uppercase">Size</label>
+                          <select
+                            value={para.fontSize}
+                            onChange={(e) => handleParagraphChange(index, 'fontSize', e.target.value)}
+                            className="w-full p-2.5 bg-black/30 border border-white/5 rounded-lg text-gray-300 text-sm focus:outline-none focus:border-cyan-500 cursor-pointer"
+                          >
+                            <option value="14px">Small (14px)</option>
+                            <option value="16px">Normal (16px)</option>
+                            <option value="18px">Large (18px)</option>
+                            <option value="20px">XL (20px)</option>
+                          </select>
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="block text-gray-400 text-xs font-medium uppercase">Weight</label>
+                          <select
+                            value={para.fontWeight}
+                            onChange={(e) => handleParagraphChange(index, 'fontWeight', e.target.value)}
+                            className="w-full p-2.5 bg-black/30 border border-white/5 rounded-lg text-gray-300 text-sm focus:outline-none focus:border-cyan-500 cursor-pointer"
+                          >
+                            <option value="normal">Normal</option>
+                            <option value="bold">Bold</option>
+                            <option value="300">Light</option>
+                            <option value="500">Medium</option>
+                          </select>
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="block text-gray-400 text-xs font-medium uppercase">Style</label>
+                          <select
+                            value={para.fontStyle}
+                            onChange={(e) => handleParagraphChange(index, 'fontStyle', e.target.value)}
+                            className="w-full p-2.5 bg-black/30 border border-white/5 rounded-lg text-gray-300 text-sm focus:outline-none focus:border-cyan-500 cursor-pointer"
+                          >
+                            <option value="normal">Normal</option>
+                            <option value="italic">Italic</option>
+                          </select>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
-            {/* Hero Image */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-white">Hero Image</h3>
-              
-              {/* Image Upload Section */}
-              <div className="space-y-4">
-                {/* Current Image Preview */}
-                {form.heroImage && (
-                  <div className="relative group">
-                    <img
-                      src={form.heroImage}
-                      alt={form.heroImageAlt || "Hero image"}
-                      className="w-full h-48 object-cover rounded-lg border border-gray-700"
-                      onError={(e) => {
-                        e.target.src = 'https://via.placeholder.com/800x400?text=Invalid+Image+URL';
-                        showNotification('Failed to load image', 'error');
-                      }}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setForm({...form, heroImage: ""})}
-                      className="absolute top-2 right-2 bg-red-500/80 hover:bg-red-600 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition"
-                      title="Remove image"
-                    >
-                      <XMarkIcon className="w-4 h-4" />
-                    </button>
-                  </div>
-                )}
-
-                {/* Upload Button */}
-                <div className="flex items-center gap-4 relative">
-                  <input
-                    type="file"
-                    accept="image/jpeg,image/png,image/gif,image/webp"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                    id="imageUpload"
-                    disabled={uploading}
-                  />
-                  <label
-                    htmlFor="imageUpload"
-                    className={`flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-4 py-3 rounded-lg text-center cursor-pointer flex items-center justify-center gap-2 transition hover:scale-105 ${
-                      uploading ? 'opacity-50 cursor-not-allowed' : ''
-                    }`}
-                  >
-                    {uploading ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        Uploading...
-                      </>
-                    ) : (
-                      <>
-                        <CloudArrowUpIcon className="w-5 h-5" />
-                        {form.heroImage ? 'Change Image' : 'Upload Image'}
-                      </>
-                    )}
-                  </label>
-                  {uploading && (
-                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg">
-                      <div className="w-6 h-6 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+            {/* Hero Image Section */}
+            <div className="space-y-6 bg-white/5 rounded-2xl p-6 border border-white/5">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center border border-orange-500/30">
+                  <PhotoIcon className="w-4 h-4 text-orange-400" />
+                </div>
+                <h3 className="text-lg font-bold text-white">Cover Media</h3>
+              </div>
+              <div className="space-y-6">
+                {/* Visual Image Preview */}
+                <div className="relative group rounded-xl overflow-hidden border-2 border-dashed border-white/20 bg-black/30 aspect-[21/9] flex items-center justify-center transition-all hover:border-orange-500/50">
+                  {form.heroImage ? (
+                    <>
+                      <img
+                        src={form.heroImage}
+                        alt={form.heroImageAlt || "Hero visual"}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        onError={(e) => {
+                          e.target.src = 'https://via.placeholder.com/800x400?text=Image+Load+Failed';
+                          showNotification('Failed to load external image', 'error');
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 backdrop-blur-sm">
+                        <button
+                          type="button"
+                          onClick={() => setForm({ ...form, heroImage: "" })}
+                          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all shadow-lg"
+                        >
+                          <XMarkIcon className="w-5 h-5" /> Remove Image
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="text-center p-8">
+                      <PhotoIcon className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                      <p className="text-gray-400 font-medium">No cover image uploaded</p>
+                      <p className="text-gray-500 text-sm mt-1">Upload a high-quality image or provide a URL below</p>
                     </div>
                   )}
                 </div>
 
-                {/* Image URL Input (fallback) */}
-                <div className="relative">
-                  <input
-                    type="url"
-                    value={form.heroImage}
-                    onChange={(e) => setForm({...form, heroImage: e.target.value})}
-                    placeholder="Or enter image URL directly..."
-                    className="w-full p-3 pl-10 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white"
-                  />
-                  <PhotoIcon className="w-5 h-5 text-gray-500 absolute left-3 top-3.5" />
-                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Upload Controls */}
+                  <div className="space-y-4">
+                    <label className="block text-gray-400 text-sm font-medium">Direct Upload</label>
+                    <div className="relative">
+                      <input
+                        type="file"
+                        accept="image/jpeg,image/png,image/gif,image/webp"
+                        onChange={handleImageUpload}
+                        className="hidden"
+                        id="imageUpload"
+                        disabled={uploading}
+                      />
+                      <label
+                        htmlFor="imageUpload"
+                        className={`w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 px-6 py-4 rounded-xl text-center cursor-pointer flex items-center justify-center gap-3 transition-all font-bold shadow-lg shadow-orange-500/20 ${uploading ? 'opacity-70 cursor-not-allowed scale-[0.98]' : 'hover:scale-[1.02]'
+                          }`}
+                      >
+                        {uploading ? (
+                          <>
+                            <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
+                            <span>Uploading Asset...</span>
+                          </>
+                        ) : (
+                          <>
+                            <CloudArrowUpIcon className="w-6 h-6" />
+                            <span>{form.heroImage ? 'Replace Image' : 'Select Local File'}</span>
+                          </>
+                        )}
+                      </label>
+                    </div>
+                    <p className="text-xs text-gray-500">Max size: 5MB. Supported: JPEG, PNG, WEBP, GIF.</p>
+                  </div>
 
-                {/* Alt Text */}
-                <div>
-                  <input
-                    type="text"
-                    value={form.heroImageAlt}
-                    onChange={(e) => setForm({...form, heroImageAlt: e.target.value})}
-                    placeholder="Image alt text (for SEO)"
-                    className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white"
-                  />
+                  {/* URL Fallback & Metadata */}
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-gray-400 text-sm font-medium mb-2">External URL</label>
+                      <div className="relative group">
+                        <input
+                          type="url"
+                          value={form.heroImage}
+                          onChange={(e) => setForm({ ...form, heroImage: e.target.value })}
+                          placeholder="https://..."
+                          className="w-full p-3.5 pl-11 bg-black/30 border border-white/10 rounded-xl text-gray-300 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/50 transition-all font-mono text-sm"
+                        />
+                        <LinkIcon className="w-5 h-5 text-gray-500 absolute left-3.5 top-[14px] group-focus-within:text-orange-500 transition-colors" />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-gray-400 text-sm font-medium mb-2">Accessibility Alt Text</label>
+                      <input
+                        type="text"
+                        value={form.heroImageAlt}
+                        onChange={(e) => setForm({ ...form, heroImageAlt: e.target.value })}
+                        placeholder="Briefly describe the image..."
+                        className="w-full p-3.5 bg-black/30 border border-white/10 rounded-xl text-gray-300 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/50 transition-all"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Live Preview */}
-          <div className="bg-[#1a1a2e] rounded-2xl border border-gray-800 p-6">
-            <h3 className="text-cyan-400 font-semibold mb-4 flex items-center gap-2">
-              <PhotoIcon className="w-5 h-5" />
-              Live Preview
-            </h3>
-            
-            <div className="bg-gradient-to-br from-[#0f0f1a] to-[#1a1a2e] p-6 rounded-lg border border-gray-700">
-              {/* Heading Preview */}
-              {form.heroHeading.text && (
-                <div style={{ textAlign: form.heroHeading.alignment }}>
-                  {form.heroHeading.type === 'h1' && (
-                    <h1 style={{ 
-                      color: form.heroHeading.color,
-                      fontSize: form.heroHeading.fontSize,
-                      fontWeight: form.heroHeading.fontWeight,
-                      marginBottom: '1rem'
-                    }}>
-                      {form.heroHeading.text}
-                    </h1>
-                  )}
-                  {form.heroHeading.type === 'h2' && (
-                    <h2 style={{ 
-                      color: form.heroHeading.color,
-                      fontSize: form.heroHeading.fontSize,
-                      fontWeight: form.heroHeading.fontWeight,
-                      marginBottom: '1rem'
-                    }}>
-                      {form.heroHeading.text}
-                    </h2>
-                  )}
-                  {form.heroHeading.type === 'h3' && (
-                    <h3 style={{ 
-                      color: form.heroHeading.color,
-                      fontSize: form.heroHeading.fontSize,
-                      fontWeight: form.heroHeading.fontWeight,
-                      marginBottom: '1rem'
-                    }}>
-                      {form.heroHeading.text}
-                    </h3>
-                  )}
+          {/* Live Preview Console */}
+          <div className="bg-[#050508] rounded-3xl border border-white/5 p-6 md:p-8 relative overflow-hidden group shadow-2xl mt-8">
+            {/* Glowing borders */}
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent opacity-50"></div>
+            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent opacity-50"></div>
+
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-lg border border-cyan-500/30">
+                  <ComputerDesktopIcon className="w-6 h-6 text-cyan-400" />
                 </div>
-              )}
+                <div>
+                  <h3 className="text-xl font-bold text-white tracking-wide">Output Simulator</h3>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    <span className="text-xs text-green-400 uppercase tracking-widest font-bold font-mono">Real-time Render Sync</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-              {/* Paragraphs Preview */}
-              {form.heroParagraphs.map((para, index) => (
-                <div
-                  key={index}
-                  style={{
-                    color: para.color,
-                    fontSize: para.fontSize,
-                    fontWeight: para.fontWeight,
-                    fontStyle: para.fontStyle,
-                    textDecoration: para.textDecoration,
-                    marginBottom: '1rem',
-                    lineHeight: '1.6'
-                  }}
-                  dangerouslySetInnerHTML={{ 
-                    __html: para.text
-                      .replace(/<em>(.*?)<\/em>/g, '<em>$1</em>')
-                      .replace(/<u>(.*?)<\/u>/g, '<u>$1</u>')
-                      .replace(/<a href="(.*?)" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline">(.*?)<\/a>/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline">$2</a>')
-                      .replace(/<span style="color:(.*?)">(.*?)<\/span>/g, '<span style="color:$1">$2</span>')
-                  }}
-                />
-              ))}
+            <div className={`bg-[#0a0a16] border border-white/10 rounded-2xl overflow-hidden shadow-2xl min-h-[300px] flex flex-col transition-all duration-700 ${!form.heroHeading.text && !form.heroParagraphs[0]?.text?.trim() && !form.heroImage ? 'border-dashed' : ''}`}>
+              {!form.heroHeading.text && !form.heroParagraphs[0]?.text?.trim() && !form.heroImage ? (
+                <div className="flex-1 flex flex-col items-center justify-center p-10 text-center opacity-50">
+                  <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mb-4 border border-white/10">
+                    <PaintBrushIcon className="w-8 h-8 text-gray-500" />
+                  </div>
+                  <h4 className="text-xl font-semibold text-gray-400 mb-2">Blank Canvas</h4>
+                  <p className="text-gray-500 max-w-sm mx-auto">Start entering heading text, paragraphs, or upload an image to see the live preview.</p>
+                </div>
+              ) : (
+                <div className="p-8 md:p-12">
+                  {/* Heading Preview */}
+                  {form.heroHeading.text && (
+                    <div style={{ textAlign: form.heroHeading.alignment }} className="mb-8">
+                      {form.heroHeading.type === 'h1' && (
+                        <h1 style={{
+                          color: form.heroHeading.color,
+                          fontSize: form.heroHeading.fontSize,
+                          fontWeight: form.heroHeading.fontWeight,
+                          lineHeight: '1.2'
+                        }} className="font-sans">
+                          {form.heroHeading.text}
+                        </h1>
+                      )}
+                      {form.heroHeading.type === 'h2' && (
+                        <h2 style={{
+                          color: form.heroHeading.color,
+                          fontSize: form.heroHeading.fontSize,
+                          fontWeight: form.heroHeading.fontWeight,
+                          lineHeight: '1.2'
+                        }} className="font-sans">
+                          {form.heroHeading.text}
+                        </h2>
+                      )}
+                      {form.heroHeading.type === 'h3' && (
+                        <h3 style={{
+                          color: form.heroHeading.color,
+                          fontSize: form.heroHeading.fontSize,
+                          fontWeight: form.heroHeading.fontWeight,
+                          lineHeight: '1.3'
+                        }} className="font-sans">
+                          {form.heroHeading.text}
+                        </h3>
+                      )}
+                    </div>
+                  )}
 
-              {/* Image Preview */}
-              {form.heroImage && (
-                <img
-                  src={form.heroImage}
-                  alt={form.heroImageAlt || 'Hero image'}
-                  className="mt-4 max-w-full h-auto rounded-lg border border-gray-700"
-                  onError={(e) => {
-                    e.target.src = 'https://via.placeholder.com/800x400?text=Invalid+Image+URL';
-                  }}
-                />
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                    {/* Paragraphs Preview */}
+                    <div className="space-y-6">
+                      {form.heroParagraphs.map((para, index) => (
+                        para.text && (
+                          <div
+                            key={index}
+                            style={{
+                              color: para.color,
+                              fontSize: para.fontSize,
+                              fontWeight: para.fontWeight,
+                              fontStyle: para.fontStyle,
+                              textDecoration: para.textDecoration,
+                              lineHeight: '1.7'
+                            }}
+                            className="text-gray-300"
+                            dangerouslySetInnerHTML={{
+                              __html: para.text
+                                .replace(/<em>(.*?)<\/em>/g, '<em class="italic">$1</em>')
+                                .replace(/<u>(.*?)<\/u>/g, '<u class="underline decoration-cyan-500/50 underline-offset-4">$1</u>')
+                                .replace(/<a href="(.*?)" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline">(.*?)<\/a>/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 hover:underline decoration-cyan-400 underline-offset-4 transition-colors font-medium">$2</a>')
+                                .replace(/<span style="color:(.*?)">(.*?)<\/span>/g, '<span style="color:$1">$2</span>')
+                            }}
+                          />
+                        )
+                      ))}
+
+                      {/* Interactive Button Preview */}
+                      {form.buttonText && (
+                        <div className="pt-4 flex">
+                          <div className="px-8 py-3.5 bg-cyan-600 text-white font-bold rounded-full shadow-[0_0_20px_rgba(6,182,212,0.4)] flex items-center justify-center pointer-events-none opacity-90">
+                            {form.buttonText}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Image Box Preview */}
+                    <div>
+                      {form.heroImage ? (
+                        <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 aspect-square sm:aspect-video lg:aspect-square transform transition-transform hover:scale-[1.02] duration-500">
+                          <img
+                            src={form.heroImage}
+                            alt={form.heroImageAlt || 'Hero layout'}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.src = 'https://via.placeholder.com/800x400?text=Preview+Error';
+                            }}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-tr from-black/20 to-transparent"></div>
+                        </div>
+                      ) : (
+                        <div className="rounded-2xl border-2 border-dashed border-white/10 aspect-square sm:aspect-video lg:aspect-square flex items-center justify-center bg-white/[0.02]">
+                          <PhotoIcon className="w-16 h-16 text-white/10" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 pt-6">
             <button
               type="button"
               onClick={() => navigate("/admin/services")}
-              className="flex-1 bg-gray-700 hover:bg-gray-600 p-4 rounded-xl font-bold text-lg transition hover:scale-[1.02]"
+              className="px-8 py-4 rounded-xl font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all duration-300 hover:shadow-lg sm:w-1/3"
             >
-              Cancel
+              Cancel Edit
             </button>
-            
+
             <button
               type="submit"
-              disabled={submitting || !form.pageTitle.trim() || 
-                (slugType === 'simple' && !autoGenerateSlug && !form.slug.trim()) || 
+              disabled={submitting || !form.pageTitle.trim() ||
+                (slugType === 'simple' && !autoGenerateSlug && !form.slug.trim()) ||
                 (slugType === 'nested' && (!form.city || !form.serviceName))}
-              className={`flex-1 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 p-4 rounded-xl font-bold text-lg transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-cyan-500/20 hover:scale-[1.02] ${
-                activeButton === 'submit' ? 'animate-pulse' : ''
-              }`}
+              className={`flex-1 group relative overflow-hidden rounded-xl p-0.5 transition-all duration-300 hover:scale-[1.02] shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] disabled:opacity-50 disabled:cursor-not-allowed ${activeButton === 'submit' ? 'animate-pulse' : ''
+                }`}
             >
-              {submitting ? (
-                <span className="flex items-center justify-center gap-2">
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  Updating...
-                </span>
-              ) : (
-                "Update Service"
-              )}
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 opacity-100 group-hover:from-cyan-400 group-hover:via-blue-400 group-hover:to-cyan-400 transition-colors"></div>
+              <div className="relative bg-[#050508] px-8 py-4 rounded-[10px] flex items-center justify-center gap-3 transition-colors group-hover:bg-opacity-0">
+                {submitting ? (
+                  <>
+                    <div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span className="font-bold text-lg text-white">Saving Changes...</span>
+                  </>
+                ) : (
+                  <>
+                    <PencilIcon className="w-6 h-6 text-white group-hover:text-white transition-colors" />
+                    <span className="font-bold text-lg text-white">Update Service Configuration</span>
+                  </>
+                )}
+              </div>
             </button>
           </div>
-        </form>
-      </section>
+        </form >
+      </section >
 
       {/* Styles */}
-      <style jsx>{`
+      < style jsx > {`
         @keyframes slideIn {
           from {
             transform: translateX(100%);
@@ -1414,7 +1538,7 @@ export default function AdminEditService() {
         button:active {
           transform: scale(0.95);
         }
-      `}</style>
+      `}</style >
     </>
   );
 }

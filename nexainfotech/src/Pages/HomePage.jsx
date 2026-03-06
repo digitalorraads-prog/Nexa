@@ -13,7 +13,7 @@ import ServicesLocation from "../Component/sections/services/ServicesLocation";
 function HomePage() {
   return (
     <div className="pt-10">
-      <HeroSection />
+      <HeroSection className="mt-[40px]" />
       <ServicesRibbon />
       <ServicesLocation />
       <WhyChooseUs />

@@ -1,7 +1,7 @@
 // DONE
 import { useState } from "react";
 import axios from "../../Protected/axios"; // ✅ Correct - using custom axios instance
-import { 
+import {
   SparklesIcon,
   ArrowLeftIcon,
   LinkIcon,
@@ -87,12 +87,12 @@ export default function AdminAddService() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     if (name === "pageTitle" && autoGenerateSlug && slugType === 'simple') {
-      setForm({ 
-        ...form, 
+      setForm({
+        ...form,
         pageTitle: value,
-        slug: generateSlug(value) 
+        slug: generateSlug(value)
       });
     } else if ((name === "city" || name === "serviceName") && slugType === 'nested') {
       const newForm = { ...form, [name]: value };
@@ -128,7 +128,7 @@ export default function AdminAddService() {
 
     setUploading(true);
     setActiveButton('uploading');
-    
+
     try {
       // ✅ Fixed: Using relative path with axios instance
       const response = await axios.post(
@@ -219,7 +219,7 @@ export default function AdminAddService() {
 
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
-    
+
     if (start === end) {
       showNotification('Please select some text first', 'warning');
       return;
@@ -230,28 +230,28 @@ export default function AdminAddService() {
     const afterText = form.heroParagraphs[index].text.substring(end);
 
     let formattedText = selectedText;
-    
-    switch(formatType) {
+
+    switch (formatType) {
       case 'link':
         setCurrentLinkIndex(index);
-        setLinkData({ 
-          url: 'https://', 
+        setLinkData({
+          url: 'https://',
           text: selectedText,
-          useSelectedText: true 
+          useSelectedText: true
         });
         setShowLinkModal(true);
         return;
-        
+
       case 'italic':
         formattedText = `<em>${selectedText}</em>`;
         showNotification('Italic applied ✓', 'success');
         break;
-        
+
       case 'underline':
         formattedText = `<u>${selectedText}</u>`;
         showNotification('Underline applied ✓', 'success');
         break;
-        
+
       case 'color':
         const color = prompt("Enter color code (e.g., #ff0000):", "#ff0000");
         if (color) {
@@ -264,13 +264,13 @@ export default function AdminAddService() {
     }
 
     const newText = beforeText + formattedText + afterText;
-    
+
     const updatedParagraphs = [...form.heroParagraphs];
     updatedParagraphs[index] = {
       ...updatedParagraphs[index],
       text: newText
     };
-    
+
     setForm({
       ...form,
       heroParagraphs: updatedParagraphs
@@ -297,23 +297,23 @@ export default function AdminAddService() {
 
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
-    
+
     const selectedText = form.heroParagraphs[currentLinkIndex].text.substring(start, end);
     const beforeText = form.heroParagraphs[currentLinkIndex].text.substring(0, start);
     const afterText = form.heroParagraphs[currentLinkIndex].text.substring(end);
 
     const linkText = linkData.useSelectedText ? selectedText : linkData.text;
-    
+
     const formattedText = `<a href="${linkData.url}" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline">${linkText}</a>`;
 
     const newText = beforeText + formattedText + afterText;
-    
+
     const updatedParagraphs = [...form.heroParagraphs];
     updatedParagraphs[currentLinkIndex] = {
       ...updatedParagraphs[currentLinkIndex],
       text: newText
     };
-    
+
     setForm({
       ...form,
       heroParagraphs: updatedParagraphs
@@ -378,7 +378,7 @@ export default function AdminAddService() {
 
     try {
       const formData = new FormData();
-      
+
       formData.append('pageTitle', form.pageTitle);
       formData.append('miniDescription', form.miniDescription || "");
       formData.append('buttonText', form.buttonText || "");
@@ -406,7 +406,7 @@ export default function AdminAddService() {
 
       if (res.data.success) {
         showNotification("Service Added Successfully 🚀", 'success');
-        
+
         setTimeout(() => {
           setForm({
             pageTitle: "",
@@ -495,14 +495,14 @@ export default function AdminAddService() {
             <LinkIcon className="w-5 h-5" />
             Add Link
           </h3>
-          
+
           <div className="space-y-4">
             <div>
               <label className="block text-gray-400 mb-2 text-sm">URL</label>
               <input
                 type="url"
                 value={linkData.url}
-                onChange={(e) => setLinkData({...linkData, url: e.target.value})}
+                onChange={(e) => setLinkData({ ...linkData, url: e.target.value })}
                 placeholder="https://example.com"
                 className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-cyan-400 transition"
                 autoFocus
@@ -516,7 +516,7 @@ export default function AdminAddService() {
                   <input
                     type="radio"
                     checked={linkData.useSelectedText}
-                    onChange={() => setLinkData({...linkData, useSelectedText: true})}
+                    onChange={() => setLinkData({ ...linkData, useSelectedText: true })}
                     className="text-cyan-400"
                   />
                   <span>Use selected text: "<span className="text-cyan-400">{linkData.text}</span>"</span>
@@ -525,7 +525,7 @@ export default function AdminAddService() {
                   <input
                     type="radio"
                     checked={!linkData.useSelectedText}
-                    onChange={() => setLinkData({...linkData, useSelectedText: false})}
+                    onChange={() => setLinkData({ ...linkData, useSelectedText: false })}
                     className="text-cyan-400"
                   />
                   <span>Custom text</span>
@@ -534,7 +534,7 @@ export default function AdminAddService() {
                   <input
                     type="text"
                     value={linkData.text}
-                    onChange={(e) => setLinkData({...linkData, text: e.target.value})}
+                    onChange={(e) => setLinkData({ ...linkData, text: e.target.value })}
                     placeholder="Enter link text"
                     className="w-full p-2 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white mt-2 focus:outline-none focus:border-cyan-400 transition"
                   />
@@ -580,67 +580,76 @@ export default function AdminAddService() {
     <>
       <Notification />
       <LinkModal />
-      
-      <section className="bg-[#0f0f1a] min-h-screen text-white pt-20 pb-10 px-5">
+
+      <section className="bg-gradient-to-br from-[#050508] via-[#0a0a16] to-[#050508] min-h-screen text-white pt-20 pb-10 px-5 relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px] animate-pulse pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] animate-pulse delay-1000 pointer-events-none"></div>
+
         {/* Back Button */}
-        <div className="max-w-4xl mx-auto mb-6">
+        <div className="max-w-4xl mx-auto mb-6 relative z-10">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition group"
+            className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition-all duration-300 group bg-white/5 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 hover:border-cyan-500/30 shadow-lg"
           >
-            <ArrowLeftIcon className="w-5 h-5 group-hover:-translate-x-1 transition" />
-            Back
+            <ArrowLeftIcon className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+            <span className="font-medium tracking-wide">Back to Services</span>
           </button>
         </div>
 
         {/* Header */}
-        <div className="max-w-4xl mx-auto mb-10">
-          <h1 className="text-4xl font-bold text-cyan-400 mb-4 flex items-center gap-3">
-            <SparklesIcon className="w-10 h-10" />
+        <div className="max-w-4xl mx-auto mb-10 relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-4">
+            <SparklesIcon className="w-4 h-4 text-cyan-400" />
+            <span className="text-sm font-semibold text-cyan-400 tracking-wide uppercase">Service Creator</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 mb-4">
             Add New Service
           </h1>
-          <p className="text-gray-400">Create a new service page with rich text editor</p>
+          <p className="text-gray-400 text-lg">Create a breathtaking new service page with our advanced rich text editor.</p>
         </div>
 
         {/* Main Form */}
-        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-6">
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-8 relative z-10">
           {/* Basic Info Card */}
-          <div className="bg-[#1a1a2e] rounded-2xl border border-gray-800 p-6 md:p-8 space-y-6">
-            
+          <div className="bg-[#0a0a16]/80 backdrop-blur-2xl rounded-3xl border border-white/10 p-6 md:p-8 space-y-8 shadow-[0_8px_30px_rgb(0,0,0,0.5)] relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-600"></div>
+
             {/* Page Title */}
-            <div>
-              <label className="block text-gray-400 mb-2 font-medium">
-                Page Title <span className="text-red-500">*</span>
+            <div className="group">
+              <label className="block text-gray-300 font-semibold mb-2 group-focus-within:text-cyan-400 transition-colors">
+                Page Title <span className="text-cyan-500">*</span>
               </label>
-              <input
-                name="pageTitle"
-                value={form.pageTitle}
-                onChange={handleChange}
-                placeholder="e.g., Digital Marketing Services in New York"
-                className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition"
-                required
-              />
-              <p className="text-gray-500 text-sm mt-1">
-                Main heading for the service page
+              <div className="relative">
+                <input
+                  name="pageTitle"
+                  value={form.pageTitle}
+                  onChange={handleChange}
+                  placeholder="e.g., Premium Web Development in London"
+                  className="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all shadow-inner"
+                  required
+                />
+              </div>
+              <p className="text-gray-500 text-sm mt-2 flex items-center gap-1.5 ">
+                <SparklesIcon className="w-3.5 h-3.5" /> Core heading for the service page
               </p>
             </div>
 
             {/* URL Type Toggle */}
-            <div className="flex gap-2 p-1 bg-[#0f0f1a] rounded-lg border border-gray-700">
+            <div className="flex gap-3 p-1.5 bg-white/5 rounded-xl border border-white/10">
               <button
                 type="button"
                 onClick={() => {
                   setSlugType('simple');
                   showNotification('Simple URL mode', 'info');
                 }}
-                className={`flex-1 py-2 px-4 rounded-lg transition flex items-center justify-center gap-2 ${
-                  slugType === 'simple' 
-                    ? 'bg-cyan-600 text-white' 
-                    : 'text-gray-400 hover:text-white'
-                }`}
+                className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 ${slugType === 'simple'
+                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
+                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  }`}
               >
                 <LinkIcon className="w-4 h-4" />
-                Simple URL
+                Simple Static URL
               </button>
               <button
                 type="button"
@@ -648,102 +657,102 @@ export default function AdminAddService() {
                   setSlugType('nested');
                   showNotification('Location based URL mode', 'info');
                 }}
-                className={`flex-1 py-2 px-4 rounded-lg transition flex items-center justify-center gap-2 ${
-                  slugType === 'nested' 
-                    ? 'bg-cyan-600 text-white' 
-                    : 'text-gray-400 hover:text-white'
-                }`}
+                className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 ${slugType === 'nested'
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg shadow-purple-500/25'
+                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  }`}
               >
                 <BuildingOfficeIcon className="w-4 h-4" />
-                Location Based
+                Dynamic Location URL
               </button>
             </div>
 
             {/* Nested URL Fields */}
             {slugType === 'nested' ? (
-              <div className="space-y-4 border-t border-gray-700 pt-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-gray-400 mb-2 font-medium">
-                      City <span className="text-red-500">*</span>
+              <div className="space-y-5 border-t border-white/10 pt-6 mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="group">
+                    <label className="block text-gray-300 font-semibold mb-2 group-focus-within:text-purple-400 transition-colors">
+                      City / Location <span className="text-purple-500">*</span>
                     </label>
                     <input
                       name="city"
                       value={form.city}
                       onChange={handleChange}
-                      placeholder="e.g., new-york"
-                      className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition"
+                      placeholder="e.g., london"
+                      className="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
                       required={slugType === 'nested'}
                     />
                   </div>
-                  <div>
-                    <label className="block text-gray-400 mb-2 font-medium">
-                      Service <span className="text-red-500">*</span>
+                  <div className="group">
+                    <label className="block text-gray-300 font-semibold mb-2 group-focus-within:text-purple-400 transition-colors">
+                      Service Namespace <span className="text-purple-500">*</span>
                     </label>
                     <input
                       name="serviceName"
                       value={form.serviceName}
                       onChange={handleChange}
-                      placeholder="e.g., digital-marketing"
-                      className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition"
+                      placeholder="e.g., enterprise-seo"
+                      className="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
                       required={slugType === 'nested'}
                     />
                   </div>
                 </div>
-                <p className="text-gray-500 text-sm">
-                  URL will be: <span className="text-cyan-400">yoursite.com/{form.city || 'city'}/{form.serviceName || 'service'}</span>
-                </p>
+                <div className="bg-purple-500/10 border border-purple-500/20 rounded-xl p-4 flex items-center gap-3">
+                  <GlobeAltIcon className="w-5 h-5 text-purple-400 flex-shrink-0" />
+                  <p className="text-gray-300 text-sm">
+                    Target URL structure: <span className="text-white font-mono font-bold">/services/{form.city || '[city]'}/{form.serviceName || '[service]'}</span>
+                  </p>
+                </div>
               </div>
             ) : (
               /* Simple Slug Field with Toggle */
-              <div className="border-t border-gray-700 pt-4">
-                <div className="flex items-center justify-between mb-2">
-                  <label className="block text-gray-400 font-medium">
-                    URL Slug <span className="text-red-500">*</span>
+              <div className="border-t border-white/10 pt-6 mt-6">
+                <div className="flex items-center justify-between mb-3">
+                  <label className="block text-gray-300 font-semibold">
+                    URL Slug <span className="text-cyan-500">*</span>
                   </label>
                   <button
                     type="button"
                     onClick={toggleSlugMode}
-                    className={`text-sm px-3 py-1 rounded-full transition ${
-                      autoGenerateSlug 
-                        ? 'bg-cyan-600 text-white' 
-                        : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                    }`}
+                    className={`text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-md transition-all ${autoGenerateSlug
+                      ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/30'
+                      : 'bg-white/10 text-gray-400 hover:bg-white/20 hover:text-white'
+                      }`}
                   >
-                    {autoGenerateSlug ? 'Auto' : 'Manual'}
+                    {autoGenerateSlug ? 'Auto Sync' : 'Manual Edit'}
                   </button>
                 </div>
-                
-                <div className="relative">
+
+                <div className="relative group">
                   <input
                     name="slug"
                     value={form.slug}
                     onChange={handleChange}
                     disabled={autoGenerateSlug}
                     placeholder={autoGenerateSlug ? "Auto-generated from title" : "Enter custom slug"}
-                    className={`w-full p-3 pl-10 ${
-                      autoGenerateSlug 
-                        ? 'bg-gray-800 text-gray-400 cursor-not-allowed' 
-                        : 'bg-[#0f0f1a] text-white'
-                    } border border-gray-700 rounded-lg placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition`}
+                    className={`w-full p-4 pl-12 ${autoGenerateSlug
+                      ? 'bg-black/20 text-gray-500 cursor-not-allowed border-white/5'
+                      : 'bg-white/5 text-white border-white/10 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500'
+                      } border rounded-xl placeholder-gray-600 focus:outline-none transition-all`}
                     required={!autoGenerateSlug && slugType === 'simple'}
                   />
-                  <LinkIcon className="w-5 h-5 text-gray-500 absolute left-3 top-3.5" />
+                  <LinkIcon className={`w-5 h-5 absolute left-4 top-4 transition-colors ${autoGenerateSlug ? 'text-gray-600' : 'text-cyan-500'}`} />
                 </div>
-                
-                <div className="flex justify-between mt-1">
+
+                <div className="flex justify-between items-center mt-2">
                   <p className="text-gray-500 text-sm">
-                    {autoGenerateSlug 
-                      ? "Slug automatically generated from title" 
-                      : "Customize the URL for this service"}
+                    {autoGenerateSlug
+                      ? "Automatically mirrors the page title."
+                      : "Define a clean, SEO-friendly identifier."}
                   </p>
                   {!autoGenerateSlug && (
                     <button
                       type="button"
-                      onClick={() => setForm({...form, slug: generateSlug(form.pageTitle)})}
-                      className="text-cyan-400 text-sm hover:text-cyan-300 transition"
+                      onClick={() => setForm({ ...form, slug: generateSlug(form.pageTitle) })}
+                      className="text-cyan-400 text-sm hover:text-cyan-300 font-medium transition"
                     >
-                      Generate from title
+                      Regenerate
                     </button>
                   )}
                 </div>
@@ -752,52 +761,52 @@ export default function AdminAddService() {
 
             {/* URL Preview */}
             {(form.slug || (form.city && form.serviceName)) && (
-              <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 p-4 rounded-lg border border-cyan-500/30">
-                <div className="flex items-center gap-2 text-gray-400 text-sm mb-2">
+              <div className="bg-gradient-to-r from-cyan-900/30 to-blue-900/30 p-4 lg:p-5 rounded-xl border border-cyan-500/20 backdrop-blur-md">
+                <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-2 uppercase tracking-wide">
                   <GlobeAltIcon className="w-4 h-4" />
-                  <span>Live URL Preview:</span>
+                  <span>Live URL Preview</span>
                 </div>
-                <div className="flex items-center gap-2 flex-wrap">
-                  <code className="text-gray-500 text-sm">yoursite.com/</code>
-                  <code className="text-cyan-400 font-mono text-sm font-bold bg-[#0f0f1a] px-2 py-1 rounded break-all">
-                    {slugType === 'nested' 
-                      ? (generateNestedSlug() || 'city/service') 
+                <div className="flex items-center flex-wrap">
+                  <span className="text-gray-400 text-base">yoursite.com/services/</span>
+                  <span className="text-white font-mono text-base font-bold underline decoration-cyan-500/50 decoration-2 underline-offset-4 break-all">
+                    {slugType === 'nested'
+                      ? (generateNestedSlug() || 'city/service')
                       : (form.slug || 'your-slug')}
-                  </code>
+                  </span>
                 </div>
               </div>
             )}
 
             {/* Mini Description */}
-            <div>
-              <label className="block text-gray-400 mb-2 font-medium">
-                Mini Description
+            <div className="group">
+              <label className="block text-gray-300 font-semibold mb-2 group-focus-within:text-cyan-400 transition-colors">
+                Sub Headline Definition
               </label>
               <textarea
                 name="miniDescription"
                 value={form.miniDescription}
                 onChange={handleChange}
-                placeholder="Brief description about this service (max 200 characters)"
-                rows="4"
+                placeholder="Briefly pitch what this service covers..."
+                rows="3"
                 maxLength="200"
-                className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition resize-none"
+                className="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all resize-none shadow-inner"
               />
-              <div className="flex justify-end mt-1">
-                <span className={`text-sm ${
-                  form.miniDescription.length >= 180 
-                    ? 'text-yellow-500' 
-                    : form.miniDescription.length >= 150 
-                      ? 'text-orange-500' 
-                      : 'text-gray-500'
-                }`}>
-                  {form.miniDescription.length}/200 characters
+              <div className="flex justify-between mt-2">
+                <p className="text-gray-500 text-sm flex items-center gap-1.5"><SparklesIcon className="w-3.5 h-3.5" /> Appears right beneath the title</p>
+                <span className={`text-sm font-mono ${form.miniDescription.length >= 180
+                  ? 'text-red-400 font-bold'
+                  : form.miniDescription.length >= 150
+                    ? 'text-yellow-400 font-bold'
+                    : 'text-gray-500'
+                  }`}>
+                  {form.miniDescription.length}/200
                 </span>
               </div>
             </div>
 
             {/* Button Text */}
-            <div>
-              <label className="block text-gray-400 mb-2 font-medium">
+            <div className="group border-t border-white/10 pt-6 mt-6">
+              <label className="block text-gray-300 font-semibold mb-2 group-focus-within:text-cyan-400 transition-colors">
                 Button Text
               </label>
               <input
@@ -814,114 +823,125 @@ export default function AdminAddService() {
           </div>
 
           {/* Hero Section with Rich Text Editor */}
-          <div className="bg-[#1a1a2e] rounded-2xl border border-gray-800 p-6 md:p-8 space-y-8">
-            <h2 className="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-3 border-b border-gray-700 pb-4">
-              <SparklesIcon className="w-6 h-6" />
-              Hero Section Content
+          <div className="bg-[#0a0a16]/80 backdrop-blur-2xl rounded-3xl border border-white/10 p-6 md:p-8 space-y-10 shadow-[0_8px_30px_rgb(0,0,0,0.5)]">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-6 flex items-center gap-3 border-b border-white/10 pb-6">
+              <SparklesIcon className="w-8 h-8 text-cyan-400" />
+              Hero Section Design
             </h2>
 
             {/* Heading Section */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-white">Main Heading</h3>
-              
+            <div className="space-y-6 bg-white/5 rounded-2xl p-6 border border-white/10">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <span className="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">1</span>
+                Main Headline
+              </h3>
+
               {/* Heading Text */}
-              <div>
-                <label className="block text-gray-400 mb-2 text-sm">Heading Text</label>
+              <div className="group">
+                <label className="block text-gray-400 mb-2 text-sm font-medium group-focus-within:text-cyan-400 transition-colors">Headline Text</label>
                 <input
                   type="text"
                   value={form.heroHeading.text}
                   onChange={(e) => handleHeadingChange('text', e.target.value)}
-                  placeholder="Enter main heading..."
-                  className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white"
+                  placeholder="e.g., Transform Your Digital Presence..."
+                  className="w-full p-4 bg-[#050508] border border-white/10 rounded-xl text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all font-medium text-lg"
                 />
               </div>
 
               {/* Heading Controls */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
                 <div>
-                  <label className="block text-gray-400 mb-2 text-sm">Type</label>
-                  <select
-                    value={form.heroHeading.type}
-                    onChange={(e) => handleHeadingChange('type', e.target.value)}
-                    className="w-full p-2 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white"
-                  >
-                    <option value="h1">Heading 1</option>
-                    <option value="h2">Heading 2</option>
-                    <option value="h3">Heading 3</option>
-                    <option value="h4">Heading 4</option>
-                  </select>
+                  <label className="block text-gray-400 mb-2 text-sm">HTML Tag</label>
+                  <div className="relative">
+                    <select
+                      value={form.heroHeading.type}
+                      onChange={(e) => handleHeadingChange('type', e.target.value)}
+                      className="w-full p-3.5 bg-[#050508] border border-white/10 rounded-xl text-white appearance-none focus:outline-none focus:border-cyan-500"
+                    >
+                      <option value="h1">Heading 1 (SEO Main)</option>
+                      <option value="h2">Heading 2</option>
+                      <option value="h3">Heading 3</option>
+                      <option value="h4">Heading 4</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div>
-                  <label className="block text-gray-400 mb-2 text-sm">Color</label>
-                  <input
-                    type="color"
-                    value={form.heroHeading.color}
-                    onChange={(e) => handleHeadingChange('color', e.target.value)}
-                    className="w-full h-10 bg-[#0f0f1a] border border-gray-700 rounded-lg"
-                  />
+                  <label className="block text-gray-400 mb-2 text-sm">Text Color</label>
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="color"
+                      value={form.heroHeading.color}
+                      onChange={(e) => handleHeadingChange('color', e.target.value)}
+                      className="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 p-0"
+                    />
+                    <span className="text-gray-300 font-mono text-sm bg-black/30 px-3 py-2 rounded-lg border border-white/5">{form.heroHeading.color}</span>
+                  </div>
                 </div>
 
                 <div>
-                  <label className="block text-gray-400 mb-2 text-sm">Font Size</label>
+                  <label className="block text-gray-400 mb-2 text-sm">Size Preset</label>
                   <select
                     value={form.heroHeading.fontSize}
                     onChange={(e) => handleHeadingChange('fontSize', e.target.value)}
-                    className="w-full p-2 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white"
+                    className="w-full p-3.5 bg-[#050508] border border-white/10 rounded-xl text-white appearance-none focus:outline-none focus:border-cyan-500"
                   >
-                    <option value="32px">Small (32px)</option>
-                    <option value="40px">Medium (40px)</option>
-                    <option value="48px">Large (48px)</option>
-                    <option value="56px">Extra Large (56px)</option>
-                    <option value="64px">Huge (64px)</option>
+                    <option value="32px">Small</option>
+                    <option value="40px">Medium</option>
+                    <option value="48px">Large (Default)</option>
+                    <option value="56px">Extra Large</option>
+                    <option value="64px">Huge</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-gray-400 mb-2 text-sm">Alignment</label>
+                  <label className="block text-gray-400 mb-2 text-sm">Text Alignment</label>
                   <select
                     value={form.heroHeading.alignment}
                     onChange={(e) => handleHeadingChange('alignment', e.target.value)}
-                    className="w-full p-2 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white"
+                    className="w-full p-3.5 bg-[#050508] border border-white/10 rounded-xl text-white appearance-none text-transform capitalize focus:outline-none focus:border-cyan-500"
                   >
-                    <option value="left">Left</option>
-                    <option value="center">Center</option>
-                    <option value="right">Right</option>
+                    <option value="left">Left Align</option>
+                    <option value="center">Center Align</option>
+                    <option value="right">Right Align</option>
                   </select>
                 </div>
               </div>
             </div>
 
             {/* Paragraphs Section */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-white">Paragraphs</h3>
+            <div className="space-y-6 bg-white/5 rounded-2xl p-6 border border-white/10">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm">2</span>
+                  Rich Body Content
+                </h3>
                 <button
                   type="button"
                   onClick={addParagraph}
-                  className="bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded-lg text-sm flex items-center gap-2 transition hover:scale-105"
+                  className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all hover:scale-105 shadow-lg shadow-blue-500/25"
                 >
-                  <span>+</span> Add Paragraph
+                  <span className="text-lg leading-none">+</span> Add Paragraph Block
                 </button>
               </div>
 
               {form.heroParagraphs.map((para, index) => (
-                <div key={index} className="bg-[#0f0f1a] p-4 rounded-lg border border-gray-700 space-y-3">
+                <div key={index} className="bg-[#050508] p-5 rounded-xl border border-white/5 space-y-4 shadow-inner relative group/para transition-all hover:border-white/10">
                   <div className="flex items-center justify-between">
-                    <span className="text-cyan-400 text-sm">Paragraph {index + 1}</span>
+                    <span className="text-gray-400 text-sm font-medium uppercase tracking-wider">Paragraph Block {index + 1}</span>
                     {form.heroParagraphs.length > 1 && (
                       <button
                         type="button"
                         onClick={() => removeParagraph(index)}
-                        className="text-red-400 hover:text-red-300 text-sm transition hover:scale-110"
+                        className="text-red-400 hover:text-red-300 hover:bg-red-500/10 px-3 py-1.5 rounded text-sm transition-all"
                       >
-                        Remove
+                        Delete Block
                       </button>
                     )}
                   </div>
 
                   {/* Formatting Toolbar */}
-                  <div className="flex gap-2 p-2 bg-[#1a1a2e] rounded-lg border border-gray-700">
+                  <div className="flex flex-wrap gap-2 p-2 bg-[#0a0a16] rounded-xl border border-white/10 sticky top-0 z-10 w-max">
                     <button
                       type="button"
                       onClick={() => {
@@ -932,56 +952,50 @@ export default function AdminAddService() {
                           applyFormatting(index, 'link');
                         }
                       }}
-                      className={`p-2 hover:bg-gray-700 rounded transition relative group active:scale-95 ${
-                        activeButton === 'link' ? 'bg-cyan-600 scale-95' : ''
-                      }`}
+                      className={`p-2.5 hover:bg-white/10 rounded-lg transition-all relative group active:scale-95 ${activeButton === 'link' ? 'bg-cyan-500/20 text-cyan-400' : 'text-gray-300'
+                        }`}
                       title="Insert Link"
                     >
-                      <LinkIcon className="w-4 h-4" />
-                      <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none border border-gray-700">
-                        Add Link (Ctrl+K)
+                      <LinkIcon className="w-5 h-5" />
+                      <span className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1.5 px-3 rounded-lg opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none border border-gray-700 shadow-xl">
+                        Add Link (Select text first)
                       </span>
                     </button>
-                    
+
+                    <div className="w-px h-8 bg-white/10 my-auto mx-1"></div>
+
                     <button
                       type="button"
                       onClick={() => applyFormatting(index, 'italic')}
-                      className={`p-2 hover:bg-gray-700 rounded transition relative group active:scale-95 ${
-                        activeButton === 'italic' ? 'bg-cyan-600 scale-95' : ''
-                      }`}
+                      className={`p-2.5 hover:bg-white/10 rounded-lg transition-all relative group active:scale-95 ${activeButton === 'italic' ? 'bg-cyan-500/20 text-cyan-400' : 'text-gray-300'
+                        }`}
                       title="Italic"
                     >
-                      <ItalicIcon className="w-4 h-4" />
-                      <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none border border-gray-700">
-                        Italic (Ctrl+I)
-                      </span>
+                      <ItalicIcon className="w-5 h-5" />
                     </button>
-                    
+
                     <button
                       type="button"
                       onClick={() => applyFormatting(index, 'underline')}
-                      className={`p-2 hover:bg-gray-700 rounded transition relative group active:scale-95 ${
-                        activeButton === 'underline' ? 'bg-cyan-600 scale-95' : ''
-                      }`}
+                      className={`p-2.5 hover:bg-white/10 rounded-lg transition-all relative group active:scale-95 ${activeButton === 'underline' ? 'bg-cyan-500/20 text-cyan-400' : 'text-gray-300'
+                        }`}
                       title="Underline"
                     >
-                      <UnderlineIcon className="w-4 h-4" />
-                      <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none border border-gray-700">
-                        Underline (Ctrl+U)
-                      </span>
+                      <UnderlineIcon className="w-5 h-5" />
                     </button>
-                    
+
+                    <div className="w-px h-8 bg-white/10 my-auto mx-1"></div>
+
                     <button
                       type="button"
                       onClick={() => applyFormatting(index, 'color')}
-                      className={`p-2 hover:bg-gray-700 rounded transition relative group active:scale-95 ${
-                        activeButton === 'color' ? 'bg-cyan-600 scale-95' : ''
-                      }`}
+                      className={`p-2.5 hover:bg-white/10 rounded-lg transition-all relative group active:scale-95 ${activeButton === 'color' ? 'bg-cyan-500/20 text-cyan-400' : 'text-gray-300'
+                        }`}
                       title="Text Color"
                     >
-                      <PaintBrushIcon className="w-4 h-4" />
-                      <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none border border-gray-700">
-                        Text Color
+                      <PaintBrushIcon className="w-5 h-5" />
+                      <span className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1.5 px-3 rounded-lg opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none border border-gray-700 shadow-xl">
+                        Inline Text Color
                       </span>
                     </button>
                   </div>
@@ -1007,7 +1021,7 @@ export default function AdminAddService() {
                         fontStyle: para.fontStyle,
                         textDecoration: para.textDecoration
                       }}
-                      dangerouslySetInnerHTML={{ 
+                      dangerouslySetInnerHTML={{
                         __html: para.text
                           .replace(/<em>(.*?)<\/em>/g, '<em>$1</em>')
                           .replace(/<u>(.*?)<\/u>/g, '<u>$1</u>')
@@ -1071,31 +1085,36 @@ export default function AdminAddService() {
             </div>
 
             {/* Hero Image */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-white">Hero Image</h3>
-              
+            <div className="space-y-6 bg-white/5 rounded-2xl p-6 border border-white/10">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <span className="w-8 h-8 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center text-sm">3</span>
+                Cover Media
+              </h3>
+
               {/* Image Upload Section */}
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {/* Current Image Preview */}
                 {form.heroImage && (
-                  <div className="relative group">
+                  <div className="relative group rounded-xl overflow-hidden border border-white/10 shadow-lg">
                     <img
                       src={form.heroImage}
                       alt={form.heroImageAlt || "Hero image"}
-                      className="w-full h-48 object-cover rounded-lg border border-gray-700"
+                      className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105"
                       onError={(e) => {
                         e.target.src = 'https://via.placeholder.com/800x400?text=Invalid+Image+URL';
                         showNotification('Failed to load image', 'error');
                       }}
                     />
-                    <button
-                      type="button"
-                      onClick={() => setForm({...form, heroImage: ""})}
-                      className="absolute top-2 right-2 bg-red-500/80 hover:bg-red-600 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition"
-                      title="Remove image"
-                    >
-                      <XMarkIcon className="w-4 h-4" />
-                    </button>
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <button
+                        type="button"
+                        onClick={() => setForm({ ...form, heroImage: "" })}
+                        className="bg-red-500 hover:bg-red-600 text-white p-3 rounded-full flex items-center justify-center transform scale-90 group-hover:scale-100 transition-all shadow-xl"
+                        title="Remove image"
+                      >
+                        <XMarkIcon className="w-6 h-6" />
+                      </button>
+                    </div>
                   </div>
                 )}
 
@@ -1111,201 +1130,182 @@ export default function AdminAddService() {
                   />
                   <label
                     htmlFor="imageUpload"
-                    className={`flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-4 py-3 rounded-lg text-center cursor-pointer flex items-center justify-center gap-2 transition hover:scale-105 ${
-                      uploading ? 'opacity-50 cursor-not-allowed' : ''
-                    }`}
+                    className={`flex-1 bg-gradient-to-r ${form.heroImage ? 'from-gray-700 to-gray-800 border-gray-600' : 'from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500'} px-6 py-4 rounded-xl text-center cursor-pointer flex items-center justify-center gap-3 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(236,72,153,0.3)] font-semibold tracking-wide ${uploading ? 'opacity-50 cursor-not-allowed' : 'hover:-translate-y-1'
+                      }`}
                   >
                     {uploading ? (
                       <>
                         <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        Uploading...
+                        Uploading media...
                       </>
                     ) : (
                       <>
-                        <CloudArrowUpIcon className="w-5 h-5" />
-                        {form.heroImage ? 'Change Image' : 'Upload Image'}
+                        <CloudArrowUpIcon className="w-6 h-6" />
+                        {form.heroImage ? 'Replace Cover Image' : 'Upload Cover Image'}
                       </>
                     )}
                   </label>
                   {uploading && (
-                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg">
-                      <div className="w-6 h-6 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+                    <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center rounded-xl z-10">
+                      <div className="w-8 h-8 border-4 border-pink-500 border-t-transparent rounded-full animate-spin"></div>
                     </div>
                   )}
                 </div>
 
                 {/* Image URL Input (fallback) */}
-                <div className="relative">
+                <div className="relative group">
                   <input
                     type="url"
                     value={form.heroImage}
-                    onChange={(e) => setForm({...form, heroImage: e.target.value})}
-                    placeholder="Or enter image URL directly..."
-                    className="w-full p-3 pl-10 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white"
+                    onChange={(e) => setForm({ ...form, heroImage: e.target.value })}
+                    placeholder="Alternatively, paste an external image URL here..."
+                    className="w-full p-4 pl-12 bg-[#050508] border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition-all font-mono text-sm"
                   />
-                  <PhotoIcon className="w-5 h-5 text-gray-500 absolute left-3 top-3.5" />
+                  <PhotoIcon className="w-5 h-5 text-gray-500 group-focus-within:text-pink-500 transition-colors absolute left-4 top-4" />
                 </div>
 
                 {/* Alt Text */}
-                <div>
+                <div className="group">
                   <input
                     type="text"
                     value={form.heroImageAlt}
-                    onChange={(e) => setForm({...form, heroImageAlt: e.target.value})}
-                    placeholder="Image alt text (for SEO)"
-                    className="w-full p-3 bg-[#0f0f1a] border border-gray-700 rounded-lg text-white"
+                    onChange={(e) => setForm({ ...form, heroImageAlt: e.target.value })}
+                    placeholder="SEO Image Alt attribute (e.g. 'Team collaborating on project')"
+                    className="w-full p-4 bg-[#050508] border border-white/10 rounded-xl text-white focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition-all text-sm"
                   />
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Live Preview */}
-          <div className="bg-[#1a1a2e] rounded-2xl border border-gray-800 p-6">
-            <h3 className="text-cyan-400 font-semibold mb-4 flex items-center gap-2">
-              <PhotoIcon className="w-5 h-5" />
-              Live Preview
-            </h3>
-            
-            <div className="bg-gradient-to-br from-[#0f0f1a] to-[#1a1a2e] p-6 rounded-lg border border-gray-700">
-              {/* Heading Preview */}
-              {form.heroHeading.text && (
-                <div style={{ textAlign: form.heroHeading.alignment }}>
-                  {form.heroHeading.type === 'h1' && (
-                    <h1 style={{ 
-                      color: form.heroHeading.color,
-                      fontSize: form.heroHeading.fontSize,
-                      fontWeight: form.heroHeading.fontWeight,
-                      marginBottom: '1rem'
-                    }}>
-                      {form.heroHeading.text}
-                    </h1>
-                  )}
-                  {form.heroHeading.type === 'h2' && (
-                    <h2 style={{ 
-                      color: form.heroHeading.color,
-                      fontSize: form.heroHeading.fontSize,
-                      fontWeight: form.heroHeading.fontWeight,
-                      marginBottom: '1rem'
-                    }}>
-                      {form.heroHeading.text}
-                    </h2>
-                  )}
-                  {form.heroHeading.type === 'h3' && (
-                    <h3 style={{ 
-                      color: form.heroHeading.color,
-                      fontSize: form.heroHeading.fontSize,
-                      fontWeight: form.heroHeading.fontWeight,
-                      marginBottom: '1rem'
-                    }}>
-                      {form.heroHeading.text}
-                    </h3>
-                  )}
-                </div>
-              )}
+          {/* Live Preview Console */}
+          <div className="bg-[#0a0a16]/90 backdrop-blur-3xl rounded-3xl border border-white/10 p-6 md:p-8 relative overflow-hidden shadow-2xl">
+            {/* Visual Flair */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 blur-[50px] pointer-events-none rounded-full"></div>
 
-              {/* Paragraphs Preview */}
-              {form.heroParagraphs.map((para, index) => (
-                <div
-                  key={index}
-                  style={{
-                    color: para.color,
-                    fontSize: para.fontSize,
-                    fontWeight: para.fontWeight,
-                    fontStyle: para.fontStyle,
-                    textDecoration: para.textDecoration,
-                    marginBottom: '1rem',
-                    lineHeight: '1.6'
-                  }}
-                  dangerouslySetInnerHTML={{ 
-                    __html: para.text
-                      .replace(/<em>(.*?)<\/em>/g, '<em>$1</em>')
-                      .replace(/<u>(.*?)<\/u>/g, '<u>$1</u>')
-                      .replace(/<a href="(.*?)" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline">(.*?)<\/a>/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline">$2</a>')
-                      .replace(/<span style="color:(.*?)">(.*?)<\/span>/g, '<span style="color:$1">$2</span>')
-                  }}
-                />
-              ))}
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <span className="relative flex h-3 w-3 mr-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                </span>
+                Live Rendering Engine
+              </h3>
+            </div>
 
-              {/* Image Preview */}
-              {form.heroImage && (
-                <img
-                  src={form.heroImage}
-                  alt={form.heroImageAlt || 'Hero image'}
-                  className="mt-4 max-w-full h-auto rounded-lg border border-gray-700"
-                  onError={(e) => {
-                    e.target.src = 'https://via.placeholder.com/800x400?text=Invalid+Image+URL';
-                  }}
-                />
-              )}
+            <div className="bg-gradient-to-br from-[#050508] to-[#0a0a16] p-6 rounded-2xl border border-white/5 ring-1 ring-white/5 shadow-inner min-h-[500px] flex flex-col justify-center">
+              <div className="max-w-3xl mx-auto w-full">
+                {/* Heading Preview */}
+                {form.heroHeading.text && (
+                  <div style={{ textAlign: form.heroHeading.alignment }} className="mb-4">
+                    {form.heroHeading.type === 'h1' && (
+                      <h1 style={{ color: form.heroHeading.color, fontSize: form.heroHeading.fontSize, fontWeight: form.heroHeading.fontWeight, lineHeight: '1.2' }}>{form.heroHeading.text}</h1>
+                    )}
+                    {form.heroHeading.type === 'h2' && (
+                      <h2 style={{ color: form.heroHeading.color, fontSize: form.heroHeading.fontSize, fontWeight: form.heroHeading.fontWeight, lineHeight: '1.2' }}>{form.heroHeading.text}</h2>
+                    )}
+                    {form.heroHeading.type === 'h3' && (
+                      <h3 style={{ color: form.heroHeading.color, fontSize: form.heroHeading.fontSize, fontWeight: form.heroHeading.fontWeight, lineHeight: '1.2' }}>{form.heroHeading.text}</h3>
+                    )}
+                    {form.heroHeading.type === 'h4' && (
+                      <h4 style={{ color: form.heroHeading.color, fontSize: form.heroHeading.fontSize, fontWeight: form.heroHeading.fontWeight, lineHeight: '1.2' }}>{form.heroHeading.text}</h4>
+                    )}
+                  </div>
+                )}
+
+                {/* Paragraphs Preview */}
+                {form.heroParagraphs.map((para, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      color: para.color,
+                      fontSize: para.fontSize,
+                      fontWeight: para.fontWeight,
+                      fontStyle: para.fontStyle,
+                      textDecoration: para.textDecoration,
+                      marginBottom: '1rem',
+                      lineHeight: '1.7',
+                      textAlign: form.heroHeading.alignment || 'left'
+                    }}
+                    dangerouslySetInnerHTML={{
+                      __html: para.text
+                        .replace(/<em>(.*?)<\/em>/g, '<em>$1</em>')
+                        .replace(/<u>(.*?)<\/u>/g, '<u>$1</u>')
+                        .replace(/<a href="(.*?)" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline">(.*?)<\/a>/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline font-medium">$2</a>')
+                        .replace(/<span style="color:(.*?)">(.*?)<\/span>/g, '<span style="color:$1">$2</span>')
+                    }}
+                  />
+                ))}
+
+                {/* Image Preview */}
+                {form.heroImage && (
+                  <div className="mt-8 rounded-2xl overflow-hidden border border-white/10 shadow-[0_10px_30px_rgb(0,0,0,0.5)] transform hover:scale-[1.01] transition-transform duration-500">
+                    <img
+                      src={form.heroImage}
+                      alt={form.heroImageAlt || 'Hero preview'}
+                      className="w-full h-auto object-cover max-h-[500px]"
+                      onError={(e) => { e.target.src = 'https://via.placeholder.com/800x400?text=Preview+Not+Available'; }}
+                    />
+                  </div>
+                )}
+
+                {/* Empty State */}
+                {!form.heroHeading.text && !form.heroParagraphs[0].text && !form.heroImage && (
+                  <div className="text-center py-20 text-gray-600 border-2 border-dashed border-white/5 rounded-2xl">
+                    <PhotoIcon className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                    <p className="font-medium text-lg">Your masterpiece awaits...</p>
+                    <p className="text-sm">Start typing above to see the magic happen in real-time.</p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 pt-6">
             <button
               type="submit"
               disabled={loading || uploading || !form.pageTitle.trim() || (slugType === 'simple' && !autoGenerateSlug && !form.slug.trim()) || (slugType === 'nested' && (!form.city || !form.serviceName))}
-              className={`flex-1 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 p-4 rounded-xl font-bold text-lg transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-cyan-500/20 hover:scale-[1.02] ${
-                activeButton === 'submit' ? 'animate-pulse' : ''
-              }`}
+              className={`flex-1 relative group overflow-hidden bg-gradient-to-r from-cyan-500 to-blue-600 p-5 rounded-2xl font-black uppercase tracking-wider text-base transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_10px_40px_rgba(6,182,212,0.3)] hover:shadow-[0_15px_50px_rgba(6,182,212,0.5)] hover:-translate-y-1 ${activeButton === 'submit' ? 'animate-pulse scale-95' : ''
+                }`}
             >
-              {loading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  Saving...
-                </span>
-              ) : (
-                "Save Service"
-              )}
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay"></div>
+              <div className="absolute inset-0 w-full h-full bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0"></div>
+              <span className="relative z-10 flex items-center justify-center gap-3">
+                {loading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Executing Launch...
+                  </>
+                ) : (
+                  <>Publish Service Config <SparklesIcon className="w-5 h-5" /></>
+                )}
+              </span>
             </button>
-            
+
             <button
               type="button"
               onClick={() => {
-                if (window.confirm("Clear all fields?")) {
+                if (window.confirm("⚠️ Are you sure you want to annihilate all input data? This action cannot be undone.")) {
+                  // ... Reset logic remains identical
                   setForm({
-                    pageTitle: "",
-                    miniDescription: "",
-                    buttonText: "",
-                    slug: "",
-                    city: "",
-                    serviceName: "",
-                    heroHeading: {
-                      text: "",
-                      type: "h1",
-                      color: "#ffffff",
-                      fontSize: "48px",
-                      fontWeight: "bold",
-                      alignment: "left"
-                    },
-                    heroParagraphs: [
-                      {
-                        text: "",
-                        color: "#d1d5db",
-                        fontSize: "18px",
-                        fontWeight: "normal",
-                        fontStyle: "normal",
-                        textDecoration: "none"
-                      }
-                    ],
-                    heroImage: "",
-                    heroImageAlt: ""
+                    pageTitle: "", miniDescription: "", buttonText: "", slug: "", city: "", serviceName: "",
+                    heroHeading: { text: "", type: "h1", color: "#ffffff", fontSize: "48px", fontWeight: "bold", alignment: "left" },
+                    heroParagraphs: [{ text: "", color: "#d1d5db", fontSize: "18px", fontWeight: "normal", fontStyle: "normal", textDecoration: "none" }],
+                    heroImage: "", heroImageAlt: ""
                   });
-                  setAutoGenerateSlug(true);
-                  setSlugType('simple');
-                  showNotification('Form cleared', 'info');
+                  setAutoGenerateSlug(true); setSlugType('simple');
+                  showNotification('All fields eradicated.', 'info');
                 }
               }}
-              className="px-6 py-4 border border-gray-700 hover:border-gray-600 rounded-xl font-medium transition hover:bg-gray-800 hover:scale-[1.02]"
+              className="sm:w-1/3 px-6 py-5 bg-white/5 border border-red-500/30 hover:bg-red-500/10 hover:border-red-500/80 rounded-2xl font-bold uppercase tracking-widest text-[#ef4444] transition-all hover:shadow-[0_0_20px_rgba(239,68,68,0.2)]"
             >
-              Clear
+              Deleted
             </button>
           </div>
 
-          {/* Note */}
-          <p className="text-center text-gray-500 text-sm mt-4">
-            <span className="text-red-500">*</span> Required fields
+          <p className="text-center font-mono text-gray-600 text-xs tracking-widest uppercase mt-4 opacity-60">
+            [ <span className="text-red-500 font-bold">*</span> ] Mandatory parameters required for initialization
           </p>
         </form>
       </section>

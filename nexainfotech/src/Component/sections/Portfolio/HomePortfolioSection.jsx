@@ -59,7 +59,7 @@ export default function HomePortfolioSection() {
           <div className="h-12 w-64 bg-gray-800 rounded-lg animate-pulse mx-auto mb-4"></div>
           <div className="w-20 h-1 bg-gray-800 mx-auto my-4 rounded-full"></div>
           <div className="h-6 w-96 bg-gray-800 rounded-lg animate-pulse mx-auto mb-12"></div>
-          
+
           {/* Category buttons skeleton */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             {[1, 2, 3, 4].map(i => (
@@ -100,10 +100,9 @@ export default function HomePortfolioSection() {
                 key={cat}
                 onClick={() => handleCategoryChange(cat)}
                 className={`px-6 py-2 rounded-full border transition-all duration-300 text-sm font-medium
-                  ${
-                    active === cat
-                      ? "bg-gradient-to-r from-[#004C7D] to-[#158EB0] text-white border-transparent shadow-lg shadow-cyan-500/30"
-                      : "border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black"
+                  ${active === cat
+                    ? "bg-gradient-to-r from-[#004C7D] to-[#158EB0] text-white border-transparent shadow-lg shadow-cyan-500/30"
+                    : "border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black"
                   }`}
               >
                 {cat}
@@ -135,12 +134,12 @@ export default function HomePortfolioSection() {
                     e.target.src = "https://via.placeholder.com/400x300?text=No+Image";
                   }}
                 />
-                
+
                 {/* Optional overlay with title on hover */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                   <h3 className="text-white font-semibold text-lg">{project.title}</h3>
                 </div>
-                
+
                 {/* Category badge */}
                 <div className="absolute top-3 left-3 bg-cyan-500/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-cyan-400 border border-cyan-500/30">
                   {project.category}
@@ -191,7 +190,7 @@ export default function HomePortfolioSection() {
             <h3 className="text-center mt-4 text-cyan-400 text-xl font-semibold">
               {selectedImage.title}
             </h3>
-            
+
             {selectedImage.description && (
               <p className="text-center mt-2 text-gray-400">
                 {selectedImage.description}

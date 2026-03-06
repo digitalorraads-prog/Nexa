@@ -76,9 +76,8 @@ export default function Pricing() {
 
       {/* Heading */}
       <div
-        className={`text-center mb-20 px-6 transition-all duration-1000 ${
-          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`text-center mb-20 px-6 transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <h2 className="text-4xl md:text-6xl font-extrabold mb-6">
           Our{" "}
@@ -99,10 +98,9 @@ export default function Pricing() {
             className={`relative group p-8 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10
               transition-all duration-700 transform hover:-translate-y-6
               hover:shadow-[0_0_40px_rgba(34,211,238,0.4)]
-              ${
-                visible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-20"
+              ${visible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-20"
               }`}
             style={{ transitionDelay: `${index * 150}ms` }}
           >
