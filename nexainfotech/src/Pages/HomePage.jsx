@@ -15,7 +15,7 @@ function HomePage() {
     <div className="pt-10">
       <HeroSection className="mt-[40px]" />
       <ServicesRibbon />
-      <ServicesLocation />
+      {/* <ServicesLocation /> */}
       <WhyChooseUs />
       <HomePortfolioSection />
       <Pricing />
