@@ -35,7 +35,7 @@ export default function ManagePages() {
   const [message, setMessage] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [editingPage, setEditingPage] = useState(null);
-  
+
   const [formData, setFormData] = useState({
     pageId: "",
     pageName: "",
@@ -69,7 +69,7 @@ export default function ManagePages() {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    
+
     if (name === 'pageName') {
       const pageId = value.toLowerCase().replace(/\s+/g, '-');
       setFormData({
@@ -87,7 +87,7 @@ export default function ManagePages() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.pageName) {
       setMessage("❌ Page name is required");
       return;
@@ -95,7 +95,7 @@ export default function ManagePages() {
 
     try {
       setLoading(true);
-      
+
       if (editingPage) {
         // ✅ Fixed: Using relative path with axios instance
         const response = await axios.put(
@@ -115,7 +115,7 @@ export default function ManagePages() {
           setMessage("✅ Page created successfully!");
         }
       }
-      
+
       fetchPages();
       setShowForm(false);
       setEditingPage(null);
@@ -187,7 +187,7 @@ export default function ManagePages() {
 
   if (loading && pages.length === 0) {
     return (
-      <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center">
+      <div className="flex items-center justify-center py-20">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-white">Loading Pages...</p>
@@ -197,7 +197,7 @@ export default function ManagePages() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] text-white pt-20 pb-10 px-5">
+    <div className="bg-transparent text-white">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8 flex justify-between items-center">
           <div>
@@ -218,11 +218,10 @@ export default function ManagePages() {
         </div>
 
         {message && (
-          <div className={`mb-6 p-4 rounded-lg ${
-            message.includes('✅') ? 'bg-green-500/20 border border-green-500 text-green-400' :
-            message.includes('❌') ? 'bg-red-500/20 border border-red-500 text-red-400' :
-            'bg-yellow-500/20 border border-yellow-500 text-yellow-400'
-          }`}>
+          <div className={`mb-6 p-4 rounded-lg ${message.includes('✅') ? 'bg-green-500/20 border border-green-500 text-green-400' :
+              message.includes('❌') ? 'bg-red-500/20 border border-red-500 text-red-400' :
+                'bg-yellow-500/20 border border-yellow-500 text-yellow-400'
+            }`}>
             {message}
           </div>
         )}
@@ -252,7 +251,7 @@ export default function ManagePages() {
             <h2 className="text-2xl font-semibold mb-6">
               {editingPage ? 'Edit Page' : 'Create New Page'}
             </h2>
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block text-sm text-gray-400 mb-2">
@@ -333,7 +332,7 @@ export default function ManagePages() {
                 >
                   {loading ? "Saving..." : (editingPage ? "Update Page" : "Create Page")}
                 </button>
-                
+
                 <button
                   type="button"
                   onClick={() => {
@@ -363,14 +362,12 @@ export default function ManagePages() {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                      page.isActive ? 'bg-cyan-600/20' : 'bg-gray-700'
-                    }`}>
-                      <DocumentTextIcon className={`w-5 h-5 ${
-                        page.isActive ? 'text-cyan-400' : 'text-gray-500'
-                      }`} />
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${page.isActive ? 'bg-cyan-600/20' : 'bg-gray-700'
+                      }`}>
+                      <DocumentTextIcon className={`w-5 h-5 ${page.isActive ? 'text-cyan-400' : 'text-gray-500'
+                        }`} />
                     </div>
-                    
+
                     <div>
                       <div className="flex items-center gap-2">
                         <h3 className="font-semibold text-lg">{page.pageName}</h3>
@@ -401,7 +398,7 @@ export default function ManagePages() {
                     >
                       <ArrowPathIcon className="w-5 h-5" />
                     </button>
-                    
+
                     <button
                       onClick={() => handleEdit(page)}
                       className="p-2 hover:bg-yellow-600 rounded-lg transition"
@@ -409,7 +406,7 @@ export default function ManagePages() {
                     >
                       <PencilIcon className="w-5 h-5" />
                     </button>
-                    
+
                     <button
                       onClick={() => handleDelete(page._id)}
                       className="p-2 hover:bg-red-600 rounded-lg transition"

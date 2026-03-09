@@ -75,7 +75,7 @@ export default function PortfolioAdd() {
   // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!form.image) {
       setMessage("❌ Please upload an image first");
       return;
@@ -101,7 +101,7 @@ export default function PortfolioAdd() {
       await axios.post("/api/portfolio", payload);
 
       setMessage("✅ Portfolio Added Successfully!");
-      
+
       // Form reset
       setForm({
         title: "",
@@ -119,8 +119,8 @@ export default function PortfolioAdd() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] text-white flex justify-center items-center px-6 pt-25">
-      <div className="w-full max-w-lg bg-white/5 border border-white/10 p-8 rounded-2xl shadow-lg">
+    <div className="text-white flex justify-center items-center py-6">
+      <div className="w-full max-w-lg bg-[#1a1a2e] border border-white/10 p-8 rounded-2xl shadow-lg">
 
         <h2 className="text-3xl font-bold text-center mb-8 text-cyan-400">
           Add Portfolio
@@ -136,9 +136,9 @@ export default function PortfolioAdd() {
 
             {form.image ? (
               <div className="relative inline-block">
-                <img 
-                  src={form.image} 
-                  alt="Preview" 
+                <img
+                  src={form.image}
+                  alt="Preview"
                   className="w-32 h-32 object-cover rounded-lg border-2 border-cyan-400"
                   onError={(e) => {
                     e.target.src = "https://via.placeholder.com/150?text=Error";
@@ -239,11 +239,10 @@ export default function PortfolioAdd() {
           </button>
 
           {message && (
-            <p className={`text-center mt-4 text-sm ${
-              message.includes('✅') ? 'text-green-400' : 
-              message.includes('❌') ? 'text-red-400' : 
-              'text-yellow-400'
-            }`}>
+            <p className={`text-center mt-4 text-sm ${message.includes('✅') ? 'text-green-400' :
+                message.includes('❌') ? 'text-red-400' :
+                  'text-yellow-400'
+              }`}>
               {message}
             </p>
           )}

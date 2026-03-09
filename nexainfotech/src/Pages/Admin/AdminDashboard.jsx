@@ -74,7 +74,7 @@ function AdminDashboardPage() {
   // Agar auth checking ho rahi hai to loading dikhao
   if (authChecking) {
     return (
-      <div className="min-h-screen bg-[#0c0c16] flex items-center justify-center">
+      <div className="flex items-center justify-center py-20">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-400">Checking authentication...</p>
@@ -84,44 +84,22 @@ function AdminDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0c0c16] text-white px-8 py-24">
-      {/* Header with Welcome and Logout Button */}
-      <div className="flex justify-between items-center mb-12">
+    <div className="bg-[#0c0c16] text-white p-6 rounded-xl border border-gray-800 shadow-xl">
+      {/* Header with Welcome */}
+      <div className="mb-10">
         <div>
           <h1 className="text-3xl font-bold">
             Admin <span className="text-cyan-400">Dashboard</span>
           </h1>
           <p className="text-gray-400 mt-2">
             Welcome back, <span className="text-cyan-400">{adminEmail}</span>!
-            Manage your website content from here.
+            Select an option below or from the sidebar.
           </p>
         </div>
-
-        {/* Logout Button */}
-        <button
-          onClick={handleLogout}
-          disabled={loading}
-          className="flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg font-medium transition disabled:opacity-50"
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-            />
-          </svg>
-          {loading ? "Logging out..." : "Logout"}
-        </button>
       </div>
 
       {/* Dashboard Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <DashboardCard
           title="Manage Blogs"
           link="/admin/manage-blogs"
@@ -129,48 +107,61 @@ function AdminDashboardPage() {
           icon="📚"
         />
         <DashboardCard
+          title="Add Blog"
+          link="/admin/add-blog"
+          description="Create a new blog post"
+          icon="✍️"
+        />
+        <DashboardCard
           title="Manage Contacts"
           link="/admin/contact"
-          description="View and respond to contact inquiries"
+          description="View and respond to inquiries"
           icon="📧"
         />
 
         <DashboardCard
           title="Manage Services"
           link="/admin/services"
-          description="Update or remove existing services"
+          description="Update or remove services"
           icon="🛠️"
+        />
+        <DashboardCard
+          title="Add Service"
+          link="/admin/add-service"
+          description="Create a new service offering"
+          icon="➕"
         />
 
         <DashboardCard
           title="Edit Navbar"
           link="/admin/navbar-editor"
-          description="Customize navigation menu items"
+          description="Customize navigation items"
           icon="🔗"
         />
         <DashboardCard
           title="Manage Portfolio"
           link="/admin/manage-portfolio"
-          description="Organize your portfolio items"
+          description="Organize your portfolio"
           icon="🖼️"
         />
         <DashboardCard
-          title="Hero Section Manager"
+          title="Add Portfolio"
+          link="/admin/add-portfolio"
+          description="Add a new portfolio item"
+          icon="🎨"
+        />
+        <DashboardCard
+          title="Hero Manager"
           link="/admin/hero"
-          description="Update the hero section content and images"
+          description="Update hero sections"
           icon="🎬"
         />
         <DashboardCard
           title="Pages Editor"
           link="/admin/pages"
-          description="Edit static pages like About Us, Contact, etc."
+          description="Edit static pages content"
           icon="📄"
         />
-      </div>
-
-      {/* Footer */}
-      <div className="mt-12 pt-6 border-t border-gray-800 text-center text-gray-500 text-sm">
-        <p>© 2024 Nexa Infotech. All rights reserved.</p>
       </div>
     </div>
   );

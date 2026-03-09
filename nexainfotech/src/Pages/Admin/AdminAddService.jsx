@@ -566,7 +566,7 @@ export default function AdminAddService() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center">
+      <div className="flex items-center justify-center py-20">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-white text-lg">Saving Service...</p>
@@ -580,7 +580,7 @@ export default function AdminAddService() {
       <Notification />
       <LinkModal />
 
-      <section className="bg-gradient-to-br from-[#050508] via-[#0a0a16] to-[#050508] min-h-screen text-white pt-20 pb-10 px-5 relative overflow-hidden">
+      <section className="bg-transparent text-white relative">
         {/* Animated Background */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px] animate-pulse pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] animate-pulse delay-1000 pointer-events-none"></div>

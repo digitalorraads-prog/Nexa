@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../Protected/axios"; // ✅ Correct - using custom axios instance
-import { 
+import {
   PlusIcon,
   PencilIcon,
   TrashIcon,
@@ -185,7 +185,7 @@ export default function PortfolioManage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center">
+      <div className="flex items-center justify-center py-20">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-white text-lg">Loading Portfolio...</p>
@@ -195,8 +195,8 @@ export default function PortfolioManage() {
   }
 
   return (
-    <section className="bg-[#0f0f1a] min-h-screen text-white pt-20 pb-10 px-5">
-      
+    <section className="bg-transparent text-white">
+
       {/* Header */}
       <div className="mb-10">
         <h1 className="text-4xl font-bold text-cyan-400 mb-4 flex items-center gap-3">
@@ -208,11 +208,10 @@ export default function PortfolioManage() {
 
       {/* Message Alert */}
       {message && (
-        <div className={`mb-6 p-4 rounded-lg ${
-          message.includes('✅') ? 'bg-green-500/20 border border-green-500 text-green-400' :
-          message.includes('❌') ? 'bg-red-500/20 border border-red-500 text-red-400' :
-          'bg-yellow-500/20 border border-yellow-500 text-yellow-400'
-        }`}>
+        <div className={`mb-6 p-4 rounded-lg ${message.includes('✅') ? 'bg-green-500/20 border border-green-500 text-green-400' :
+            message.includes('❌') ? 'bg-red-500/20 border border-red-500 text-red-400' :
+              'bg-yellow-500/20 border border-yellow-500 text-yellow-400'
+          }`}>
           {message}
         </div>
       )}
@@ -228,7 +227,7 @@ export default function PortfolioManage() {
             <FolderIcon className="w-10 h-10 text-cyan-400" />
           </div>
         </div>
-        
+
         <div className="bg-green-900/30 border border-green-500 rounded-xl p-6">
           <div className="flex items-center justify-between">
             <div>
@@ -238,7 +237,7 @@ export default function PortfolioManage() {
             <LinkIcon className="w-10 h-10 text-green-400" />
           </div>
         </div>
-        
+
         <div className="bg-yellow-900/20 border border-yellow-500 rounded-xl p-6">
           <div className="flex items-center justify-between">
             <div>
@@ -362,9 +361,9 @@ export default function PortfolioManage() {
                     {project.link && (
                       <p className="text-sm text-gray-300 mt-2">
                         <span className="text-gray-400">Link:</span>{" "}
-                        <a 
-                          href={project.link} 
-                          target="_blank" 
+                        <a
+                          href={project.link}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="text-cyan-400 hover:underline break-all"
                         >
@@ -391,12 +390,12 @@ export default function PortfolioManage() {
                       <label className="block text-sm text-gray-400">
                         Update Image
                       </label>
-                      
+
                       {form.image ? (
                         <div className="relative inline-block">
-                          <img 
-                            src={form.image} 
-                            alt="Preview" 
+                          <img
+                            src={form.image}
+                            alt="Preview"
                             className="w-20 h-20 object-cover rounded-lg border border-cyan-400"
                             onError={(e) => {
                               e.target.src = "https://via.placeholder.com/150?text=Error";

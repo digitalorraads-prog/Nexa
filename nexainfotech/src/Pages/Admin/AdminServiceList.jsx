@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "../../Protected/axios"; // ✅ Correct - using custom axios instance
 import { useNavigate } from "react-router-dom";
-import { 
+import {
   PlusIcon,
   PencilIcon,
   TrashIcon,
@@ -27,7 +27,7 @@ export default function AdminServiceList() {
   const [loading, setLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState(null);
   const [copiedSlug, setCopiedSlug] = useState(null);
-  
+
   // Filter states
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
@@ -47,14 +47,14 @@ export default function AdminServiceList() {
     try {
       // ✅ Fixed: Using relative path with axios instance
       const res = await axios.get("/api/services");
-      
+
       let fetchedServices = [];
       if (res.data.success && Array.isArray(res.data.data)) {
         fetchedServices = res.data.data;
       } else if (Array.isArray(res.data)) {
         fetchedServices = res.data;
       }
-      
+
       setServices(fetchedServices);
       applyFilters(fetchedServices, filters);
     } catch (error) {
@@ -76,7 +76,7 @@ export default function AdminServiceList() {
     // Search filter
     if (currentFilters.search) {
       const searchTerm = currentFilters.search.toLowerCase();
-      filtered = filtered.filter(s => 
+      filtered = filtered.filter(s =>
         s.pageTitle?.toLowerCase().includes(searchTerm) ||
         s.miniDescription?.toLowerCase().includes(searchTerm) ||
         s.slug?.toLowerCase().includes(searchTerm) ||
@@ -108,13 +108,13 @@ export default function AdminServiceList() {
 
     // Rich text filter
     if (currentFilters.hasRichText === 'yes') {
-      filtered = filtered.filter(s => 
-        (s.heroHeading?.text && s.heroHeading.text.trim() !== '') || 
+      filtered = filtered.filter(s =>
+        (s.heroHeading?.text && s.heroHeading.text.trim() !== '') ||
         (s.heroParagraphs?.length > 0 && s.heroParagraphs[0]?.text)
       );
     } else if (currentFilters.hasRichText === 'no') {
-      filtered = filtered.filter(s => 
-        (!s.heroHeading?.text || s.heroHeading.text.trim() === '') && 
+      filtered = filtered.filter(s =>
+        (!s.heroHeading?.text || s.heroHeading.text.trim() === '') &&
         (!s.heroParagraphs || s.heroParagraphs.length === 0 || !s.heroParagraphs[0]?.text)
       );
     }
@@ -183,7 +183,7 @@ export default function AdminServiceList() {
     try {
       // ✅ Fixed: Using relative path with axios instance
       const res = await axios.delete(`/api/services/delete/${id}`);
-      
+
       if (res.data.success) {
         const updatedServices = services.filter(s => s._id !== id);
         setServices(updatedServices);
@@ -238,7 +238,7 @@ export default function AdminServiceList() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center">
+      <div className="flex items-center justify-center py-20">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-white text-lg">Loading Services...</p>
@@ -248,7 +248,7 @@ export default function AdminServiceList() {
   }
 
   return (
-    <section className="bg-[#0f0f1a] min-h-screen text-white pt-20 pb-10 px-5">
+    <section className="bg-transparent text-white">
       {/* Header */}
       <div className="max-w-7xl mx-auto">
         <div className="mb-10">
@@ -272,7 +272,7 @@ export default function AdminServiceList() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 border border-purple-500/30 rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -287,7 +287,7 @@ export default function AdminServiceList() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-gradient-to-br from-green-900/20 to-emerald-900/20 border border-green-500/30 rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -302,7 +302,7 @@ export default function AdminServiceList() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-gradient-to-br from-yellow-900/20 to-orange-900/20 border border-yellow-500/30 rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -362,11 +362,10 @@ export default function AdminServiceList() {
 
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className={`px-4 py-3 rounded-lg transition flex items-center gap-2 text-sm border ${
-                  showFilters 
-                    ? 'bg-cyan-600 border-cyan-500 text-white' 
+                className={`px-4 py-3 rounded-lg transition flex items-center gap-2 text-sm border ${showFilters
+                    ? 'bg-cyan-600 border-cyan-500 text-white'
                     : 'bg-gray-800 border-gray-700 hover:bg-gray-700'
-                }`}
+                  }`}
               >
                 <FunnelIcon className="w-4 h-4" />
                 <span className="hidden sm:inline">Filters</span>
@@ -490,48 +489,48 @@ export default function AdminServiceList() {
               </div>
 
               {/* Active Filters Display */}
-              {(filters.search || filters.hasDescription !== 'all' || filters.hasButton !== 'all' || 
+              {(filters.search || filters.hasDescription !== 'all' || filters.hasButton !== 'all' ||
                 filters.hasImage !== 'all' || filters.hasRichText !== 'all' || filters.slugType !== 'all') && (
-                <div className="mt-4 pt-4 border-t border-gray-700">
-                  <p className="text-sm text-gray-400 mb-2">Active Filters:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {filters.search && (
-                      <span className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-xs flex items-center gap-1">
-                        Search: "{filters.search}"
-                        <button onClick={() => handleFilterChange('search', '')}>
-                          <XCircleIcon className="w-3 h-3" />
-                        </button>
-                      </span>
-                    )}
-                    {filters.hasDescription !== 'all' && (
-                      <span className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs">
-                        {filters.hasDescription === 'yes' ? 'Has Description' : 'No Description'}
-                      </span>
-                    )}
-                    {filters.hasButton !== 'all' && (
-                      <span className="bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full text-xs">
-                        {filters.hasButton === 'yes' ? 'Has Button' : 'No Button'}
-                      </span>
-                    )}
-                    {filters.hasImage !== 'all' && (
-                      <span className="bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-xs">
-                        {filters.hasImage === 'yes' ? 'Has Image' : 'No Image'}
-                      </span>
-                    )}
-                    {filters.hasRichText !== 'all' && (
-                      <span className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs">
-                        {filters.hasRichText === 'yes' ? 'Has Rich Text' : 'No Rich Text'}
-                      </span>
-                    )}
-                    {filters.slugType !== 'all' && (
-                      <span className="bg-pink-500/20 text-pink-400 px-3 py-1 rounded-full text-xs">
-                        {filters.slugType === 'custom' ? 'Custom URLs' : 
-                         filters.slugType === 'nested' ? 'Location Based' : 'Auto-generated URLs'}
-                      </span>
-                    )}
+                  <div className="mt-4 pt-4 border-t border-gray-700">
+                    <p className="text-sm text-gray-400 mb-2">Active Filters:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {filters.search && (
+                        <span className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-xs flex items-center gap-1">
+                          Search: "{filters.search}"
+                          <button onClick={() => handleFilterChange('search', '')}>
+                            <XCircleIcon className="w-3 h-3" />
+                          </button>
+                        </span>
+                      )}
+                      {filters.hasDescription !== 'all' && (
+                        <span className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs">
+                          {filters.hasDescription === 'yes' ? 'Has Description' : 'No Description'}
+                        </span>
+                      )}
+                      {filters.hasButton !== 'all' && (
+                        <span className="bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full text-xs">
+                          {filters.hasButton === 'yes' ? 'Has Button' : 'No Button'}
+                        </span>
+                      )}
+                      {filters.hasImage !== 'all' && (
+                        <span className="bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-xs">
+                          {filters.hasImage === 'yes' ? 'Has Image' : 'No Image'}
+                        </span>
+                      )}
+                      {filters.hasRichText !== 'all' && (
+                        <span className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs">
+                          {filters.hasRichText === 'yes' ? 'Has Rich Text' : 'No Rich Text'}
+                        </span>
+                      )}
+                      {filters.slugType !== 'all' && (
+                        <span className="bg-pink-500/20 text-pink-400 px-3 py-1 rounded-full text-xs">
+                          {filters.slugType === 'custom' ? 'Custom URLs' :
+                            filters.slugType === 'nested' ? 'Location Based' : 'Auto-generated URLs'}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
             </div>
           )}
 
@@ -559,7 +558,7 @@ export default function AdminServiceList() {
               {services.length === 0 ? 'No services found.' : 'No matching services.'}
             </p>
             <p className="text-gray-500 mb-6">
-              {services.length === 0 
+              {services.length === 0
                 ? 'Get started by creating your first service'
                 : 'Try adjusting your filters'}
             </p>
@@ -590,7 +589,7 @@ export default function AdminServiceList() {
               const isCustomSlug = service.slug && service.slug !== generatedFromTitle && !service.slug.includes('/');
               const isNestedSlug = service.slug && service.slug.includes('/');
               const hasRichText = service.heroHeading?.text || (service.heroParagraphs?.length > 0 && service.heroParagraphs[0]?.text);
-              
+
               return (
                 <div
                   key={service._id}
@@ -602,7 +601,7 @@ export default function AdminServiceList() {
                       <div className="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                         <DocumentTextIcon className="w-5 h-5 text-cyan-400" />
                       </div>
-                      
+
                       {/* Action Buttons */}
                       <div className="flex gap-1">
                         <button
@@ -612,7 +611,7 @@ export default function AdminServiceList() {
                         >
                           <EyeIcon className="w-4 h-4 text-green-400 group-hover:scale-110 transition" />
                         </button>
-                        
+
                         <button
                           onClick={() => navigate(`/admin/edit/${service._id}`)}
                           className="p-2 hover:bg-yellow-500/20 rounded-lg transition group"
@@ -620,7 +619,7 @@ export default function AdminServiceList() {
                         >
                           <PencilIcon className="w-4 h-4 text-yellow-400 group-hover:scale-110 transition" />
                         </button>
-                        
+
                         <button
                           onClick={() => handleDelete(service._id, service.pageTitle)}
                           disabled={deleteLoading === service._id}
@@ -640,7 +639,7 @@ export default function AdminServiceList() {
                     <h3 className="text-xl font-semibold text-white mb-2 line-clamp-1">
                       {service.pageTitle}
                     </h3>
-                    
+
                     {service.miniDescription ? (
                       <p className="text-gray-400 text-sm mb-4 line-clamp-2">
                         {service.miniDescription}
@@ -679,9 +678,8 @@ export default function AdminServiceList() {
                     {service.slug && (
                       <div className="mb-3">
                         <div className="flex items-center gap-2 mb-1">
-                          <LinkIcon className={`w-3 h-3 ${
-                            isNestedSlug ? 'text-pink-400' : isCustomSlug ? 'text-purple-400' : 'text-gray-500'
-                          }`} />
+                          <LinkIcon className={`w-3 h-3 ${isNestedSlug ? 'text-pink-400' : isCustomSlug ? 'text-purple-400' : 'text-gray-500'
+                            }`} />
                           <span className="text-xs text-gray-500">URL Slug:</span>
                           {isNestedSlug && (
                             <span className="text-xs bg-pink-500/20 text-pink-400 px-2 py-0.5 rounded-full">

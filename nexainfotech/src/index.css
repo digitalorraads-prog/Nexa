@@ -216,6 +216,27 @@ html {
   animation: slideUp 0.8s ease-out forwards;
 }
 
-.animate-zoomIn {
-  animation: zoomIn 0.8s ease-out forwards;
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.4s ease-out forwards;
+}
+
+/* Hide scrollbar for clean dashboard feel */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

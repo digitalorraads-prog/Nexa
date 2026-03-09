@@ -8,13 +8,15 @@ export default function Navbar() {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [activeSubDropdown, setActiveSubDropdown] = useState(null);
+  const [activeSubSubDropdown, setActiveSubSubDropdown] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [navItems, setNavItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Load navbar from DATABASE (backend)
   useEffect(() => {
-   
+
     loadNavbarFromDatabase();
   }, []);
 
@@ -23,8 +25,8 @@ export default function Navbar() {
     try {
       setLoading(true);
       const response = await axios.get("/api/navbar");
-      
-      
+
+
       if (response.data.success) {
         // Database se data mil gaya
         setNavItems(response.data.data);
@@ -48,7 +50,7 @@ export default function Navbar() {
     try {
       const saved = localStorage.getItem("navbarItems");
       console.log("Loaded from storage:", saved);
-      
+
       if (saved) {
         setNavItems(JSON.parse(saved));
       } else {
@@ -56,9 +58,9 @@ export default function Navbar() {
         const defaultItems = [
           { id: "1", name: "Home", path: "/", type: "link" },
           { id: "2", name: "Blog", path: "/blog", type: "link" },
-          { 
-            id: "3", 
-            name: "Services", 
+          {
+            id: "3",
+            name: "Services",
             type: "dropdown",
             dropdown: [
               { id: "3-1", name: "New York", path: "/new-york" },
@@ -140,6 +142,8 @@ export default function Navbar() {
   const closeAll = () => {
     setMobileMenu(false);
     setActiveDropdown(null);
+    setActiveSubDropdown(null);
+    setActiveSubSubDropdown(null);
   };
 
   const linkClass = "hover:text-cyan-400 transition";
@@ -162,9 +166,8 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 w-full z-50 text-white flex justify-between items-center px-6 lg:px-8 py-4 transition-all duration-300 ${
-          scrolled ? "bg-[#0c0c16] shadow-lg" : "bg-black/40 backdrop-blur-xl"
-        } border-b border-white/10`}
+        className={`fixed top-0 w-full z-50 text-white flex justify-between items-center px-6 lg:px-8 py-4 transition-all duration-300 ${scrolled ? "bg-[#0c0c16] shadow-lg" : "bg-black/40 backdrop-blur-xl"
+          } border-b border-white/10`}
       >
         {/* Logo */}
         <Link to="/" onClick={closeAll}>
@@ -186,31 +189,67 @@ export default function Navbar() {
                     onClick={() => setActiveDropdown(activeDropdown === item.id ? null : item.id)}
                   >
                     {item.name}
-                    <svg 
-                      className={`w-4 h-4 transition-transform duration-200 ${
-                        activeDropdown === item.id ? "rotate-180" : ""
-                      }`} 
-                      fill="none" 
-                      stroke="currentColor" 
+                    <svg
+                      className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === item.id ? "rotate-180" : ""
+                        }`}
+                      fill="none"
+                      stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  
+
                   {/* Dropdown Menu */}
-                  <div className={`absolute left-0 mt-2 w-48 bg-[#1a1a2e] rounded-lg shadow-xl border border-white/10 overflow-hidden transition-all duration-200 ${
-                    activeDropdown === item.id ? "opacity-100 visible" : "opacity-0 invisible group-hover:visible group-hover:opacity-100"
-                  }`}>
+                  <div className={`absolute left-0 mt-2 w-48 bg-[#1a1a2e] rounded-lg shadow-xl border border-white/10 overflow-hidden transition-all duration-200 ${activeDropdown === item.id ? "opacity-100 visible" : "opacity-0 invisible group-hover:visible group-hover:opacity-100"
+                    }`}>
                     {item.dropdown?.map((dropItem) => (
-                      <Link
-                        key={dropItem.id}
-                        to={dropItem.path}
-                        onClick={closeAll}
-                        className="block px-4 py-3 hover:bg-cyan-600 hover:text-white transition"
-                      >
-                        {dropItem.name}
-                      </Link>
+                      <div key={dropItem.id} className="relative group/sub">
+                        {dropItem.type === "dropdown" ? (
+                          <div className="flex justify-between items-center px-4 py-3 hover:bg-cyan-600 transition cursor-pointer">
+                            {dropItem.name} <span className="text-[10px]">▶</span>
+                            <div className="absolute top-0 left-full w-48 bg-[#1a1a2e] rounded-lg shadow-xl border border-white/10 overflow-hidden hidden group-hover/sub:block z-50">
+                              {dropItem.dropdown?.map(ss => (
+                                <div key={ss.id} className="relative group/ss">
+                                  {ss.type === "dropdown" ? (
+                                    <div className="flex justify-between items-center px-4 py-3 hover:bg-cyan-600 transition cursor-pointer">
+                                      {ss.name} <span className="text-[10px]">▶</span>
+                                      <div className="absolute top-0 left-full w-48 bg-[#1a1a2e] rounded-lg shadow-xl border border-white/10 overflow-hidden hidden group-hover/ss:block z-50">
+                                        {ss.dropdown?.map(sss => (
+                                          <Link
+                                            key={sss.id}
+                                            to={sss.path || "#"}
+                                            onClick={closeAll}
+                                            className="block px-4 py-3 hover:bg-cyan-600 hover:text-white transition"
+                                          >
+                                            {sss.name}
+                                          </Link>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <Link
+                                      to={ss.path || "#"}
+                                      onClick={closeAll}
+                                      className="block px-4 py-3 hover:bg-cyan-600 hover:text-white transition"
+                                    >
+                                      {ss.name}
+                                    </Link>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ) : (
+                          <Link
+                            to={dropItem.path || "#"}
+                            onClick={closeAll}
+                            className="block px-4 py-3 hover:bg-cyan-600 hover:text-white transition"
+                          >
+                            {dropItem.name}
+                          </Link>
+                        )}
+                      </div>
                     ))}
                   </div>
                 </>
@@ -271,19 +310,16 @@ export default function Navbar() {
           className="lg:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5"
         >
           <span
-            className={`block h-0.5 w-6 bg-white transition-all duration-300 ${
-              mobileMenu ? "rotate-45 translate-y-2" : ""
-            }`}
+            className={`block h-0.5 w-6 bg-white transition-all duration-300 ${mobileMenu ? "rotate-45 translate-y-2" : ""
+              }`}
           />
           <span
-            className={`block h-0.5 w-6 bg-white transition-all duration-300 ${
-              mobileMenu ? "opacity-0" : ""
-            }`}
+            className={`block h-0.5 w-6 bg-white transition-all duration-300 ${mobileMenu ? "opacity-0" : ""
+              }`}
           />
           <span
-            className={`block h-0.5 w-6 bg-white transition-all duration-300 ${
-              mobileMenu ? "-rotate-45 -translate-y-2" : ""
-            }`}
+            className={`block h-0.5 w-6 bg-white transition-all duration-300 ${mobileMenu ? "-rotate-45 -translate-y-2" : ""
+              }`}
           />
         </button>
 
@@ -299,30 +335,83 @@ export default function Navbar() {
                       className="text-lg py-3 border-b border-white/10 hover:text-cyan-400 w-full text-left flex justify-between items-center"
                     >
                       {item.name}
-                      <svg 
-                        className={`w-4 h-4 transition-transform duration-200 ${
-                          activeDropdown === item.id ? "rotate-180" : ""
-                        }`} 
-                        fill="none" 
-                        stroke="currentColor" 
+                      <svg
+                        className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === item.id ? "rotate-180" : ""
+                          }`}
+                        fill="none"
+                        stroke="currentColor"
                         viewBox="0 0 24 24"
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </button>
-                    
+
                     {/* Mobile Dropdown */}
                     {activeDropdown === item.id && (
                       <div className="pl-4 mb-2">
                         {item.dropdown?.map((dropItem) => (
-                          <Link
-                            key={dropItem.id}
-                            to={dropItem.path}
-                            onClick={closeAll}
-                            className="block py-2 text-base hover:text-cyan-400"
-                          >
-                            {dropItem.name}
-                          </Link>
+                          <div key={dropItem.id}>
+                            {dropItem.type === "dropdown" ? (
+                              <>
+                                <button
+                                  onClick={() => setActiveSubDropdown(activeSubDropdown === dropItem.id ? null : dropItem.id)}
+                                  className="flex justify-between items-center w-full py-2 text-base hover:text-cyan-400"
+                                >
+                                  {dropItem.name}
+                                  <span className={`text-[10px] transition-transform ${activeSubDropdown === dropItem.id ? "rotate-90" : ""}`}>▶</span>
+                                </button>
+                                {activeSubDropdown === dropItem.id && (
+                                  <div className="pl-4 border-l border-white/10 ml-2">
+                                    {dropItem.dropdown?.map(ss => (
+                                      <div key={ss.id}>
+                                        {ss.type === "dropdown" ? (
+                                          <>
+                                            <button
+                                              onClick={() => setActiveSubSubDropdown(activeSubSubDropdown === ss.id ? null : ss.id)}
+                                              className="flex justify-between items-center w-full py-2 text-sm text-gray-300 hover:text-cyan-400"
+                                            >
+                                              {ss.name}
+                                              <span className={`text-[10px] transition-transform ${activeSubSubDropdown === ss.id ? "rotate-90" : ""}`}>▶</span>
+                                            </button>
+                                            {activeSubSubDropdown === ss.id && (
+                                              <div className="pl-4 border-l border-white/10 ml-2">
+                                                {ss.dropdown?.map(sss => (
+                                                  <Link
+                                                    key={sss.id}
+                                                    to={sss.path || "#"}
+                                                    onClick={closeAll}
+                                                    className="block py-1.5 text-xs text-gray-400 hover:text-cyan-400"
+                                                  >
+                                                    {sss.name}
+                                                  </Link>
+                                                ))}
+                                              </div>
+                                            )}
+                                          </>
+                                        ) : (
+                                          <Link
+                                            to={ss.path || "#"}
+                                            onClick={closeAll}
+                                            className="block py-2 text-sm text-gray-300 hover:text-cyan-400"
+                                          >
+                                            {ss.name}
+                                          </Link>
+                                        )}
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </>
+                            ) : (
+                              <Link
+                                to={dropItem.path || "#"}
+                                onClick={closeAll}
+                                className="block py-2 text-base hover:text-cyan-400"
+                              >
+                                {dropItem.name}
+                              </Link>
+                            )}
+                          </div>
                         ))}
                       </div>
                     )}

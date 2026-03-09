@@ -220,6 +220,9 @@ export default function ServiceDetails() {
         />
       </section>
 
+
+      <ServicesRibbon />
+
       {(service.heroHeading?.text || service.heroParagraphs?.length > 0 || service.heroImage) && (
         <section className="relative z-10 py-24 lg:py-32 overflow-hidden bg-[radial-gradient(circle_at_10%_30%,_#121c4e,_#070b28)]">
           {/* Subtle glowing objects from HTML */}
@@ -227,7 +230,7 @@ export default function ServiceDetails() {
           <div className="absolute -bottom-[100px] left-[10%] w-[300px] h-[300px] bg-[#00b4ff]/10 rounded-full blur-[80px] pointer-events-none"></div>
 
           <div className="container mx-auto px-5 lg:px-10 relative z-10">
-            <div className={`grid ${service.heroImage ? 'lg:grid-cols-2 gap-16 lg:gap-20' : 'grid-cols-1 max-w-5xl mx-auto'} items-center`}>
+            <div className={`grid ${service.heroImage ? 'lg:grid-cols-2 gap-4 lg:gap-6' : 'grid-cols-1 max-w-5xl mx-auto'} items-center`}>
               <motion.div
                 initial={{ y: 30, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
@@ -249,7 +252,7 @@ export default function ServiceDetails() {
                 )}
 
                 {/* Paragraphs */}
-                <div className="space-y-6 mb-10 max-w-lg">
+                <div className="space-y-6 mb-10 max-w-xl">
                   {service.heroParagraphs?.map((para, index) => (
                     <motion.div
                       key={index}
@@ -304,7 +307,7 @@ export default function ServiceDetails() {
                     transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                   >
                     <div
-                      className="relative rounded-[30px] overflow-hidden shadow-[0_40px_60px_-15px_rgba(0,0,0,0.6)] border border-white/20 aspect-[4/3] lg:aspect-[4/5] xl:aspect-[3/2] lg:h-[600px] w-full transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_35px_55px_-10px_black] group/heroimg"
+                      className="relative rounded-[30px] overflow-hidden shadow-[0_40px_60px_-15px_rgba(0,0,0,0.6)] border border-white/20 aspect-[4/3] lg:aspect-[4/5] xl:aspect-[3/2] lg:h-[480px] max-w-2xl mx-auto transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_35px_55px_-10px_black] group/heroimg"
                       style={{ transform: "perspective(1000px) rotateY(-3deg) rotateX(2deg)" }}
                       onMouseOver={(e) => { e.currentTarget.style.transform = "perspective(1000px) rotateY(0deg) rotateX(0deg)"; }}
                       onMouseOut={(e) => { e.currentTarget.style.transform = "perspective(1000px) rotateY(-3deg) rotateX(2deg)"; }}

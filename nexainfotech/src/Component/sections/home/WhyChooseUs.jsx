@@ -58,7 +58,7 @@ export default function WhyChooseUs() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-16 bg-[#0a0a14] text-white overflow-hidden"
+      className="relative py-12 bg-[#0a0a14] text-white overflow-hidden"
     >
       {/* Animated Background with Particles Effect */}
       <div className="absolute inset-0">
@@ -77,58 +77,57 @@ export default function WhyChooseUs() {
 
       {/* Heading with Floating Animation */}
       <div
-        className={`text-center mb-16 px-6 transition-all duration-1000 ${
-          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`text-center mb-10 px-6 transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <span className="inline-block px-4 py-2 rounded-full bg-cyan-500/10 text-cyan-400 text-sm font-semibold mb-4 backdrop-blur-sm border border-cyan-500/20">
           ✦ WHY CHOOSE US ✦
         </span>
-        <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold mb-3">
           We Deliver{" "}
           <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent bg-size-200 animate-gradient">
             Excellence
           </span>
         </h2>
-        <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+        <p className="text-gray-400 max-w-2xl mx-auto text-base">
           Discover what makes us different and why our clients trust us with their most important projects
         </p>
       </div>
 
       {/* Grid - Container Chota Kiya */}
-      <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
         {features.map((item, index) => (
           <div
             key={index}
-            className={`group relative p-6 rounded-2xl bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-xl border border-white/10
+            className={`group relative p-5 rounded-2xl bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-xl border border-white/10
               transition-all duration-500 hover:duration-300
               hover:scale-105 hover:-translate-y-2
               hover:shadow-[0_20px_40px_-15px_rgba(6,182,212,0.3)]
               hover:border-cyan-500/30
               ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}`}
-            style={{ 
+            style={{
               transitionDelay: `${index * 100}ms`,
               animation: visible ? `float 3s ease-in-out ${index * 0.2}s infinite` : 'none'
             }}
           >
             {/* Hover Glow Effect */}
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/0 via-cyan-500/0 to-blue-500/0 group-hover:from-cyan-500/10 group-hover:via-blue-500/10 group-hover:to-purple-500/10 transition-all duration-500"></div>
-            
+
             {/* Number with Icon Combined */}
-            <div className="flex items-start justify-between mb-4">
-          
+            <div className="flex items-start justify-between mb-3">
+
               <div className="text-3xl transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
                 {item.icon}
               </div>
             </div>
 
             {/* Title */}
-            <h3 className="text-lg font-bold mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-300">
+            <h3 className="text-base font-bold mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-300">
               {item.title}
             </h3>
 
             {/* Description */}
-            <p className="text-gray-400 text-sm leading-relaxed mb-4 group-hover:text-gray-300 transition-colors duration-300">
+            <p className="text-gray-400 text-xs leading-relaxed mb-3 group-hover:text-gray-300 transition-colors duration-300">
               {item.desc}
             </p>
 
@@ -165,5 +164,5 @@ export default function WhyChooseUs() {
         }
       `}</style>
     </section>
- );
+  );
 }

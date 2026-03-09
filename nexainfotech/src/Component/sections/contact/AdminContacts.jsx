@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "../../../Protected/axios";
-import { 
-  EnvelopeIcon, 
-  PhoneIcon, 
-  UserIcon, 
+import {
+  EnvelopeIcon,
+  PhoneIcon,
+  UserIcon,
   CalendarIcon,
   CheckCircleIcon,
   EyeIcon,
@@ -71,14 +71,14 @@ export default function AdminContacts() {
   };
 
   const filteredContacts = contacts.filter(item => {
-    const matchesFilter = filter === 'all' || 
-      (filter === 'read' && item.isRead) || 
+    const matchesFilter = filter === 'all' ||
+      (filter === 'read' && item.isRead) ||
       (filter === 'unread' && !item.isRead);
-    
+
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.message.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     return matchesFilter && matchesSearch;
   });
 
@@ -90,7 +90,7 @@ export default function AdminContacts() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center">
+      <div className="flex items-center justify-center py-20">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-white text-lg">Loading...</p>
@@ -100,7 +100,7 @@ export default function AdminContacts() {
   }
 
   return (
-    <section className="bg-[#0f0f1a] min-h-screen text-white pt-20 pb-10 px-5">
+    <section className="bg-transparent text-white">
       {/* Header */}
       <div className="mb-10">
         <h1 className="text-4xl font-bold text-cyan-400 mb-4">
@@ -120,7 +120,7 @@ export default function AdminContacts() {
             <EnvelopeIcon className="w-10 h-10 text-cyan-400" />
           </div>
         </div>
-        
+
         <div className="bg-green-900/30 border border-green-500 rounded-xl p-6">
           <div className="flex items-center justify-between">
             <div>
@@ -130,7 +130,7 @@ export default function AdminContacts() {
             <CheckCircleIcon className="w-10 h-10 text-green-400" />
           </div>
         </div>
-        
+
         <div className="bg-yellow-900/20 border border-yellow-500 rounded-xl p-6">
           <div className="flex items-center justify-between">
             <div>
@@ -149,17 +149,16 @@ export default function AdminContacts() {
             <button
               key={filterOption}
               onClick={() => setFilter(filterOption)}
-              className={`px-4 py-2 rounded-lg capitalize transition-all ${
-                filter === filterOption
+              className={`px-4 py-2 rounded-lg capitalize transition-all ${filter === filterOption
                   ? 'bg-cyan-500 text-white'
                   : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-              }`}
+                }`}
             >
               {filterOption}
             </button>
           ))}
         </div>
-        
+
         <input
           type="text"
           placeholder="Search by name, email or message..."
@@ -180,11 +179,10 @@ export default function AdminContacts() {
           {filteredContacts.map((item) => (
             <div
               key={item._id}
-              className={`p-6 rounded-2xl border transition-all duration-300 ${
-                item.isRead
+              className={`p-6 rounded-2xl border transition-all duration-300 ${item.isRead
                   ? "bg-green-900/30 border-green-500"
                   : "bg-cyan-900/20 border-cyan-500"
-              }`}
+                }`}
             >
               {/* Header */}
               <div className="flex flex-wrap justify-between items-start mb-4">
