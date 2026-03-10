@@ -26,7 +26,6 @@ import AdminServiceList from "./Pages/Admin/AdminServiceList";
 import PortfolioAddPage from "./Pages/Admin/PortfolioAddPage";
 import PortfolioManagePage from "./Pages/Admin/PortfolioManagePage";
 import AdminNavbarEditor from "./Pages/Admin/AdminNavbarEditor";
-import DigitalMarketingPage from "./Pages/DigitalMarketingPage";
 import ManagePages from "./Pages/Admin/ManagePages";
 import HeroManager from "./Pages/Admin/HeroManager";
 
@@ -69,10 +68,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/blog" element={<Blog />} />
 
-        <Route
-          path="/services/digital-marketing"
-          element={<DigitalMarketingPage />}
-        />
+
         <Route path="/blog/:id" element={<SingleBlogPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/portfolio" element={<PortfolioPage />} />

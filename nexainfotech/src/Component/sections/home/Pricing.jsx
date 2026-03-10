@@ -19,21 +19,11 @@ export default function Pricing() {
   }, []);
 
   const plans = [
-    {
-      title: "SEO",
-      oldPrice: 250,
-      price: 150,
-      duration: "Monthly",
-      features: [
-        "Content Optimization",
-        "On-Page Optimization",
-        "Initial Keyword Ranking",
-      ],
-    },
+
     {
       title: "WEB DESIGN",
       oldPrice: 300,
-      price: 200,
+      price: 199,
       duration: "Per Website",
       features: [
         "Up to 5 Pages Content",
@@ -42,9 +32,20 @@ export default function Pricing() {
       ],
     },
     {
+      title: "SEO",
+      oldPrice: 250,
+      price: 149,
+      duration: "Monthly",
+      features: [
+        "Content Optimization",
+        "On-Page Optimization",
+        "Initial Keyword Ranking",
+      ],
+    },
+    {
       title: "GRAPHIC DESIGN",
       oldPrice: 150,
-      price: 100,
+      price: 99,
       duration: "Per Month",
       features: [
         "1 Logo",
@@ -55,7 +56,7 @@ export default function Pricing() {
     {
       title: "SOCIAL MEDIA",
       oldPrice: 150,
-      price: 100,
+      price: 99,
       duration: "Monthly",
       features: [
         "Instagram",
