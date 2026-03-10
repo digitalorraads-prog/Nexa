@@ -134,6 +134,22 @@ function HeroManager() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("content"); // New tab state for editor
 
+  // Hero duplication states
+  const [showHeroDuplicateModal, setShowHeroDuplicateModal] = useState(false);
+  const [heroToDuplicate, setHeroToDuplicate] = useState(null);
+  const [isDuplicatingHero, setIsDuplicatingHero] = useState(false);
+  const [duplicateHeroForm, setDuplicateHeroForm] = useState({
+    heroName: "",
+    title: "",
+    pageId: ""
+  });
+
+  // Hero import states
+  const [showImportHeroModal, setShowImportHeroModal] = useState(false);
+  const [searchImportQuery, setSearchImportQuery] = useState("");
+  const [isImportingHero, setIsImportingHero] = useState(false);
+  const [importTargetPageId, setImportTargetPageId] = useState("");
+
   // Form state
   const [formData, setFormData] = useState({
     pageId: "",
@@ -455,6 +471,86 @@ function HeroManager() {
       setMessage(err.response?.data?.message || "❌ Upload failed");
     } finally {
       setUploading(false);
+    }
+  };
+
+  const handleDuplicateHeroClick = (hero) => {
+    setHeroToDuplicate(hero);
+    setDuplicateHeroForm({
+      heroName: `${hero.heroName} (Copy)`,
+      title: `${hero.title} (Copy)`,
+      pageId: hero.pageId // Default to same page
+    });
+    setShowHeroDuplicateModal(true);
+  };
+
+  const handleDuplicateHeroSubmit = async (e) => {
+    e.preventDefault();
+    if (!heroToDuplicate) return;
+
+    setIsDuplicatingHero(true);
+    try {
+      // 1. Call the backend duplicate endpoint to get a base copy
+      const res = await axios.post(`/api/heroes/admin/${heroToDuplicate._id}/duplicate`);
+
+      if (res.data.success) {
+        const newHero = res.data.data;
+
+        // 2. Update the new hero with values from modal (name, title, page)
+        // Also ensure it's set to inactive by default as per duplication logic
+        await axios.put(`/api/heroes/admin/${newHero._id}`, {
+          heroName: duplicateHeroForm.heroName,
+          title: duplicateHeroForm.title,
+          pageId: duplicateHeroForm.pageId,
+          isActive: false
+        });
+
+        setShowHeroDuplicateModal(false);
+        fetchHeroes(); // Refresh list
+        setMessage("✅ Hero duplicated successfully!");
+
+        // If page changed, expand the target page
+        if (duplicateHeroForm.pageId !== heroToDuplicate.pageId) {
+          setExpandedPage(duplicateHeroForm.pageId);
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      setMessage("❌ Duplication failed: " + (err.response?.data?.message || err.message));
+    } finally {
+      setIsDuplicatingHero(false);
+    }
+  };
+
+  const handleImportHero = async (sourceHero) => {
+    if (!importTargetPageId) return;
+
+    setIsImportingHero(true);
+    try {
+      // 1. Duplicate the source hero
+      const res = await axios.post(`/api/heroes/admin/${sourceHero._id}/duplicate`);
+
+      if (res.data.success) {
+        const newHero = res.data.data;
+
+        // 2. Move it to the target page and give it a copy name
+        await axios.put(`/api/heroes/admin/${newHero._id}`, {
+          heroName: `${sourceHero.heroName} (Imported)`,
+          pageId: importTargetPageId,
+          isActive: false
+        });
+
+        setShowImportHeroModal(false);
+        setSearchImportQuery("");
+        fetchHeroes();
+        setMessage(`✅ Hero "${sourceHero.heroName}" imported to current page!`);
+        setExpandedPage(importTargetPageId);
+      }
+    } catch (err) {
+      console.error(err);
+      setMessage("❌ Import failed: " + (err.response?.data?.message || err.message));
+    } finally {
+      setIsImportingHero(false);
     }
   };
 
@@ -978,13 +1074,26 @@ function HeroManager() {
                     ) && (
                         <div className="p-2 space-y-4 animate-fadeIn bg-black/20 rounded-b-lg">
                           {/* New Hero Section Button - Always visible at top of page sections */}
-                          <button
-                            onClick={() => handleCreateHero(page.pageId, page.pageName)}
-                            className="w-full py-3 bg-cyan-600/10 hover:bg-cyan-600/20 text-cyan-400 text-xs font-bold rounded-xl border border-dashed border-cyan-500/40 transition-all flex items-center justify-center gap-2 group"
-                          >
-                            <PlusIcon className="w-5 h-5 group-hover:scale-125 transition-transform" />
-                            Add More Hero Sections to {page.pageName}
-                          </button>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button
+                              onClick={() => handleCreateHero(page.pageId, page.pageName)}
+                              className="w-full py-3 bg-cyan-600/10 hover:bg-cyan-600/20 text-cyan-400 text-xs font-bold rounded-xl border border-dashed border-cyan-500/40 transition-all flex items-center justify-center gap-2 group"
+                            >
+                              <PlusIcon className="w-5 h-5 group-hover:scale-125 transition-transform" />
+                              Add New Hero Section
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                setImportTargetPageId(page.pageId);
+                                setShowImportHeroModal(true);
+                              }}
+                              className="w-full py-3 bg-purple-600/10 hover:bg-purple-600/20 text-purple-400 text-xs font-bold rounded-xl border border-dashed border-purple-500/40 transition-all flex items-center justify-center gap-2 group"
+                            >
+                              <ArrowPathIcon className="w-5 h-5 group-hover:rotate-180 transition-transform" />
+                              Import from Other Page
+                            </button>
+                          </div>
 
                           <div className="space-y-3">
                             {getFilteredHeroes(page.pageId).length > 0 ? (
@@ -1022,7 +1131,7 @@ function HeroManager() {
 
                                       <div className="flex gap-2">
                                         <button
-                                          onClick={(e) => { e.stopPropagation(); handleDuplicateHero(hero._id); }}
+                                          onClick={(e) => { e.stopPropagation(); handleDuplicateHeroClick(hero); }}
                                           className="p-1.5 hover:bg-gray-700 rounded-lg transition-colors"
                                           title="Duplicate"
                                         >
@@ -1793,9 +1902,181 @@ function HeroManager() {
             </div>
           </div>
         </div>
+
+        {/* Hero Duplicate Modal */}
+        {showHeroDuplicateModal && (
+          <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-[100] p-4 animate-fadeIn">
+            <div className="bg-[#1a1a2e] rounded-3xl border border-white/10 p-6 md:p-8 max-w-xl w-full shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-600"></div>
+
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                  <DocumentDuplicateIcon className="w-6 h-6 text-cyan-400" />
+                  Duplicate Hero Section
+                </h2>
+                <button onClick={() => setShowHeroDuplicateModal(false)} className="text-gray-400 hover:text-white transition">
+                  <XMarkIcon className="w-6 h-6" />
+                </button>
+              </div>
+
+              <form onSubmit={handleDuplicateHeroSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-500 uppercase mb-2 ml-1">Hero Name (Internal)</label>
+                  <input
+                    type="text"
+                    value={duplicateHeroForm.heroName}
+                    onChange={(e) => setDuplicateHeroForm({ ...duplicateHeroForm, heroName: e.target.value })}
+                    className="w-full bg-[#0f0f1a] border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition-all font-medium"
+                    required
+                    placeholder="Internal name for management"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-500 uppercase mb-2 ml-1">Hero Title (Display)</label>
+                  <input
+                    type="text"
+                    value={duplicateHeroForm.title}
+                    onChange={(e) => setDuplicateHeroForm({ ...duplicateHeroForm, title: e.target.value })}
+                    className="w-full bg-[#0f0f1a] border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition-all font-medium"
+                    required
+                    placeholder="Main heading text"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-500 uppercase mb-2 ml-1">Target Page</label>
+                  <select
+                    value={duplicateHeroForm.pageId}
+                    onChange={(e) => setDuplicateHeroForm({ ...duplicateHeroForm, pageId: e.target.value })}
+                    className="w-full bg-[#0f0f1a] border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition-all font-medium appearance-none"
+                    required
+                  >
+                    {availablePages.map(page => (
+                      <option key={page.pageId} value={page.pageId}>
+                        {page.pageName} ({page.pageId})
+                      </option>
+                    ))}
+                  </select>
+                  <p className="text-[10px] text-gray-500 mt-2 flex items-center gap-1">
+                    <GlobeAltIcon className="w-3 h-3" />
+                    You can move this copy to a different page
+                  </p>
+                </div>
+
+                <div className="flex gap-4 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setShowHeroDuplicateModal(false)}
+                    className="flex-1 px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-bold transition-all hover:scale-[1.02]"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isDuplicatingHero}
+                    className="flex-1 px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-white rounded-xl font-bold transition-all shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 hover:scale-[1.02]"
+                  >
+                    {isDuplicatingHero ? (
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    ) : (
+                      <DocumentDuplicateIcon className="w-5 h-5" />
+                    )}
+                    {isDuplicatingHero ? 'Duplicating...' : 'Duplicate Now'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Hero Import Modal */}
+        {showImportHeroModal && (
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-xl flex items-center justify-center z-[100] p-4 animate-fadeIn">
+            <div className="bg-[#1a1a2e] rounded-3xl border border-white/10 p-6 md:p-8 max-w-2xl w-full max-h-[90vh] shadow-2xl relative overflow-hidden flex flex-col">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-cyan-500"></div>
+
+              <div className="flex justify-between items-center mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                    <ArrowPathIcon className="w-6 h-6 text-purple-400" />
+                    Import Hero Section
+                  </h2>
+                  <p className="text-xs text-gray-400 mt-1">Select a hero section from any page to copy here</p>
+                </div>
+                <button onClick={() => setShowImportHeroModal(false)} className="text-gray-400 hover:text-white transition">
+                  <XMarkIcon className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div className="mb-6 relative">
+                <input
+                  type="text"
+                  placeholder="Search by hero name, title or page..."
+                  value={searchImportQuery}
+                  onChange={(e) => setSearchImportQuery(e.target.value)}
+                  className="w-full bg-[#0f0f1a] border border-gray-700 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-purple-500 transition-all"
+                />
+                <EyeIcon className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+              </div>
+
+              <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-3">
+                {heroes
+                  .filter(h => {
+                    const query = searchImportQuery.toLowerCase();
+                    return h.heroName?.toLowerCase().includes(query) ||
+                      h.title?.toLowerCase().includes(query) ||
+                      h.pageName?.toLowerCase().includes(query) ||
+                      h.pageId?.toLowerCase().includes(query);
+                  })
+                  .map(hero => (
+                    <div
+                      key={hero._id}
+                      className="bg-[#0f0f1a] border border-gray-800 rounded-2xl p-4 flex items-center justify-between group hover:border-purple-500/50 transition-all"
+                    >
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-[10px] bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded border border-purple-500/20 font-bold uppercase tracking-wider">
+                            {hero.pageName}
+                          </span>
+                          <h4 className="text-sm font-bold text-white">{hero.heroName}</h4>
+                        </div>
+                        <p className="text-xs text-gray-500 italic truncate max-w-[300px]">"{hero.title}"</p>
+                      </div>
+
+                      <button
+                        onClick={() => handleImportHero(hero)}
+                        disabled={isImportingHero}
+                        className="bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold px-4 py-2 rounded-lg transition-all flex items-center gap-2 shadow-lg shadow-purple-600/10 disabled:opacity-50"
+                      >
+                        {isImportingHero ? (
+                          <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                        ) : (
+                          <PlusIcon className="w-4 h-4" />
+                        )}
+                        Import
+                      </button>
+                    </div>
+                  ))
+                }
+
+                {heroes.filter(h => {
+                  const query = searchImportQuery.toLowerCase();
+                  return h.heroName?.toLowerCase().includes(query) ||
+                    h.title?.toLowerCase().includes(query) ||
+                    h.pageName?.toLowerCase().includes(query);
+                }).length === 0 && (
+                    <div className="text-center py-10">
+                      <p className="text-gray-500 text-sm">No heroes found matching your search.</p>
+                    </div>
+                  )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
-};
+}
 
 export default HeroManager;

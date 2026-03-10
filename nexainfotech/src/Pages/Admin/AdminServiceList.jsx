@@ -7,6 +7,7 @@ import {
   PencilIcon,
   TrashIcon,
   DocumentTextIcon,
+  DocumentDuplicateIcon,
   SparklesIcon,
   CalendarIcon,
   LinkIcon,
@@ -18,7 +19,11 @@ import {
   ArrowPathIcon,
   PhotoIcon,
   DocumentIcon,
-  PaintBrushIcon
+  PaintBrushIcon,
+  BuildingOfficeIcon,
+  GlobeAltIcon,
+  ExclamationCircleIcon,
+  ExclamationTriangleIcon
 } from '@heroicons/react/24/outline';
 
 export default function AdminServiceList() {
@@ -27,6 +32,19 @@ export default function AdminServiceList() {
   const [loading, setLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState(null);
   const [copiedSlug, setCopiedSlug] = useState(null);
+
+  // Duplication states
+  const [showDuplicateModal, setShowDuplicateModal] = useState(false);
+  const [serviceToDuplicate, setServiceToDuplicate] = useState(null);
+  const [isDuplicating, setIsDuplicating] = useState(false);
+  const [duplicateForm, setDuplicateForm] = useState({
+    pageTitle: "",
+    slug: "",
+    city: "",
+    serviceName: "",
+    slugType: 'simple',
+    autoGenerateSlug: true
+  });
 
   // Filter states
   const [showFilters, setShowFilters] = useState(false);
@@ -219,6 +237,79 @@ export default function AdminServiceList() {
     });
   };
 
+  // Duplicate handlers
+  const handleDuplicateClick = (service) => {
+    setServiceToDuplicate(service);
+
+    // Check if original slug was nested
+    const isNested = service.slug && service.slug.includes('/');
+    let city = "";
+    let serviceName = "";
+
+    if (isNested) {
+      const parts = service.slug.split('/');
+      city = parts[0];
+      serviceName = parts[1] + "-copy";
+    }
+
+    setDuplicateForm({
+      pageTitle: service.pageTitle + " (Copy)",
+      slug: isNested ? "" : (service.slug + "-copy"),
+      city: city,
+      serviceName: serviceName,
+      slugType: isNested ? 'nested' : 'simple',
+      autoGenerateSlug: !isNested
+    });
+    setShowDuplicateModal(true);
+  };
+
+  const handleDuplicateSubmit = async (e) => {
+    e.preventDefault();
+    if (!serviceToDuplicate) return;
+
+    setIsDuplicating(true);
+    try {
+      const formData = new FormData();
+
+      // Basic info from modal
+      formData.append('pageTitle', duplicateForm.pageTitle);
+      formData.append('miniDescription', serviceToDuplicate.miniDescription || "");
+      formData.append('buttonText', serviceToDuplicate.buttonText || "");
+
+      // Slug logic
+      let finalSlug = "";
+      if (duplicateForm.slugType === 'nested') {
+        const citySlug = duplicateForm.city.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        const serviceSlug = duplicateForm.serviceName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        finalSlug = `${citySlug}/${serviceSlug}`;
+      } else {
+        finalSlug = duplicateForm.slug;
+      }
+      formData.append('slug', finalSlug);
+
+      // Template data from original service
+      formData.append('heroHeading', JSON.stringify(serviceToDuplicate.heroHeading));
+      formData.append('heroParagraphs', JSON.stringify(serviceToDuplicate.heroParagraphs));
+      formData.append('heroImage', serviceToDuplicate.heroImage || "");
+      formData.append('heroImageAlt', serviceToDuplicate.heroImageAlt || "");
+
+      const res = await axios.post("/api/services/add", formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      if (res.data.success) {
+        setShowDuplicateModal(false);
+        fetchServices();
+        alert("Service Duplicated Successfully! 🚀");
+      }
+    } catch (error) {
+      console.error("Duplication failed:", error);
+      alert(error.response?.data?.error || "Duplication Failed ❌");
+    } finally {
+      setIsDuplicating(false);
+    }
+  };
+
   // Calculate stats
   const stats = {
     total: services.length,
@@ -363,8 +454,8 @@ export default function AdminServiceList() {
               <button
                 onClick={() => setShowFilters(!showFilters)}
                 className={`px-4 py-3 rounded-lg transition flex items-center gap-2 text-sm border ${showFilters
-                    ? 'bg-cyan-600 border-cyan-500 text-white'
-                    : 'bg-gray-800 border-gray-700 hover:bg-gray-700'
+                  ? 'bg-cyan-600 border-cyan-500 text-white'
+                  : 'bg-gray-800 border-gray-700 hover:bg-gray-700'
                   }`}
               >
                 <FunnelIcon className="w-4 h-4" />
@@ -613,6 +704,14 @@ export default function AdminServiceList() {
                         </button>
 
                         <button
+                          onClick={() => handleDuplicateClick(service)}
+                          className="p-2 hover:bg-cyan-500/20 rounded-lg transition group"
+                          title="Duplicate Service"
+                        >
+                          <DocumentDuplicateIcon className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition" />
+                        </button>
+
+                        <button
                           onClick={() => navigate(`/admin/edit/${service._id}`)}
                           className="p-2 hover:bg-yellow-500/20 rounded-lg transition group"
                           title="Edit Service"
@@ -739,6 +838,145 @@ export default function AdminServiceList() {
           </div>
         )}
       </div>
+
+      {/* Duplicate Modal */}
+      {showDuplicateModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fadeIn">
+          <div className="bg-[#1a1a2e] rounded-3xl border border-white/10 p-6 md:p-8 max-w-2xl w-full shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-600"></div>
+
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                <DocumentDuplicateIcon className="w-6 h-6 text-cyan-400" />
+                Duplicate Service
+              </h2>
+              <button onClick={() => setShowDuplicateModal(false)} className="text-gray-400 hover:text-white transition">
+                <XCircleIcon className="w-6 h-6" />
+              </button>
+            </div>
+
+            <form onSubmit={handleDuplicateSubmit} className="space-y-6">
+              {/* Title */}
+              <div>
+                <label className="block text-sm text-gray-400 mb-2">New Page Title</label>
+                <input
+                  type="text"
+                  value={duplicateForm.pageTitle}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const newSlug = duplicateForm.autoGenerateSlug && duplicateForm.slugType === 'simple'
+                      ? val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+                      : duplicateForm.slug;
+                    setDuplicateForm({ ...duplicateForm, pageTitle: val, slug: newSlug });
+                  }}
+                  className="w-full bg-[#0f0f1a] border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition"
+                  required
+                />
+              </div>
+
+              {/* URL Type Toggle */}
+              <div className="flex gap-2 p-1 bg-[#0f0f1a] rounded-xl border border-gray-800">
+                <button
+                  type="button"
+                  onClick={() => setDuplicateForm({ ...duplicateForm, slugType: 'simple', autoGenerateSlug: true, slug: duplicateForm.pageTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') })}
+                  className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${duplicateForm.slugType === 'simple' ? 'bg-cyan-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                >
+                  Simple URL
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setDuplicateForm({ ...duplicateForm, slugType: 'nested', autoGenerateSlug: false })}
+                  className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${duplicateForm.slugType === 'nested' ? 'bg-purple-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                >
+                  Location Based
+                </button>
+              </div>
+
+              {duplicateForm.slugType === 'nested' ? (
+                <div className="grid grid-cols-2 gap-4 animate-fadeIn">
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-2">City</label>
+                    <input
+                      type="text"
+                      value={duplicateForm.city}
+                      onChange={(e) => setDuplicateForm({ ...duplicateForm, city: e.target.value })}
+                      className="w-full bg-[#0f0f1a] border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500"
+                      placeholder="e.g., london"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-2">Service Name</label>
+                    <input
+                      type="text"
+                      value={duplicateForm.serviceName}
+                      onChange={(e) => setDuplicateForm({ ...duplicateForm, serviceName: e.target.value })}
+                      className="w-full bg-[#0f0f1a] border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500"
+                      placeholder="e.g., seo-services"
+                      required
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <label className="text-sm text-gray-400">URL Slug</label>
+                    <button
+                      type="button"
+                      onClick={() => setDuplicateForm({ ...duplicateForm, autoGenerateSlug: !duplicateForm.autoGenerateSlug })}
+                      className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded transition ${duplicateForm.autoGenerateSlug ? 'bg-cyan-500/20 text-cyan-400' : 'bg-gray-700 text-gray-400'}`}
+                    >
+                      {duplicateForm.autoGenerateSlug ? 'Auto Sync' : 'Manual Edit'}
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    value={duplicateForm.slug}
+                    onChange={(e) => setDuplicateForm({ ...duplicateForm, slug: e.target.value, autoGenerateSlug: false })}
+                    disabled={duplicateForm.autoGenerateSlug}
+                    className="w-full bg-[#0f0f1a] border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    required
+                  />
+                </div>
+              )}
+
+              {/* URL Preview */}
+              <div className="bg-[#0f0f1a] p-4 rounded-xl border border-gray-800">
+                <p className="text-xs text-gray-500 mb-1 flex items-center gap-1">
+                  <GlobeAltIcon className="w-3 h-3" /> URL Preview:
+                </p>
+                <code className="text-cyan-400 text-sm font-mono break-all">
+                  /services/{duplicateForm.slugType === 'nested'
+                    ? `${duplicateForm.city || '{city}'}/${duplicateForm.serviceName || '{service}'}`
+                    : (duplicateForm.slug || '{slug}')}
+                </code>
+              </div>
+
+              <div className="flex gap-4 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowDuplicateModal(false)}
+                  className="flex-1 px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-semibold transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isDuplicating}
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-xl font-semibold transition shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2"
+                >
+                  {isDuplicating ? (
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  ) : (
+                    <DocumentDuplicateIcon className="w-5 h-5" />
+                  )}
+                  {isDuplicating ? 'Duplicating...' : 'Duplicate Now'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Add animation CSS */}
       <style jsx>{`
