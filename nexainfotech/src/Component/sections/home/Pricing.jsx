@@ -20,28 +20,8 @@ export default function Pricing() {
 
   const plans = [
 
-    {
-      title: "WEB DESIGN",
-      oldPrice: 300,
-      price: 199,
-      duration: "Per Website",
-      features: [
-        "Up to 5 Pages Content",
-        "SEO Friendly Website",
-        "Responsive Design",
-      ],
-    },
-    {
-      title: "SEO",
-      oldPrice: 250,
-      price: 149,
-      duration: "Monthly",
-      features: [
-        "Content Optimization",
-        "On-Page Optimization",
-        "Initial Keyword Ranking",
-      ],
-    },
+
+
     {
       title: "GRAPHIC DESIGN",
       oldPrice: 150,
@@ -64,6 +44,27 @@ export default function Pricing() {
         "LinkedIn",
       ],
     },
+    {
+      title: "SEO",
+      oldPrice: 250,
+      price: 149,
+      duration: "Monthly",
+      features: [
+        "Content Optimization",
+        "On-Page Optimization",
+        "Initial Keyword Ranking",
+      ],
+    }, {
+      title: "WEB DESIGN",
+      oldPrice: 300,
+      price: 199,
+      duration: "Per Website",
+      features: [
+        "Up to 5 Pages Content",
+        "SEO Friendly Website",
+        "Responsive Design",
+      ],
+    }
   ];
 
   return (
