@@ -154,7 +154,7 @@ export default function Navbar() {
     return (
       <header className="fixed top-0 w-full z-50 bg-[#0c0c16] text-white flex justify-between items-center px-6 lg:px-8 py-4 border-b border-white/10">
         <img
-          src="https://nexainfotech.com/wp-content/uploads/2022/06/nexa-infotech-logo.png"
+          src="/nexa-infotech-logo.webp"
           alt="Nexa Infotech Logo"
           className="h-8 lg:h-12"
         />
@@ -172,7 +172,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" onClick={closeAll}>
           <img
-            src="https://nexainfotech.com/wp-content/uploads/2022/06/nexa-infotech-logo.png"
+            src="/nexa-infotech-logo.webp"
             alt="Nexa Infotech Logo"
             className="h-8 lg:h-12"
           />

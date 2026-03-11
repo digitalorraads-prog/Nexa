@@ -57,7 +57,7 @@ export default function Footer() {
           {/* Logo + About */}
           <div>
             <img
-              src="https://nexainfotech.com/wp-content/uploads/2022/06/nexa-infotech-logo.png"
+              src="/nexa-infotech-logo.webp"
               alt="Logo"
               className="h-12 mb-4"
             />

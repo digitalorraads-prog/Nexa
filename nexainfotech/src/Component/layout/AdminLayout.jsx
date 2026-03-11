@@ -58,12 +58,12 @@ export default function AdminLayout({ children }) {
                     }`}
             >
                 <div className="flex items-center justify-between p-4 border-b border-gray-800 h-16">
-                    <h2
-                        className={`font-bold text-xl text-cyan-400 whitespace-nowrap transition-opacity duration-300 ${isSidebarOpen ? "opacity-100" : "opacity-0 hidden"
+                    <img
+                        src="/nexa-infotech-logo.webp"
+                        alt="Nexa Logo"
+                        className={`h-8 transition-opacity duration-300 ${isSidebarOpen ? "opacity-100" : "opacity-0 hidden"
                             }`}
-                    >
-                        Nexa Admin
-                    </h2>
+                    />
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                         className="p-2 bg-gray-800 rounded-md hover:bg-gray-700 text-gray-300 flex-shrink-0"
