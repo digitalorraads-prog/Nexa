@@ -134,7 +134,7 @@ export default function ServiceDetails() {
             {error || "The requested service configuration is currently unavailable in this sector."}
           </p>
           <Link
-            to="/services"
+            to="/"
             className="inline-flex items-center gap-4 bg-white text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-cyan-400 transition-colors shadow-2xl shadow-white/5"
           >
             Reconnect to Catalog

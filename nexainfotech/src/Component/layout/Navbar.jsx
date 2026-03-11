@@ -58,15 +58,7 @@ export default function Navbar() {
         const defaultItems = [
           { id: "1", name: "Home", path: "/", type: "link" },
           { id: "2", name: "Blog", path: "/blog", type: "link" },
-          {
-            id: "3",
-            name: "Services",
-            type: "dropdown",
-            dropdown: [
-              { id: "3-1", name: "New York", path: "/new-york" },
-              { id: "3-2", name: "USA", path: "/usa" }
-            ]
-          },
+
           { id: "4", name: "About", path: "/about", type: "link" },
           { id: "5", name: "Contact", path: "/contact", type: "link" },
         ];

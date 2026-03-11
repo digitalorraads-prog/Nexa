@@ -9,7 +9,7 @@ import Navbar from "./Component/layout/Navbar";
 import Footer from "./Component/layout/Footer";
 import Blog from "./Component/sections/blogs/Blog";
 import AddBlogForm from "./Component/sections/blogs/AddBlogForm";
-import ServicesPage from "./Pages/ServicesPage";
+
 import ServiceDetails from "./Pages/ServiceDetails";
 import UpdateBlogPage from "./Pages/UpdateBlogPage";
 import SingleBlogPage from "./Pages/SingleBlogPage";
@@ -72,7 +72,7 @@ function App() {
         <Route path="/blog/:id" element={<SingleBlogPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/portfolio" element={<PortfolioPage />} />
-        <Route path="/services" element={<ServicesPage />} />
+
 
         <Route path="/:slug" element={<ServiceDetails />} />
         <Route path="/:city/:serviceName" element={<ServiceDetails />} />
@@ -194,7 +194,7 @@ function App() {
           }
         />
 
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
       {!isAdminRoute && <Footer />}
