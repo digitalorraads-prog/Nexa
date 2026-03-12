@@ -9,6 +9,7 @@ const AdminSeoManager = () => {
   const [editingSeo, setEditingSeo] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all"); // all, completed, missing
+  const [bulkLoading, setBulkLoading] = useState(false);
   const [formData, setFormData] = useState({
     pageUrl: "",
     metaTitle: "",
@@ -105,6 +106,21 @@ const AdminSeoManager = () => {
     }
   };
 
+  const handleAutoSEOServices = async () => {
+    if (window.confirm("This will automatically generate/sync SEO titles for all services using their page titles. Continue?")) {
+      try {
+        setBulkLoading(true);
+        const response = await axios.post("/api/seo/bulk-auto-services");
+        alert(response.data.message);
+        fetchData();
+      } catch (error) {
+        alert(error.response?.data?.message || "Error during bulk SEO update");
+      } finally {
+        setBulkLoading(false);
+      }
+    }
+  };
+
   // Logic to combine Services and SEO Records
   const masterPagesList = useMemo(() => {
     // 1. Get all SEO URLs
@@ -177,6 +193,18 @@ const AdminSeoManager = () => {
           <p className="text-gray-400 text-sm mt-1">Manage metadata for services and static pages.</p>
         </div>
         <div className="flex gap-3">
+          <button
+            onClick={handleAutoSEOServices}
+            disabled={bulkLoading}
+            className={`${bulkLoading ? "bg-gray-600 cursor-not-allowed" : "bg-purple-600 hover:bg-purple-700"} text-white px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2 shadow-lg shadow-purple-500/20`}
+          >
+            {bulkLoading ? (
+              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            ) : (
+              <span>✨</span>
+            )}
+            Auto SEO Services
+          </button>
           <button
             onClick={() => setShowModal(true)}
             className="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2"
