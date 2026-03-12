@@ -151,12 +151,6 @@ function AdminDashboardPage() {
           description="Edit static pages content"
           icon="📄"
         />
-        <DashboardCard
-          title="SEO Report"
-          link="/admin/seo-report"
-          description="Track work productivity for all SEO users"
-          icon="📋"
-        />
       </div>
     </div>
   );
