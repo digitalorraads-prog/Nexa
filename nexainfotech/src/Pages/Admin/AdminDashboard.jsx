@@ -125,12 +125,7 @@ function AdminDashboardPage() {
           description="Update or remove services"
           icon="🛠️"
         />
-        <DashboardCard
-          title="Add Service"
-          link="/admin/add-service"
-          description="Create a new service offering"
-          icon="➕"
-        />
+
 
         <DashboardCard
           title="Edit Navbar"
@@ -149,12 +144,6 @@ function AdminDashboardPage() {
           link="/admin/add-portfolio"
           description="Add a new portfolio item"
           icon="🎨"
-        />
-        <DashboardCard
-          title="Hero Manager"
-          link="/admin/hero"
-          description="Update hero sections"
-          icon="🎬"
         />
         <DashboardCard
           title="Pages Editor"

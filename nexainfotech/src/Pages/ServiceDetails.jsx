@@ -246,9 +246,9 @@ export default function ServiceDetails() {
 
                 {/* Heading */}
                 {service.heroHeading?.text && (
-                  <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-[68px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-[#e0f0e8] leading-[1.1] mb-8">
+                  <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-[68px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-[#e0f0e8] leading-[1.1] mb-8">
                     {service.heroHeading.text}
-                  </h1>
+                  </h2>
                 )}
 
                 {/* Paragraphs */}

@@ -2,53 +2,38 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "../../Protected/axios";
 
-export default function AdminLayout({ children }) {
+export default function SeoLayout({ children }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [adminEmail, setAdminEmail] = useState("");
+    const [userEmail, setUserEmail] = useState("");
     const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Optionally fetch admin email if needed for topbar
-        const fetchAdmin = async () => {
+        const fetchUser = async () => {
             try {
-                const response = await axios.get("/api/admin/check-auth");
+                const response = await axios.get("/api/seo/check-auth");
                 if (response.data.authenticated) {
-                    setAdminEmail(response.data.admin?.email || "Admin");
+                    setUserEmail(response.data.user?.email || "SEO Specialist");
                 }
             } catch (err) {
-                // Will be handled by ProtectedRoute, just ignore here
+                // Handled by ProtectedRouteSeo
             }
         };
-        fetchAdmin();
+        fetchUser();
     }, []);
 
     const handleLogout = async () => {
         try {
-            await axios.post("/api/admin/logout");
-            localStorage.removeItem("navbarItems");
-            localStorage.removeItem("user");
-            navigate("/admin/login");
+            await axios.post("/api/seo/logout");
+            navigate("/seo/login");
         } catch (error) {
-            if (error.code === 'ERR_NETWORK') {
-                localStorage.clear();
-                navigate("/admin/login");
-            }
+            navigate("/seo/login");
         }
     };
 
     const menuItems = [
-        { name: "Dashboard", path: "/admin/dashboard", icon: "📊" },
-        { name: "Manage Blogs", path: "/admin/manage-blogs", icon: "📚" },
-        { name: "Add Blog", path: "/admin/add-blog", icon: "✍️" },
-        { name: "Manage Services", path: "/admin/services", icon: "🛠️" },
-        { name: "Add Service", path: "/admin/add-service", icon: "➕" },
-        { name: "Manage Portfolio", path: "/admin/manage-portfolio", icon: "🖼️" },
-        { name: "Add Portfolio", path: "/admin/add-portfolio", icon: "🎨" },
-        { name: "Edit Navbar", path: "/admin/navbar-editor", icon: "🔗" },
-        { name: "Pages & Heroes", path: "/admin/hero", icon: "🎬" },
-        { name: "SEO Users", path: "/admin/manage-seo-users", icon: "👥" },
-        { name: "Contacts", path: "/admin/contact", icon: "📧" },
+        { name: "SEO Dashboard", path: "/seo/dashboard", icon: "📊" },
+        { name: "SEO Manager", path: "/admin/seo", icon: "🔍" },
     ];
 
     return (
@@ -110,7 +95,7 @@ export default function AdminLayout({ children }) {
                 {/* Top Navbar */}
                 <header className="h-16 bg-[#111827] border-b border-gray-800 flex items-center justify-between px-6 sticky top-0 z-40">
                     <div className="text-gray-400">
-                        <span className="text-sm font-medium">Hello, <span className="text-cyan-400">{adminEmail || "Admin"}</span></span>
+                        <span className="text-sm font-medium">Hello, <span className="text-cyan-400">{userEmail}</span></span>
                     </div>
                     <div className="flex items-center gap-4">
                         <Link

@@ -28,6 +28,13 @@ import PortfolioManagePage from "./Pages/Admin/PortfolioManagePage";
 import AdminNavbarEditor from "./Pages/Admin/AdminNavbarEditor";
 import ManagePages from "./Pages/Admin/ManagePages";
 import HeroManager from "./Pages/Admin/HeroManager";
+import AdminSeoManager from "./Pages/Admin/AdminSeoManager";
+import ManageSeoUsers from "./Pages/Admin/ManageSeoUsers";
+import useSEO from "./hooks/useSEO";
+import SeoLoginPage from "./Pages/Admin/SeoLoginPage";
+import SeoDashboard from "./Pages/Admin/SeoDashboard";
+import ProtectedRouteSeo from "./Protected/ProtectedRouteSeo";
+import SeoLayout from "./Component/layout/SeoLayout";
 
 function AdminLoginWrapper() {
   const [status, setStatus] = useState("loading");
@@ -50,9 +57,37 @@ function AdminLoginWrapper() {
   return <AdminLoginPage />;
 }
 
+function SeoLoginWrapper() {
+  const [status, setStatus] = useState("loading");
+
+  useEffect(() => {
+    axios
+      .get("/api/seo/check-auth")
+      .then(() => setStatus("authenticated"))
+      .catch(() => setStatus("unauthenticated"));
+  }, []);
+
+  if (status === "loading") {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#0c0c16]">
+        <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (status === "authenticated") {
+    return <Navigate to="/seo/dashboard" replace />;
+  }
+
+  return <SeoLoginPage />;
+}
+
 function App() {
   const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith("/admin");
+  const isDashboardRoute = location.pathname.startsWith("/admin") || location.pathname.startsWith("/seo");
+
+  // Call handle SEO updates
+  useSEO();
 
   // Scroll to top on every route change
   useEffect(() => {
@@ -61,7 +96,7 @@ function App() {
 
   return (
     <div>
-      {!isAdminRoute && <Navbar />}
+      {!isDashboardRoute && <Navbar />}
 
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -184,6 +219,37 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/admin/manage-seo-users"
+          element={
+            <ProtectedRoute>
+              <ManageSeoUsers />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/seo"
+          element={
+            <ProtectedRouteSeo>
+              <SeoLayout>
+                <AdminSeoManager />
+              </SeoLayout>
+            </ProtectedRouteSeo>
+          }
+        />
+
+        <Route path="/seo/login" element={<SeoLoginWrapper />} />
+        <Route
+          path="/seo/dashboard"
+          element={
+            <ProtectedRouteSeo>
+              <SeoLayout>
+                <SeoDashboard />
+              </SeoLayout>
+            </ProtectedRouteSeo>
+          }
+        />
 
         <Route
           path="/admin/add-service"
@@ -197,7 +263,7 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
-      {!isAdminRoute && <Footer />}
+      {!isDashboardRoute && <Footer />}
     </div>
   );
 }
