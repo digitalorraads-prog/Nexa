@@ -24,7 +24,7 @@ const useSEO = () => {
           }
 
           // Update Meta Description
-          let metaDescription = document.querySelector("meta[name='description']");
+          let metaDescription = document.querySelector("meta[name='description']") || document.querySelector("meta[name='Description']");
           if (seoData.metaDescription) {
             if (metaDescription) {
               metaDescription.setAttribute("content", seoData.metaDescription);
@@ -32,13 +32,13 @@ const useSEO = () => {
               const meta = document.createElement("meta");
               meta.name = "description";
               meta.content = seoData.metaDescription;
-              document.head.prepend(meta);
+              document.head.appendChild(meta);
             }
           }
 
           // Update Meta Keywords
+          let metaKeywords = document.querySelector("meta[name='keywords']") || document.querySelector("meta[name='Keywords']");
           if (seoData.metaKeywords) {
-            let metaKeywords = document.querySelector("meta[name='keywords']");
             if (metaKeywords) {
               metaKeywords.setAttribute("content", seoData.metaKeywords);
             } else {
@@ -50,7 +50,7 @@ const useSEO = () => {
           }
 
           // Update Robots Tag
-          let robotsMeta = document.querySelector("meta[name='robots']");
+          let robotsMeta = document.querySelector("meta[name='robots']") || document.querySelector("meta[name='Robots']");
           const robotsValue = seoData.robotsTag || "index, follow";
           console.log(`🤖 Robots Tag:`, robotsValue);
           if (robotsMeta) {
@@ -59,11 +59,11 @@ const useSEO = () => {
             const meta = document.createElement("meta");
             meta.name = "robots";
             meta.content = robotsValue;
-            document.head.prepend(meta);
+            document.head.appendChild(meta);
           }
 
           // Update Canonical URL
-          let canonicalLink = document.querySelector("link[rel='canonical']");
+          let canonicalLink = document.querySelector("link[rel='canonical']") || document.querySelector("link[rel='Canonical']");
           if (seoData.canonicalUrl && seoData.canonicalUrl.trim()) {
             const canonicalValue = seoData.canonicalUrl.trim();
             console.log(`🔗 Canonical URL:`, canonicalValue);
@@ -73,13 +73,11 @@ const useSEO = () => {
               const link = document.createElement("link");
               link.rel = "canonical";
               link.href = canonicalValue;
-              document.head.prepend(link);
+              document.head.appendChild(link);
             }
-          } else {
-            console.log(`🔗 No Canonical URL defined for this page.`);
-            if (canonicalLink) {
-              canonicalLink.remove();
-            }
+          } else if (canonicalLink) {
+            // Remove if defined but empty in SEO data
+            canonicalLink.remove();
           }
         }
       } catch (error) {
