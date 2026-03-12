@@ -58,7 +58,7 @@ const SeoReport = () => {
                 id: seo._id + "_created",
                 url: seo.pageUrl,
                 user: seo.createdBy || "Admin",
-                date: new Date(seo.createdAt),
+                date: new Date(seo.createdAt || seo.updatedAt || Date.now()),
                 type: "Created",
                 changes: null
             });
@@ -70,7 +70,7 @@ const SeoReport = () => {
                         id: seo._id + "_h_" + idx,
                         url: seo.pageUrl,
                         user: h.updatedBy || "Unknown",
-                        date: new Date(h.updatedAt),
+                        date: new Date(h.updatedAt || Date.now()),
                         type: "Updated",
                         changes: h.changes
                     });
