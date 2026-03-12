@@ -6,6 +6,11 @@ const useSEO = () => {
   const location = useLocation();
 
   useEffect(() => {
+    // Skip SEO for admin and dashboard routes
+    if (location.pathname.startsWith("/admin") || location.pathname.startsWith("/seo")) {
+      return;
+    }
+
     const updateSEO = async () => {
       try {
         // Encode the pathname to handle special characters in URLs correctly
