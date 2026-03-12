@@ -14,20 +14,26 @@ const useSEO = () => {
         
         const response = await axios.get(`/api/seo/${encodedPath}`);
         const seoData = response.data;
+        
+        console.log(`🔍 SEO Data for ${currentPath}:`, seoData);
 
         if (seoData) {
           // Update Document Title
-          document.title = seoData.metaTitle;
+          if (seoData.metaTitle) {
+            document.title = seoData.metaTitle;
+          }
 
           // Update Meta Description
           let metaDescription = document.querySelector("meta[name='description']");
-          if (metaDescription) {
-            metaDescription.setAttribute("content", seoData.metaDescription);
-          } else {
-            const meta = document.createElement("meta");
-            meta.name = "description";
-            meta.content = seoData.metaDescription;
-            document.head.appendChild(meta);
+          if (seoData.metaDescription) {
+            if (metaDescription) {
+              metaDescription.setAttribute("content", seoData.metaDescription);
+            } else {
+              const meta = document.createElement("meta");
+              meta.name = "description";
+              meta.content = seoData.metaDescription;
+              document.head.prepend(meta);
+            }
           }
 
           // Update Meta Keywords
@@ -42,10 +48,46 @@ const useSEO = () => {
               document.head.appendChild(meta);
             }
           }
+
+          // Update Robots Tag
+          let robotsMeta = document.querySelector("meta[name='robots']");
+          const robotsValue = seoData.robotsTag || "index, follow";
+          console.log(`🤖 Robots Tag:`, robotsValue);
+          if (robotsMeta) {
+            robotsMeta.setAttribute("content", robotsValue);
+          } else {
+            const meta = document.createElement("meta");
+            meta.name = "robots";
+            meta.content = robotsValue;
+            document.head.prepend(meta);
+          }
+
+          // Update Canonical URL
+          let canonicalLink = document.querySelector("link[rel='canonical']");
+          if (seoData.canonicalUrl && seoData.canonicalUrl.trim()) {
+            const canonicalValue = seoData.canonicalUrl.trim();
+            console.log(`🔗 Canonical URL:`, canonicalValue);
+            if (canonicalLink) {
+              canonicalLink.setAttribute("href", canonicalValue);
+            } else {
+              const link = document.createElement("link");
+              link.rel = "canonical";
+              link.href = canonicalValue;
+              document.head.prepend(link);
+            }
+          } else {
+            console.log(`🔗 No Canonical URL defined for this page.`);
+            if (canonicalLink) {
+              canonicalLink.remove();
+            }
+          }
         }
       } catch (error) {
-        // If no SEO data is found or any error occurs, we don't change anything
-        // This allows default static tags to show up
+        if (error.response?.status === 404) {
+          console.log(`ℹ️ No custom SEO found for ${location.pathname}, using defaults.`);
+        } else {
+          console.error("❌ SEO Update Error:", error);
+        }
       }
     };
 
