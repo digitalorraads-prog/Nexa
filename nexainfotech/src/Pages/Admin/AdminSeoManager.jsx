@@ -9,6 +9,8 @@ const AdminSeoManager = () => {
   const [editingSeo, setEditingSeo] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all"); // all, completed, missing
+  const [sourceFilter, setSourceFilter] = useState("all"); // all, auto, manual
+  const [typeFilter, setTypeFilter] = useState("all"); // all, service, static
   const [bulkLoading, setBulkLoading] = useState(false);
   const [formData, setFormData] = useState({
     pageUrl: "",
@@ -173,8 +175,22 @@ const AdminSeoManager = () => {
       combined = combined.filter(p => p.hasSeo);
     }
 
+    // Source filter (Only applicable if SEO exists)
+    if (sourceFilter === "auto") {
+      combined = combined.filter(p => p.seo?.createdBy?.startsWith("System") || p.seo?.updatedBy?.startsWith("System"));
+    } else if (sourceFilter === "manual") {
+      combined = combined.filter(p => p.hasSeo && !p.seo?.createdBy?.startsWith("System") && !p.seo?.updatedBy?.startsWith("System"));
+    }
+
+    // Type filter
+    if (typeFilter === "service") {
+      combined = combined.filter(p => p.type === "service");
+    } else if (typeFilter === "static") {
+      combined = combined.filter(p => p.type === "custom");
+    }
+
     return combined.sort((a, b) => a.pageUrl.localeCompare(b.pageUrl));
-  }, [seos, services, searchTerm, statusFilter]);
+  }, [seos, services, searchTerm, statusFilter, sourceFilter, typeFilter]);
 
   const stats = useMemo(() => {
      return {
@@ -231,38 +247,48 @@ const AdminSeoManager = () => {
             </div>
         </div>
 
-        {/* Search and Filter */}
-        <div className="bg-[#111827] p-4 rounded-xl border border-gray-800 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
-           <div className="relative w-full md:w-80">
+        {/* Filters Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6">
+           {/* Search Box */}
+           <div className="lg:col-span-1 relative">
               <input 
                 type="text" 
                 placeholder="Search URL or Title..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-[#0c0c16] border border-gray-700 rounded-lg px-10 py-2.5 text-sm outline-none focus:border-cyan-500 transition-all"
+                className="w-full bg-[#111827] border border-gray-700 rounded-xl px-10 py-2.5 text-sm outline-none focus:border-cyan-500 transition-all text-white"
               />
               <span className="absolute left-3 top-2.5 text-gray-500">🔍</span>
            </div>
 
-           <div className="flex items-center gap-2 bg-[#0c0c16] p-1 rounded-lg border border-gray-800">
-              <button 
-                onClick={() => setStatusFilter("all")}
-                className={`px-4 py-1.5 text-xs font-bold rounded-md transition-all ${statusFilter === "all" ? "bg-cyan-500 text-white shadow-lg" : "text-gray-400 hover:text-white"}`}
-              >
-                All
-              </button>
-              <button 
-                onClick={() => setStatusFilter("completed")}
-                className={`px-4 py-1.5 text-xs font-bold rounded-md transition-all ${statusFilter === "completed" ? "bg-green-500 text-white shadow-lg" : "text-gray-400 hover:text-white"}`}
-              >
-                Completed
-              </button>
-              <button 
-                onClick={() => setStatusFilter("missing")}
-                className={`px-4 py-1.5 text-xs font-bold rounded-md transition-all ${statusFilter === "missing" ? "bg-red-500 text-white shadow-lg" : "text-gray-400 hover:text-white"}`}
-              >
-                Missing
-              </button>
+           {/* Status Filter */}
+           <div className="flex flex-col gap-1.5">
+              <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest pl-1">SEO Status</span>
+              <div className="flex bg-[#111827] p-1 rounded-xl border border-gray-800">
+                <button onClick={() => setStatusFilter("all")} className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${statusFilter === "all" ? "bg-cyan-500 text-white" : "text-gray-400 hover:text-white"}`}>All</button>
+                <button onClick={() => setStatusFilter("completed")} className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${statusFilter === "completed" ? "bg-green-500 text-white" : "text-gray-400 hover:text-white"}`}>Done</button>
+                <button onClick={() => setStatusFilter("missing")} className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${statusFilter === "missing" ? "bg-red-500 text-white" : "text-gray-400 hover:text-white"}`}>Missing</button>
+              </div>
+           </div>
+
+           {/* Source Filter */}
+           <div className="flex flex-col gap-1.5">
+              <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest pl-1">Data Source</span>
+              <div className="flex bg-[#111827] p-1 rounded-xl border border-gray-800">
+                <button onClick={() => setSourceFilter("all")} className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${sourceFilter === "all" ? "bg-cyan-500 text-white" : "text-gray-400 hover:text-white"}`}>All</button>
+                <button onClick={() => setSourceFilter("auto")} className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${sourceFilter === "auto" ? "bg-purple-500 text-white" : "text-gray-400 hover:text-white"}`}>Auto</button>
+                <button onClick={() => setSourceFilter("manual")} className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${sourceFilter === "manual" ? "bg-orange-500 text-white" : "text-gray-400 hover:text-white"}`}>Manual</button>
+              </div>
+           </div>
+
+           {/* Type Filter */}
+           <div className="flex flex-col gap-1.5">
+              <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest pl-1">Page Type</span>
+              <div className="flex bg-[#111827] p-1 rounded-xl border border-gray-800">
+                <button onClick={() => setTypeFilter("all")} className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${typeFilter === "all" ? "bg-cyan-500 text-white" : "text-gray-400 hover:text-white"}`}>All</button>
+                <button onClick={() => setTypeFilter("service")} className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${typeFilter === "service" ? "bg-blue-500 text-white" : "text-gray-400 hover:text-white"}`}>Services</button>
+                <button onClick={() => setTypeFilter("static")} className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${typeFilter === "static" ? "bg-indigo-500 text-white" : "text-gray-400 hover:text-white"}`}>Static</button>
+              </div>
            </div>
         </div>
 
