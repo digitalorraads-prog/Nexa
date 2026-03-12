@@ -52,7 +52,6 @@ const useSEO = () => {
           // Update Robots Tag
           let robotsMeta = document.querySelector("meta[name='robots']") || document.querySelector("meta[name='Robots']");
           const robotsValue = seoData.robotsTag || "index, follow";
-          console.log(`🤖 Robots Tag:`, robotsValue);
           if (robotsMeta) {
             robotsMeta.setAttribute("content", robotsValue);
           } else {
@@ -66,7 +65,6 @@ const useSEO = () => {
           let canonicalLink = document.querySelector("link[rel='canonical']") || document.querySelector("link[rel='Canonical']");
           if (seoData.canonicalUrl && seoData.canonicalUrl.trim()) {
             const canonicalValue = seoData.canonicalUrl.trim();
-            console.log(`🔗 Canonical URL:`, canonicalValue);
             if (canonicalLink) {
               canonicalLink.setAttribute("href", canonicalValue);
             } else {
@@ -76,13 +74,53 @@ const useSEO = () => {
               document.head.appendChild(link);
             }
           } else if (canonicalLink) {
-            // Remove if defined but empty in SEO data
             canonicalLink.remove();
           }
+
+          // AUTO-SEO: If SEO data exists but title is generic or missing, and we find an H1, sync it.
+          // We wait a bit for the page to render the H1
+          setTimeout(async () => {
+            const h1Element = document.querySelector("h1");
+            if (h1Element && h1Element.innerText.trim()) {
+              const h1Text = h1Element.innerText.trim();
+              if (!seoData.metaTitle || seoData.metaTitle === "Automatic Title") {
+                console.log("🔄 Auto SEO: Syncing Title from H1:", h1Text);
+                try {
+                  await axios.post("/api/seo/auto-update", {
+                    pageUrl: currentPath,
+                    metaTitle: h1Text
+                  });
+                  document.title = h1Text;
+                } catch (e) {
+                  console.error("❌ Auto SEO Sync Error:", e);
+                }
+              }
+            }
+          }, 1000);
+
         }
       } catch (error) {
         if (error.response?.status === 404) {
-          console.log(`ℹ️ No custom SEO found for ${location.pathname}, using defaults.`);
+          console.log(`ℹ️ No custom SEO found for ${location.pathname}, attempting Auto SEO...`);
+          
+          // Try to get H1 and create a new SEO record
+          setTimeout(async () => {
+            const h1Element = document.querySelector("h1");
+            if (h1Element && h1Element.innerText.trim()) {
+              const h1Text = h1Element.innerText.trim();
+              console.log("✨ Auto SEO: Creating new SEO record from H1:", h1Text);
+              try {
+                await axios.post("/api/seo/auto-update", {
+                  pageUrl: location.pathname,
+                  metaTitle: h1Text
+                });
+                document.title = h1Text;
+              } catch (e) {
+                console.error("❌ Auto SEO Creation Error:", e);
+              }
+            }
+          }, 1000);
+
         } else {
           console.error("❌ SEO Update Error:", error);
         }
