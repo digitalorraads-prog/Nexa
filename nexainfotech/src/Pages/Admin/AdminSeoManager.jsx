@@ -274,7 +274,13 @@ const AdminSeoManager = () => {
                              <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
                              {page.seo.metaTitle.substring(0, 40)}...
                            </div>
-                           <span className="text-[10px] text-gray-500 italic">Last updated: {new Date(page.seo.updatedAt).toLocaleDateString()}</span>
+                           <div className="flex flex-col text-[10px]">
+                             <span className="text-cyan-400/80 font-medium">{page.seo.createdBy || "Admin"}</span>
+                             {page.seo.updatedBy && page.seo.updatedBy !== page.seo.createdBy && (
+                               <span className="text-gray-500 italic">Last edit: {page.seo.updatedBy}</span>
+                             )}
+                             <span className="text-gray-500">{new Date(page.seo.updatedAt).toLocaleDateString()}</span>
+                           </div>
                         </div>
                       ) : (
                         <div className="flex items-center gap-1.5 text-red-500/70 text-xs font-bold italic">
