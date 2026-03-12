@@ -48,6 +48,7 @@ export default function AdminLayout({ children }) {
         { name: "Edit Navbar", path: "/admin/navbar-editor", icon: "🔗" },
         { name: "Pages & Heroes", path: "/admin/hero", icon: "🎬" },
         { name: "SEO Users", path: "/admin/manage-seo-users", icon: "👥" },
+        { name: "SEO Report", path: "/admin/seo-report", icon: "📋" },
         { name: "Contacts", path: "/admin/contact", icon: "📧" },
     ];
 

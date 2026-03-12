@@ -30,6 +30,7 @@ import ManagePages from "./Pages/Admin/ManagePages";
 import HeroManager from "./Pages/Admin/HeroManager";
 import AdminSeoManager from "./Pages/Admin/AdminSeoManager";
 import ManageSeoUsers from "./Pages/Admin/ManageSeoUsers";
+import SeoReport from "./Pages/Admin/SeoReport";
 import useSEO from "./hooks/useSEO";
 import SeoLoginPage from "./Pages/Admin/SeoLoginPage";
 import SeoDashboard from "./Pages/Admin/SeoDashboard";
@@ -228,6 +229,14 @@ function App() {
           }
         />
 
+        <Route
+          path="/admin/seo-report"
+          element={
+            <ProtectedRoute>
+              <SeoReport />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/admin/seo"
           element={
