@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "../../../Protected/axios"; // 👈 Use the instance with withCredentials: true
 import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ export default function AdminLogin() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(""); // Optional: Add error state for better UX
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -88,16 +90,26 @@ export default function AdminLogin() {
               disabled={loading}
             />
 
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-4 py-3 rounded-xl bg-[#1f2937] border border-gray-700 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400 outline-none transition"
-              required
-              disabled={loading}
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-xl bg-[#1f2937] border border-gray-700 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400 outline-none transition pr-12"
+                required
+                disabled={loading}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-cyan-400 transition-colors"
+                disabled={loading}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
 
             <button
               type="submit"
@@ -118,7 +130,7 @@ export default function AdminLogin() {
             <div className="text-center mt-4">
               <button
                 type="button"
-                onClick={() => alert("Please contact admin to reset password")}
+                onClick={() => alert("Please contact Rakesh Saini Devloper to reset password")}
                 className="text-sm text-gray-400 hover:text-cyan-400 transition"
               >
                 Forgot Password?

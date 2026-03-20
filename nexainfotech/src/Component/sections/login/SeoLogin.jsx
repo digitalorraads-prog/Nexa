@@ -1,12 +1,14 @@
 import { useState } from "react";
 import axios from "../../../Protected/axios";
 import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function SeoLogin() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -48,15 +50,24 @@ export default function SeoLogin() {
               className="w-full px-4 py-3 rounded-xl bg-[#1f2937] border border-gray-700 focus:border-cyan-400 outline-none transition"
               required
             />
-            <input
-              type="password"
-              name="password"
-              placeholder="SEO Password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-4 py-3 rounded-xl bg-[#1f2937] border border-gray-700 focus:border-cyan-400 outline-none transition"
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="SEO Password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-xl bg-[#1f2937] border border-gray-700 focus:border-cyan-400 outline-none transition pr-12"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-cyan-400 transition-colors"
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
             <button
               type="submit"
               disabled={loading}

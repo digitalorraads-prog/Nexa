@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../Protected/axios";
+import { Eye, EyeOff } from "lucide-react";
 
 const ManageSeoUsers = () => {
   const [users, setUsers] = useState([]);
@@ -10,6 +11,7 @@ const ManageSeoUsers = () => {
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const fetchUsers = async () => {
     try {
@@ -160,15 +162,24 @@ const ManageSeoUsers = () => {
                 </div>
                 <div>
                   <label className="block text-sm text-gray-400 mb-2">Password</label>
-                  <input
-                    type="text"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    className="w-full bg-[#0c0c16] border border-gray-700 rounded-lg p-3 focus:outline-none focus:border-cyan-500 text-white font-mono transition-all"
-                    placeholder="Set user password"
-                    required
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      className="w-full bg-[#0c0c16] border border-gray-700 rounded-lg p-3 focus:outline-none focus:border-cyan-500 text-white font-mono transition-all pr-12"
+                      placeholder="Set user password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-cyan-400 transition-colors"
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  </div>
                   <p className="text-[10px] text-gray-500 mt-2 italic">Tip: Use a strong password for security.</p>
                 </div>
               </div>
