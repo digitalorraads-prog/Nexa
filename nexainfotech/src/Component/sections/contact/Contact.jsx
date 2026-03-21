@@ -34,8 +34,14 @@ export default function Contact() {
       });
     } catch (error) {
       console.error("Contact form error:", error);
-      const errorMsg =
-        error.response?.data?.message || "Failed to send message ❌";
+      let errorMsg = error.response?.data?.message || "Failed to send message ❌";
+      
+      if (error.code === 'ECONNABORTED') {
+        errorMsg = "Request timed out. Please check your internet or try again later. ⏳";
+      } else if (!error.response) {
+        errorMsg = "Server unreachable. Please try again later. 🌐";
+      }
+      
       alert(errorMsg);
     } finally {
       setLoading(false);

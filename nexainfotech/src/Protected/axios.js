@@ -2,7 +2,8 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   baseURL: "https://nexa-backend-xyul.onrender.com",
-  withCredentials: true, // Required to send/receive session cookies across different domains
+  timeout: 30000, // 30 second timeout
+  withCredentials: true,
 });
 
 export default axiosInstance;
