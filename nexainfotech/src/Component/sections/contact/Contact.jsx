@@ -25,7 +25,7 @@ export default function Contact() {
     try {
       const response = await axios.post("/api/contact", formData);
       console.log("Response:", response.data);
-      alert("Message Sent Successfully 🚀");
+      alert(response.data.message || "Message Sent Successfully 🚀");
       setFormData({
         name: "",
         phone: "",
