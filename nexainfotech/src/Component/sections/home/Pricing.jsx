@@ -83,7 +83,7 @@ export default function Pricing() {
       >
         <h2 className="text-4xl md:text-6xl font-extrabold mb-6">
           Our{" "}
-          <span className="bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
             Pricing Plans
           </span>
         </h2>
@@ -107,7 +107,7 @@ export default function Pricing() {
             style={{ transitionDelay: `${index * 150}ms` }}
           >
             {/* Popular Badge */}
-            <div className="absolute -top-4 right-4 bg-gradient-to-r from-cyan-400 to-blue-600 text-black text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+            <div className="absolute -top-4 right-4 bg-linear-to-r from-cyan-400 to-blue-600 text-black text-xs font-bold px-3 py-1 rounded-full shadow-lg">
               Popular
             </div>
 
@@ -137,7 +137,7 @@ export default function Pricing() {
             </ul>
 
             {/* Button */}
-            <Link to="/contact" className="w-full py-3 px-5 rounded-full bg-gradient-to-r from-[#004C7D] to-[#158EB0] font-semibold transition hover:scale-105">
+            <Link to="/contact" className="w-full py-3 px-5 rounded-full bg-linear-to-r from-[#004C7D] to-[#158EB0] font-semibold transition hover:scale-105">
               Know More
             </Link>
           </div>

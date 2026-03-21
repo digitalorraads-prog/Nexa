@@ -87,16 +87,16 @@ export default function ServicesNYC() {
           {/* Main Heading */}
           <h2 className="text-4xl md:text-6xl font-bold mb-6">
             The Benefits Of{" "}
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent bg-size-200 animate-gradient">
+            <span className="bg-linear-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent bg-size-200 animate-gradient">
               Working With Us
             </span>
           </h2>
 
           {/* Decorative Line */}
           <div className="flex justify-center items-center gap-4">
-            <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+            <div className="w-12 h-0.5 bg-linear-to-r from-transparent via-cyan-400 to-transparent"></div>
             <div className="w-2 h-2 rotate-45 bg-cyan-400 animate-pulse"></div>
-            <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+            <div className="w-12 h-0.5 bg-linear-to-r from-transparent via-cyan-400 to-transparent"></div>
           </div>
         </div>
 
@@ -111,12 +111,12 @@ export default function ServicesNYC() {
               style={{ transitionDelay: `${index * 200}ms` }}
             >
               {/* Card with Hover Effects */}
-              <div className="relative p-8 h-full bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden
+              <div className="relative p-8 h-full bg-linear-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden
                 hover:scale-105 hover:-translate-y-2 transition-all duration-300
                 hover:shadow-[0_20px_40px_-15px_rgba(6,182,212,0.5)]">
                 
                 {/* Animated Background Gradient on Hover */}
-                <div className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
+                <div className={`absolute inset-0 bg-linear-to-r ${service.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
                 
                 {/* Icon with NYC Theme */}
                 <div className="relative mb-6">
@@ -133,7 +133,7 @@ export default function ServicesNYC() {
                 </div>
 
                 {/* Title with Gradient on Hover */}
-                <h3 className="text-2xl font-bold mb-4 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-300">
+                <h3 className="text-2xl font-bold mb-4 group-hover:text-transparent group-hover:bg-linear-to-r group-hover:from-cyan-400 group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-300">
                   {service.title}
                 </h3>
 
@@ -144,7 +144,7 @@ export default function ServicesNYC() {
 
                 {/* NYC Skyline Progress Bar */}
                 <div className="relative h-1 bg-white/5 rounded-full overflow-hidden">
-                  <div className={`absolute inset-y-0 left-0 w-0 bg-gradient-to-r ${service.color} rounded-full transition-all duration-500 group-hover:w-full`}></div>
+                  <div className={`absolute inset-y-0 left-0 w-0 bg-linear-to-r ${service.color} rounded-full transition-all duration-500 group-hover:w-full`}></div>
                 </div>
 
                 {/* Building Icon at Bottom */}
@@ -154,7 +154,7 @@ export default function ServicesNYC() {
 
                 {/* Corner Accent */}
                 <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden">
-                  <div className={`absolute top-0 right-0 w-16 h-16 bg-gradient-to-br ${service.color} opacity-20 transform rotate-45 translate-x-8 -translate-y-8 group-hover:translate-x-6 group-hover:-translate-y-6 transition-transform duration-500`}></div>
+                  <div className={`absolute top-0 right-0 w-16 h-16 bg-linear-to-br ${service.color} opacity-20 transform rotate-45 translate-x-8 -translate-y-8 group-hover:translate-x-6 group-hover:-translate-y-6 transition-transform duration-500`}></div>
                 </div>
               </div>
 

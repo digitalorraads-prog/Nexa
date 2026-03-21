@@ -79,7 +79,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-8 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+            <h4 className="text-lg font-semibold mb-8 bg-linear-to-r from-white to-gray-200 bg-clip-text text-transparent">
               Quick Links
             </h4>
             <ul className="space-y-4">
@@ -99,7 +99,7 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="text-lg font-semibold mb-8 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+            <h4 className="text-lg font-semibold mb-8 bg-linear-to-r from-white to-gray-200 bg-clip-text text-transparent">
               Services
             </h4>
             <ul className="space-y-4">
@@ -153,7 +153,7 @@ export default function Footer() {
 
           {/* Social Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-8 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+            <h4 className="text-lg font-semibold mb-8 bg-linear-to-r from-white to-gray-200 bg-clip-text text-transparent">
               Connect With Us
             </h4>
             <div className="flex flex-wrap gap-4">

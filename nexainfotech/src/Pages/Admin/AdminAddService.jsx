@@ -602,7 +602,7 @@ export default function AdminAddService() {
             <SparklesIcon className="w-4 h-4 text-cyan-400" />
             <span className="text-sm font-semibold text-cyan-400 tracking-wide uppercase">Service Creator</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 mb-4">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-white to-gray-400 mb-4">
             Add New Service
           </h1>
           <p className="text-gray-400 text-lg">Create a breathtaking new service page with our advanced rich text editor.</p>
@@ -612,7 +612,7 @@ export default function AdminAddService() {
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-8 relative z-10">
           {/* Basic Info Card */}
           <div className="bg-[#0a0a16]/80 backdrop-blur-2xl rounded-3xl border border-white/10 p-6 md:p-8 space-y-8 shadow-[0_8px_30px_rgb(0,0,0,0.5)] relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-600"></div>
+            <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-cyan-500 to-blue-600"></div>
 
             {/* Page Title */}
             <div className="group">
@@ -643,7 +643,7 @@ export default function AdminAddService() {
                   showNotification('Simple URL mode', 'info');
                 }}
                 className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 ${slugType === 'simple'
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
+                  ? 'bg-linear-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
                   }`}
               >
@@ -657,7 +657,7 @@ export default function AdminAddService() {
                   showNotification('Location based URL mode', 'info');
                 }}
                 className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 ${slugType === 'nested'
-                  ? 'bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg shadow-purple-500/25'
+                  ? 'bg-linear-to-r from-purple-500 to-pink-600 text-white shadow-lg shadow-purple-500/25'
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
                   }`}
               >
@@ -698,7 +698,7 @@ export default function AdminAddService() {
                   </div>
                 </div>
                 <div className="bg-purple-500/10 border border-purple-500/20 rounded-xl p-4 flex items-center gap-3">
-                  <GlobeAltIcon className="w-5 h-5 text-purple-400 flex-shrink-0" />
+                  <GlobeAltIcon className="w-5 h-5 text-purple-400 shrink-0" />
                   <p className="text-gray-300 text-sm">
                     Target URL structure: <span className="text-white font-mono font-bold">/services/{form.city || '[city]'}/{form.serviceName || '[service]'}</span>
                   </p>
@@ -760,7 +760,7 @@ export default function AdminAddService() {
 
             {/* URL Preview */}
             {(form.slug || (form.city && form.serviceName)) && (
-              <div className="bg-gradient-to-r from-cyan-900/30 to-blue-900/30 p-4 lg:p-5 rounded-xl border border-cyan-500/20 backdrop-blur-md">
+              <div className="bg-linear-to-r from-cyan-900/30 to-blue-900/30 p-4 lg:p-5 rounded-xl border border-cyan-500/20 backdrop-blur-md">
                 <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-2 uppercase tracking-wide">
                   <GlobeAltIcon className="w-4 h-4" />
                   <span>Live URL Preview</span>
@@ -823,7 +823,7 @@ export default function AdminAddService() {
 
           {/* Hero Section with Rich Text Editor */}
           <div className="bg-[#0a0a16]/80 backdrop-blur-2xl rounded-3xl border border-white/10 p-6 md:p-8 space-y-10 shadow-[0_8px_30px_rgb(0,0,0,0.5)]">
-            <h2 className="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-6 flex items-center gap-3 border-b border-white/10 pb-6">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500 mb-6 flex items-center gap-3 border-b border-white/10 pb-6">
               <SparklesIcon className="w-8 h-8 text-cyan-400" />
               Hero Section Design
             </h2>
@@ -918,7 +918,7 @@ export default function AdminAddService() {
                 <button
                   type="button"
                   onClick={addParagraph}
-                  className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all hover:scale-105 shadow-lg shadow-blue-500/25"
+                  className="bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all hover:scale-105 shadow-lg shadow-blue-500/25"
                 >
                   <span className="text-lg leading-none">+</span> Add Paragraph Block
                 </button>
@@ -1129,7 +1129,7 @@ export default function AdminAddService() {
                   />
                   <label
                     htmlFor="imageUpload"
-                    className={`flex-1 bg-gradient-to-r ${form.heroImage ? 'from-gray-700 to-gray-800 border-gray-600' : 'from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500'} px-6 py-4 rounded-xl text-center cursor-pointer flex items-center justify-center gap-3 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(236,72,153,0.3)] font-semibold tracking-wide ${uploading ? 'opacity-50 cursor-not-allowed' : 'hover:-translate-y-1'
+                    className={`flex-1 bg-linear-to-r ${form.heroImage ? 'from-gray-700 to-gray-800 border-gray-600' : 'from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500'} px-6 py-4 rounded-xl text-center cursor-pointer flex items-center justify-center gap-3 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(236,72,153,0.3)] font-semibold tracking-wide ${uploading ? 'opacity-50 cursor-not-allowed' : 'hover:-translate-y-1'
                       }`}
                   >
                     {uploading ? (
@@ -1192,7 +1192,7 @@ export default function AdminAddService() {
               </h3>
             </div>
 
-            <div className="bg-gradient-to-br from-[#050508] to-[#0a0a16] p-6 rounded-2xl border border-white/5 ring-1 ring-white/5 shadow-inner min-h-[500px] flex flex-col justify-center">
+            <div className="bg-linear-to-br from-[#050508] to-[#0a0a16] p-6 rounded-2xl border border-white/5 ring-1 ring-white/5 shadow-inner min-h-[500px] flex flex-col justify-center">
               <div className="max-w-3xl mx-auto w-full">
                 {/* Heading Preview */}
                 {form.heroHeading.text && (
@@ -1265,7 +1265,7 @@ export default function AdminAddService() {
             <button
               type="submit"
               disabled={loading || uploading || !form.pageTitle.trim() || (slugType === 'simple' && !autoGenerateSlug && !form.slug.trim()) || (slugType === 'nested' && (!form.city || !form.serviceName))}
-              className={`flex-1 relative group overflow-hidden bg-gradient-to-r from-cyan-500 to-blue-600 p-5 rounded-2xl font-black uppercase tracking-wider text-base transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_10px_40px_rgba(6,182,212,0.3)] hover:shadow-[0_15px_50px_rgba(6,182,212,0.5)] hover:-translate-y-1 ${activeButton === 'submit' ? 'animate-pulse scale-95' : ''
+              className={`flex-1 relative group overflow-hidden bg-linear-to-r from-cyan-500 to-blue-600 p-5 rounded-2xl font-black uppercase tracking-wider text-base transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_10px_40px_rgba(6,182,212,0.3)] hover:shadow-[0_15px_50px_rgba(6,182,212,0.5)] hover:-translate-y-1 ${activeButton === 'submit' ? 'animate-pulse scale-95' : ''
                 }`}
             >
               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay"></div>

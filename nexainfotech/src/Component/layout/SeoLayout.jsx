@@ -52,7 +52,7 @@ export default function SeoLayout({ children }) {
                     />
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                        className="p-2 bg-gray-800 rounded-md hover:bg-gray-700 text-gray-300 flex-shrink-0"
+                        className="p-2 bg-gray-800 rounded-md hover:bg-gray-700 text-gray-300 shrink-0"
                     >
                         {isSidebarOpen ? (
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" /></svg>
@@ -74,7 +74,7 @@ export default function SeoLayout({ children }) {
                                     }`}
                                 title={!isSidebarOpen ? item.name : ""}
                             >
-                                <span className="text-xl flex-shrink-0">{item.icon}</span>
+                                <span className="text-xl shrink-0">{item.icon}</span>
                                 <span
                                     className={`ml-3 whitespace-nowrap font-medium transition-all duration-300 ${isSidebarOpen ? "opacity-100 block" : "opacity-0 hidden"
                                         }`}

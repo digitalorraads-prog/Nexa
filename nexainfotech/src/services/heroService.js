@@ -1,9 +1,10 @@
 import axios from "../Protected/axios";
+import axiosPublic from "../Protected/axiosPublic";
 
 // Get all heroes
 export const getAllHeroes = async () => {
   try {
-    const response = await axios.get("/api/heroes");
+    const response = await axiosPublic.get("/api/heroes");
     return response.data;
   } catch (error) {
     console.error('Error fetching heroes:', error);
@@ -14,7 +15,7 @@ export const getAllHeroes = async () => {
 // Get active hero (for backward compatibility)
 export const getHeroData = async () => {
   try {
-    const response = await axios.get("/api/heroes/active");
+    const response = await axiosPublic.get("/api/heroes/active");
     return response.data;
   } catch (error) {
     console.error('Error fetching active hero:', error);
@@ -25,7 +26,7 @@ export const getHeroData = async () => {
 // Get hero by page/identifier
 export const getHeroByPage = async (pageName) => {
   try {
-    const response = await axios.get(`/api/heroes/page/${pageName}`);
+    const response = await axiosPublic.get(`/api/heroes/page/${pageName}`);
     return response.data;
   } catch (error) {
     console.error(`Error fetching hero for page ${pageName}:`, error);
@@ -36,7 +37,7 @@ export const getHeroByPage = async (pageName) => {
 // Get hero by ID
 export const getHeroById = async (id) => {
   try {
-    const response = await axios.get(`/api/heroes/${id}`);
+    const response = await axiosPublic.get(`/api/heroes/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching hero:', error);

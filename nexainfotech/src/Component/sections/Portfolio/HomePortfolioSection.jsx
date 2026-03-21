@@ -82,11 +82,11 @@ export default function HomePortfolioSection() {
     <section className="pt-24 pb-20 bg-[#0f0f1a] text-white">
       <div className="max-w-7xl mx-auto px-6 text-center">
 
-        <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+        <h2 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
           Portfolio
         </h2>
 
-        <div className="w-20 h-1 bg-gradient-to-r from-[#004C7D] to-[#158EB0] mx-auto my-4 rounded-full"></div>
+        <div className="w-20 h-1 bg-linear-to-r from-[#004C7D] to-[#158EB0] mx-auto my-4 rounded-full"></div>
 
         <p className="text-gray-400 mb-12">
           Showcasing my best work
@@ -101,7 +101,7 @@ export default function HomePortfolioSection() {
                 onClick={() => handleCategoryChange(cat)}
                 className={`px-6 py-2 rounded-full border transition-all duration-300 text-sm font-medium
                   ${active === cat
-                    ? "bg-gradient-to-r from-[#004C7D] to-[#158EB0] text-white border-transparent shadow-lg shadow-cyan-500/30"
+                    ? "bg-linear-to-r from-[#004C7D] to-[#158EB0] text-white border-transparent shadow-lg shadow-cyan-500/30"
                     : "border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black"
                   }`}
               >
@@ -154,7 +154,7 @@ export default function HomePortfolioSection() {
           <div className="mt-14">
             <button
               onClick={() => setVisibleCount((prev) => prev + 6)}
-              className="px-8 py-3 rounded-full bg-gradient-to-r from-[#004C7D] to-[#158EB0]
+              className="px-8 py-3 rounded-full bg-linear-to-r from-[#004C7D] to-[#158EB0]
               text-white font-medium shadow-lg shadow-cyan-500/30
               hover:scale-105 transition-all duration-300"
             >

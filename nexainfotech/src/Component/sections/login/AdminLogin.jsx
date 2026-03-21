@@ -140,7 +140,7 @@ export default function AdminLogin() {
         </div>
 
         {/* Right side - Welcome Message */}
-        <div className="hidden md:flex items-center justify-center bg-gradient-to-br from-cyan-500/20 to-blue-600/20 backdrop-blur-xl p-12">
+        <div className="hidden md:flex items-center justify-center bg-linear-to-br from-cyan-500/20 to-blue-600/20 backdrop-blur-xl p-12">
           <div className="text-center">
             <h2 className="text-3xl font-bold mb-4 text-cyan-400">
               Welcome Back!

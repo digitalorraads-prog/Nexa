@@ -102,7 +102,7 @@ export default function ServicesLinks() {
                 </div>
 
                 {/* Glow Effect */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#004C7D]/0 to-[#158EB0]/0 group-hover:from-[#004C7D]/10 group-hover:to-[#158EB0]/10 transition duration-500 -z-10"></div>
+                <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-[#004C7D]/0 to-[#158EB0]/0 group-hover:from-[#004C7D]/10 group-hover:to-[#158EB0]/10 transition duration-500 -z-10"></div>
               </Link>
             );
           })}

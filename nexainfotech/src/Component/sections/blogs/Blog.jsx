@@ -1,4 +1,4 @@
-import axios from "../../../Protected/axios"; // ✅ Correct import path
+import axios from "../../../Protected/axiosPublic"; // ✅ Correct import path
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -109,7 +109,7 @@ export default function Blog() {
                 </div>
 
                 <button
-                  className="px-5 py-2 rounded-full bg-gradient-to-r from-[#004C7D] to-[#158EB0] text-sm font-semibold hover:scale-105 transition-transform"
+                  className="px-5 py-2 rounded-full bg-linear-to-r from-[#004C7D] to-[#158EB0] text-sm font-semibold hover:scale-105 transition-transform"
                 >
                   Read More →
                 </button>

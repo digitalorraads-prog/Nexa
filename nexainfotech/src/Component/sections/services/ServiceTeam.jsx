@@ -22,7 +22,7 @@ export default function ServiceTeam({ serviceType, location, isLocationBased }) 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {team.map((member, index) => (
             <div key={index} className="text-center">
-              <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 p-1">
+              <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-linear-to-r from-cyan-500 to-blue-500 p-1">
                 <div className="w-full h-full rounded-full bg-[#1a1a2e] flex items-center justify-center text-4xl">
                   👤
                 </div>

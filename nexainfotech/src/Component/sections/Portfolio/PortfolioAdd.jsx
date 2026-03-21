@@ -154,7 +154,7 @@ export default function PortfolioAdd() {
               </div>
             ) : (
               <div className="space-y-3">
-                <label className="relative flex items-center justify-center gap-2 bg-gradient-to-r from-[#004C7D] to-[#158EB0] hover:from-[#005a94] hover:to-[#1aa0c9] px-4 py-4 rounded-lg font-medium transition cursor-pointer w-full">
+                <label className="relative flex items-center justify-center gap-2 bg-linear-to-r from-[#004C7D] to-[#158EB0] hover:from-[#005a94] hover:to-[#1aa0c9] px-4 py-4 rounded-lg font-medium transition cursor-pointer w-full">
                   <input
                     type="file"
                     accept="image/*"
@@ -233,7 +233,7 @@ export default function PortfolioAdd() {
           <button
             type="submit"
             disabled={loading || uploadingImage || !form.image}
-            className="w-full py-3 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 font-semibold hover:scale-105 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 rounded-full bg-linear-to-r from-green-500 to-emerald-500 font-semibold hover:scale-105 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Adding..." : "➕ Add Portfolio"}
           </button>

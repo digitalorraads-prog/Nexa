@@ -1,7 +1,8 @@
 // src/components/Navbar.jsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "../../Protected/axios";
+import axiosPublic from "../../Protected/axiosPublic";
+import axiosProtected from "../../Protected/axios"; // For auth checks and logout
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -24,7 +25,7 @@ export default function Navbar() {
   const loadNavbarFromDatabase = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("/api/navbar");
+      const response = await axiosPublic.get("/api/navbar");
 
 
       if (response.data.success) {
@@ -99,15 +100,41 @@ export default function Navbar() {
 
   // Check if admin is logged in
   useEffect(() => {
-    axios
+    axiosProtected
       .get("/api/admin/check-auth")
       .then((res) => {
-        setIsLoggedIn(true);
-        setIsAdmin(res.data?.isAdmin || false);
+        if (res.data.authenticated) {
+          setIsAdmin(true);
+          setIsLoggedIn(true); // Keep isLoggedIn updated
+        } else {
+          setIsAdmin(false);
+          setIsLoggedIn(false); // Keep isLoggedIn updated
+          localStorage.removeItem("isAdmin");
+        }
       })
       .catch(() => {
-        setIsLoggedIn(false);
         setIsAdmin(false);
+        setIsLoggedIn(false); // Keep isLoggedIn updated
+        localStorage.removeItem("isAdmin");
+      });
+  }, []);
+
+  // Check if SEO is logged in
+  useEffect(() => {
+    axiosProtected
+      .get("/api/seo/check-auth")
+      .then((res) => {
+        if (res.data.authenticated) {
+          setIsSeo(true);
+          setIsLoggedIn(true);
+        } else {
+          setIsSeo(false);
+          localStorage.removeItem("isSeo");
+        }
+      })
+      .catch(() => {
+        setIsSeo(false);
+        localStorage.removeItem("isSeo");
       });
   }, []);
 
@@ -125,10 +152,17 @@ export default function Navbar() {
   }, [mobileMenu]);
 
   const handleLogout = async () => {
-    await axios.post("/api/admin/logout");
-    setIsLoggedIn(false);
-    setIsAdmin(false);
-    window.location.href = "/";
+    try {
+      await axiosProtected.post("/api/admin/logout");
+      setIsLoggedIn(false); // Set isLoggedIn to false on logout
+      setIsAdmin(false);
+      setIsSeo(false); // Also clear SEO state on admin logout
+      localStorage.removeItem("isAdmin");
+      localStorage.removeItem("isSeo");
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   const closeAll = () => {
@@ -288,7 +322,7 @@ export default function Navbar() {
           ) : (
             <Link
               to="/contact"
-              className={`${buttonClass} bg-gradient-to-r from-[#004C7D] to-[#158EB0] hover:scale-105`}
+              className={`${buttonClass} bg-linear-to-r from-[#004C7D] to-[#158EB0] hover:scale-105`}
               onClick={closeAll}
             >
               Get Started
@@ -452,7 +486,7 @@ export default function Navbar() {
                 <Link
                   to="/contact"
                   onClick={closeAll}
-                  className="mt-4 px-6 py-3 bg-gradient-to-r from-[#004C7D] to-[#158EB0] text-center rounded-full"
+                  className="mt-4 px-6 py-3 bg-linear-to-r from-[#004C7D] to-[#158EB0] text-center rounded-full"
                 >
                   Get Started
                 </Link>

@@ -85,7 +85,7 @@ export default function WhyChooseUs() {
         </span>
         <h2 className="text-3xl md:text-4xl font-bold mb-3">
           We Deliver{" "}
-          <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent bg-size-200 animate-gradient">
+          <span className="bg-linear-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent bg-size-200 animate-gradient">
             Excellence
           </span>
         </h2>
@@ -99,7 +99,7 @@ export default function WhyChooseUs() {
         {features.map((item, index) => (
           <div
             key={index}
-            className={`group relative p-5 rounded-2xl bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-xl border border-white/10
+            className={`group relative p-5 rounded-2xl bg-linear-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-xl border border-white/10
               transition-all duration-500 hover:duration-300
               hover:scale-105 hover:-translate-y-2
               hover:shadow-[0_20px_40px_-15px_rgba(6,182,212,0.3)]
@@ -111,7 +111,7 @@ export default function WhyChooseUs() {
             }}
           >
             {/* Hover Glow Effect */}
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/0 via-cyan-500/0 to-blue-500/0 group-hover:from-cyan-500/10 group-hover:via-blue-500/10 group-hover:to-purple-500/10 transition-all duration-500"></div>
+            <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-cyan-500/0 via-cyan-500/0 to-blue-500/0 group-hover:from-cyan-500/10 group-hover:via-blue-500/10 group-hover:to-purple-500/10 transition-all duration-500"></div>
 
             {/* Number with Icon Combined */}
             <div className="flex items-start justify-between mb-3">
@@ -122,7 +122,7 @@ export default function WhyChooseUs() {
             </div>
 
             {/* Title */}
-            <h3 className="text-base font-bold mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-300">
+            <h3 className="text-base font-bold mb-2 group-hover:text-transparent group-hover:bg-linear-to-r group-hover:from-cyan-400 group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-300">
               {item.title}
             </h3>
 
@@ -133,12 +133,12 @@ export default function WhyChooseUs() {
 
             {/* Animated Progress Line */}
             <div className="relative h-1 bg-white/5 rounded-full overflow-hidden">
-              <div className="absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 rounded-full transition-all duration-500 group-hover:w-full"></div>
+              <div className="absolute inset-y-0 left-0 w-0 bg-linear-to-r from-cyan-400 via-blue-500 to-purple-600 rounded-full transition-all duration-500 group-hover:w-full"></div>
             </div>
 
             {/* Corner Accent */}
             <div className="absolute top-0 right-0 w-12 h-12 overflow-hidden">
-              <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-cyan-500/20 to-transparent transform rotate-45 translate-x-6 -translate-y-6 group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform duration-500"></div>
+              <div className="absolute top-0 right-0 w-12 h-12 bg-linear-to-br from-cyan-500/20 to-transparent transform rotate-45 translate-x-6 -translate-y-6 group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform duration-500"></div>
             </div>
           </div>
         ))}

@@ -352,7 +352,7 @@ export default function AdminServiceList() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div className="bg-gradient-to-br from-cyan-900/20 to-blue-900/20 border border-cyan-500/30 rounded-xl p-6">
+          <div className="bg-linear-to-br from-cyan-900/20 to-blue-900/20 border border-cyan-500/30 rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400 text-sm">Total Services</p>
@@ -364,7 +364,7 @@ export default function AdminServiceList() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 border border-purple-500/30 rounded-xl p-6">
+          <div className="bg-linear-to-br from-purple-900/20 to-pink-900/20 border border-purple-500/30 rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400 text-sm">Custom URLs</p>
@@ -379,7 +379,7 @@ export default function AdminServiceList() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-green-900/20 to-emerald-900/20 border border-green-500/30 rounded-xl p-6">
+          <div className="bg-linear-to-br from-green-900/20 to-emerald-900/20 border border-green-500/30 rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400 text-sm">Rich Content</p>
@@ -394,7 +394,7 @@ export default function AdminServiceList() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-yellow-900/20 to-orange-900/20 border border-yellow-500/30 rounded-xl p-6">
+          <div className="bg-linear-to-br from-yellow-900/20 to-orange-900/20 border border-yellow-500/30 rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400 text-sm">With Buttons</p>
@@ -467,7 +467,7 @@ export default function AdminServiceList() {
 
               <button
                 onClick={() => navigate("/admin/add-service")}
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 px-6 py-3 rounded-lg font-semibold transition flex items-center gap-2 shadow-lg"
+                className="bg-linear-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 px-6 py-3 rounded-lg font-semibold transition flex items-center gap-2 shadow-lg"
               >
                 <PlusIcon className="w-5 h-5" />
                 <span className="hidden sm:inline">Add New</span>
@@ -843,7 +843,7 @@ export default function AdminServiceList() {
       {showDuplicateModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fadeIn">
           <div className="bg-[#1a1a2e] rounded-3xl border border-white/10 p-6 md:p-8 max-w-2xl w-full shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-600"></div>
+            <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-cyan-500 to-blue-600"></div>
 
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-white flex items-center gap-2">
@@ -963,7 +963,7 @@ export default function AdminServiceList() {
                 <button
                   type="submit"
                   disabled={isDuplicating}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-xl font-semibold transition shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2"
+                  className="flex-1 px-6 py-3 bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-xl font-semibold transition shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2"
                 >
                   {isDuplicating ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>

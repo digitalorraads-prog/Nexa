@@ -72,7 +72,7 @@ const COLOR_PRESETS = {
   },
   colorful: {
     name: 'Colorful Theme',
-    title: 'text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-red-500',
+    title: 'text-transparent bg-clip-text bg-linear-to-r from-purple-600 via-pink-500 to-red-500',
     subtitle: 'text-pink-500',
     description: 'text-gray-800',
   },
@@ -86,11 +86,11 @@ const COLOR_PRESETS = {
 
 // Badge style options
 const BADGE_STYLES = [
-  { name: 'Cyan Blue', value: 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white' },
-  { name: 'Purple Pink', value: 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' },
-  { name: 'Green', value: 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' },
-  { name: 'Yellow Orange', value: 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white' },
-  { name: 'Red Pink', value: 'bg-gradient-to-r from-red-500 to-pink-500 text-white' },
+  { name: 'Cyan Blue', value: 'bg-linear-to-r from-cyan-500 to-blue-600 text-white' },
+  { name: 'Purple Pink', value: 'bg-linear-to-r from-purple-500 to-pink-500 text-white' },
+  { name: 'Green', value: 'bg-linear-to-r from-green-500 to-emerald-500 text-white' },
+  { name: 'Yellow Orange', value: 'bg-linear-to-r from-yellow-500 to-orange-500 text-white' },
+  { name: 'Red Pink', value: 'bg-linear-to-r from-red-500 to-pink-500 text-white' },
   { name: 'Solid Blue', value: 'bg-blue-500 text-white' },
   { name: 'Solid Green', value: 'bg-green-500 text-white' },
   { name: 'Solid Purple', value: 'bg-purple-500 text-white' },
@@ -111,9 +111,9 @@ const TEXT_COLORS = [
   { name: 'Yellow', value: 'text-yellow-400' },
   { name: 'Red', value: 'text-red-400' },
   { name: 'Orange', value: 'text-orange-400' },
-  { name: 'Gradient 1', value: 'text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500' },
-  { name: 'Gradient 2', value: 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500' },
-  { name: 'Gradient 3', value: 'text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500' },
+  { name: 'Gradient 1', value: 'text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500' },
+  { name: 'Gradient 2', value: 'text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-500' },
+  { name: 'Gradient 3', value: 'text-transparent bg-clip-text bg-linear-to-r from-green-400 to-blue-500' },
 ];
 
 function HeroManager() {
@@ -196,7 +196,7 @@ function HeroManager() {
       subtitleHex: '#22d3ee',
       descriptionHex: '#d1d5db',
     },
-    badgeStyle: 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white',
+    badgeStyle: 'bg-linear-to-r from-cyan-500 to-blue-600 text-white',
     useCustomColors: false,
     useHexColors: {
       title: false,
@@ -396,7 +396,7 @@ function HeroManager() {
         subtitleHex: '#22d3ee',
         descriptionHex: '#d1d5db',
       },
-      badgeStyle: hero.badgeStyle || 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white',
+      badgeStyle: hero.badgeStyle || 'bg-linear-to-r from-cyan-500 to-blue-600 text-white',
       useCustomColors: hero.useCustomColors || false,
       useHexColors: hero.useHexColors || {
         title: false,
@@ -783,7 +783,7 @@ function HeroManager() {
       <div className="max-w-7xl mx-auto">
         <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[#1a1a2e]/50 p-8 rounded-3xl border border-gray-800 backdrop-blur-md">
           <div className="flex-1">
-            <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-2">
+            <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500 mb-2">
               Hero Dashboard
             </h1>
             <p className="text-gray-400 max-w-md">
@@ -1647,7 +1647,7 @@ function HeroManager() {
                                                     <div className="flex items-center gap-2">
                                                       <TagIcon className="w-4 h-4 text-cyan-400" />
                                                       <select
-                                                        value={formData.badgeStyle || 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'}
+                                                        value={formData.badgeStyle || 'bg-linear-to-r from-cyan-500 to-blue-600 text-white'}
                                                         onChange={(e) => setFormData({ ...formData, badgeStyle: e.target.value })}
                                                         className="text-xs bg-[#1a1a2e] border border-gray-600 rounded px-2 py-1 text-white focus:outline-none focus:border-cyan-400"
                                                       >
@@ -1662,10 +1662,10 @@ function HeroManager() {
 
                                                   {/* Badge Preview */}
                                                   <div className="flex flex-wrap gap-2">
-                                                    <span className={`${formData.badgeStyle || 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'} px-3 py-1.5 rounded-full text-sm inline-block`}>
+                                                    <span className={`${formData.badgeStyle || 'bg-linear-to-r from-cyan-500 to-blue-600 text-white'} px-3 py-1.5 rounded-full text-sm inline-block`}>
                                                       Internship Available
                                                     </span>
-                                                    <span className={`${formData.badgeStyle || 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'} px-3 py-1.5 rounded-full text-sm inline-block`}>
+                                                    <span className={`${formData.badgeStyle || 'bg-linear-to-r from-cyan-500 to-blue-600 text-white'} px-3 py-1.5 rounded-full text-sm inline-block`}>
                                                       Placement Assistance
                                                     </span>
                                                   </div>
@@ -1841,7 +1841,7 @@ function HeroManager() {
                                               <button
                                                 type="submit"
                                                 disabled={loading || uploading}
-                                                className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 py-3 rounded-lg font-semibold transition disabled:opacity-50"
+                                                className="flex-1 bg-linear-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 py-3 rounded-lg font-semibold transition disabled:opacity-50"
                                               >
                                                 {loading ? "Saving..." : "Save Changes"}
                                               </button>
@@ -1907,7 +1907,7 @@ function HeroManager() {
         {showHeroDuplicateModal && (
           <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-[100] p-4 animate-fadeIn">
             <div className="bg-[#1a1a2e] rounded-3xl border border-white/10 p-6 md:p-8 max-w-xl w-full shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-600"></div>
+              <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-cyan-500 to-blue-600"></div>
 
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold text-white flex items-center gap-2">
@@ -1975,7 +1975,7 @@ function HeroManager() {
                   <button
                     type="submit"
                     disabled={isDuplicatingHero}
-                    className="flex-1 px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-white rounded-xl font-bold transition-all shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 hover:scale-[1.02]"
+                    className="flex-1 px-6 py-3 bg-linear-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-white rounded-xl font-bold transition-all shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 hover:scale-[1.02]"
                   >
                     {isDuplicatingHero ? (
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -1994,7 +1994,7 @@ function HeroManager() {
         {showImportHeroModal && (
           <div className="fixed inset-0 bg-black/80 backdrop-blur-xl flex items-center justify-center z-[100] p-4 animate-fadeIn">
             <div className="bg-[#1a1a2e] rounded-3xl border border-white/10 p-6 md:p-8 max-w-2xl w-full max-h-[90vh] shadow-2xl relative overflow-hidden flex flex-col">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-cyan-500"></div>
+              <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-purple-500 to-cyan-500"></div>
 
               <div className="flex justify-between items-center mb-6">
                 <div>

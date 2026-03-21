@@ -123,7 +123,7 @@ export default function AddBlogForm() {
 
   return (
     <div className="min-h-screen bg-[#0c0c16] flex items-center justify-center px-4 py-20">
-      <div className="w-full max-w-2xl bg-gradient-to-br from-[#111122] to-[#0c0c16] border border-cyan-500/20 rounded-3xl shadow-[0_0_40px_rgba(0,255,255,0.15)] p-10 backdrop-blur-xl">
+      <div className="w-full max-w-2xl bg-linear-to-br from-[#111122] to-[#0c0c16] border border-cyan-500/20 rounded-3xl shadow-[0_0_40px_rgba(0,255,255,0.15)] p-10 backdrop-blur-xl">
 
         <h2 className="text-3xl font-bold text-center text-cyan-400 mb-10 tracking-wide">
           Add New Blog
@@ -169,7 +169,7 @@ export default function AddBlogForm() {
               </div>
             ) : (
               <div className="space-y-3">
-                <label className="relative flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-4 py-3 rounded-lg font-medium transition cursor-pointer w-full">
+                <label className="relative flex items-center justify-center gap-2 bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-4 py-3 rounded-lg font-medium transition cursor-pointer w-full">
                   <input
                     type="file"
                     accept="image/*"
@@ -252,7 +252,7 @@ export default function AddBlogForm() {
             className={`w-full py-3 rounded-full font-semibold tracking-wide transition-all duration-300 ${
               loading || uploadingImage
                 ? "bg-gray-600 cursor-not-allowed"
-                : "bg-gradient-to-r from-[#004C7D] to-[#158EB0] hover:scale-105"
+                : "bg-linear-to-r from-[#004C7D] to-[#158EB0] hover:scale-105"
             } text-white`}
           >
             {loading ? "Publishing Blog..." : "Publish Blog"}

@@ -57,7 +57,7 @@ export default function OurExperts() {
       >
         <h2 className="text-4xl md:text-6xl font-extrabold mb-4">
           Our{" "}
-          <span className="bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
             Experts
           </span>
         </h2>

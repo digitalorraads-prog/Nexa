@@ -72,7 +72,7 @@ export default function AboutSection() {
           >
             <h1 className="text-4xl md:text-5xl font-extrabold mb-6">
               About{" "}
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
                 Our Company
               </span>
             </h1>
@@ -88,7 +88,7 @@ export default function AboutSection() {
               we craft strategies that elevate brands and maximize ROI.
             </p>
 
-            <Link to="/contact" className="px-6 py-3 rounded-full bg-gradient-to-r from-[#004C7D] to-[#158EB0] font-semibold hover:-translate-y-1 transition">
+            <Link to="/contact" className="px-6 py-3 rounded-full bg-linear-to-r from-[#004C7D] to-[#158EB0] font-semibold hover:-translate-y-1 transition">
               Contact Us
             </Link>
           </div>
@@ -118,7 +118,7 @@ export default function AboutSection() {
               key={index}
               className="p-8 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 hover:-translate-y-3 transition duration-500"
             >
-              <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
+              <h2 className="text-3xl font-bold bg-linear-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
                 <Counter target={item.number} />
               </h2>
               <p className="text-gray-400 mt-2">{item.label}</p>

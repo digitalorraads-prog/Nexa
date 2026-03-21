@@ -11,7 +11,7 @@ export default function CallToAction({
     <section className="relative py-12 md:py-16 bg-[#0a0f1c] text-white text-center overflow-hidden">
       {/* Animated Background Gradients */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 blur-3xl opacity-50" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-linear-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 blur-3xl opacity-50" />
       </div>
 
       <div className="relative max-w-4xl mx-auto px-6 z-10">
@@ -27,7 +27,7 @@ export default function CallToAction({
 
           <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-snug max-w-3xl mx-auto">
             {title}{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500">
               {location}?
             </span>
           </h2>
@@ -43,7 +43,7 @@ export default function CallToAction({
           >
             <Link
               to="/contact"
-              className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-lg shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all hover:shadow-[0_0_30px_rgba(6,182,212,0.6)]"
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-linear-to-r from-cyan-500 to-blue-600 text-white font-bold text-lg shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all hover:shadow-[0_0_30px_rgba(6,182,212,0.6)]"
             >
               Get Free Consultation
               <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

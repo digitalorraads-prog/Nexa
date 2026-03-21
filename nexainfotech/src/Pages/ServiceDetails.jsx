@@ -90,7 +90,7 @@ export default function ServiceDetails() {
   const renderFormattedText = (text) => {
     if (!text) return null;
     let formattedText = text
-      .replace(/\*\*(.*?)\*\*/g, '<strong class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-extrabold">$1</strong>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500 font-extrabold">$1</strong>')
       .replace(/\*(.*?)\*/g, '<em class="text-gray-300 italic">$1</em>')
       .replace(/<span style="color:(.*?)">(.*?)<\/span>/g, '<span style="color:$1">$2</span>')
       .replace(/<u>(.*?)<\/u>/g, '<u class="underline decoration-cyan-500/50 underline-offset-4 decoration-2">$1</u>')
@@ -112,7 +112,7 @@ export default function ServiceDetails() {
             <div className="absolute inset-4 border-2 border-blue-500/20 rounded-full"></div>
             <div className="absolute inset-4 border-b-2 border-blue-400 rounded-full animate-[spin_2s_linear_infinite_reverse]"></div>
           </div>
-          <p className="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500 tracking-widest uppercase">
+          <p className="text-xl font-black bg-clip-text text-transparent bg-linear-to-r from-cyan-400 to-blue-500 tracking-widest uppercase">
             Initializing Elite Interface
           </p>
         </motion.div>
@@ -168,7 +168,7 @@ export default function ServiceDetails() {
               <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
                 <div className="flex flex-col sm:flex-row items-center gap-8 lg:gap-16 w-full lg:w-auto">
                   <motion.div whileHover={{ scale: 1.05 }} className="flex items-center gap-6 group bg-white/[0.03] p-5 rounded-[2rem] border border-white/10 hover:border-cyan-500/40 transition-all duration-700 shadow-2xl">
-                    <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-400/30 flex items-center justify-center">
+                    <div className="relative w-16 h-16 rounded-2xl bg-linear-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-400/30 flex items-center justify-center">
                       <MapPinIcon className="w-8 h-8 text-cyan-400 group-hover:scale-110 transition-transform" />
                       <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 border-2 border-[#0a0a16] rounded-full animate-pulse shadow-[0_0_15px_#22c55e]"></span>
                     </div>
@@ -179,7 +179,7 @@ export default function ServiceDetails() {
                   </motion.div>
                   <div className="hidden sm:block w-px h-20 bg-gradient-to-b from-transparent via-white/10 to-transparent"></div>
                   <motion.div whileHover={{ scale: 1.05 }} className="flex items-center gap-6 group bg-white/[0.03] p-5 rounded-[2rem] border border-white/10 hover:border-blue-500/40 transition-all duration-700 shadow-2xl">
-                    <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-600/20 border border-blue-400/30 flex items-center justify-center">
+                    <div className="relative w-16 h-16 rounded-2xl bg-linear-to-br from-blue-500/20 to-purple-600/20 border border-blue-400/30 flex items-center justify-center">
                       <WrenchScrewdriverIcon className="w-8 h-8 text-blue-400" />
                     </div>
                     <div>
@@ -239,14 +239,14 @@ export default function ServiceDetails() {
                 className="order-2 lg:order-1"
               >
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-8 bg-gradient-to-br from-[#1f8f52] to-[#0f733e] border border-white/10 shadow-[0_10px_20px_-8px_rgba(31,143,82,0.4)] backdrop-blur-sm">
+                <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-8 bg-linear-to-br from-[#1f8f52] to-[#0f733e] border border-white/10 shadow-[0_10px_20px_-8px_rgba(31,143,82,0.4)] backdrop-blur-sm">
                   <CheckCircleIcon className="w-5 h-5 text-white" />
                   <span className="text-[14px] font-medium tracking-wide text-white">Expert Assessments • Trusted Solutions</span>
                 </div>
 
                 {/* Heading */}
                 {service.heroHeading?.text && (
-                  <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-[68px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-[#e0f0e8] leading-[1.1] mb-8">
+                  <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-[68px] font-bold text-transparent bg-clip-text bg-linear-to-r from-white to-[#e0f0e8] leading-[1.1] mb-8">
                     {service.heroHeading.text}
                   </h2>
                 )}
@@ -270,7 +270,7 @@ export default function ServiceDetails() {
                 {/* Buttons */}
                 <div className="flex flex-wrap gap-5 mt-4">
                   {service.buttonText && (
-                    <Link to="/contact" className="group inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold border border-white/10 transition-all bg-gradient-to-br from-[#1f8f52] to-[#0f733e] hover:from-[#138a46] hover:to-[#0b6130] text-white shadow-[0_18px_30px_-12px_rgba(31,143,82,0.4)] hover:shadow-[0_25px_35px_-10px_#1f8f52] hover:scale-105 hover:-translate-y-1">
+                    <Link to="/contact" className="group inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold border border-white/10 transition-all bg-linear-to-br from-[#1f8f52] to-[#0f733e] hover:from-[#138a46] hover:to-[#0b6130] text-white shadow-[0_18px_30px_-12px_rgba(31,143,82,0.4)] hover:shadow-[0_25px_35px_-10px_#1f8f52] hover:scale-105 hover:-translate-y-1">
                       <ClockIcon className="w-5 h-5 gap-2 transition-transform group-hover:rotate-12" />
                       {service.buttonText}
                     </Link>

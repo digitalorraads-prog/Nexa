@@ -78,7 +78,7 @@ export default function Services() {
       >
         <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
           Our{" "}
-          <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent animate-gradient-x">
+          <span className="bg-linear-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent animate-gradient-x">
             Services
           </span>
         </h2>
@@ -107,7 +107,7 @@ export default function Services() {
             }}
           >
             {/* Gradient Glow Border */}
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 opacity-0 group-hover:opacity-25 blur-xl transition duration-500"></div>
+            <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-cyan-400 via-blue-500 to-purple-500 opacity-0 group-hover:opacity-25 blur-xl transition duration-500"></div>
 
             {/* Icon */}
             <div className="relative text-4xl mb-6 transition-all duration-500 group-hover:scale-125 group-hover:rotate-6">
@@ -123,7 +123,7 @@ export default function Services() {
             </p>
 
             {/* Animated Bottom Line */}
-            <div className="relative mt-6 h-1 w-0 bg-gradient-to-r from-cyan-400 to-blue-600 transition-all duration-500 group-hover:w-full"></div>
+            <div className="relative mt-6 h-1 w-0 bg-linear-to-r from-cyan-400 to-blue-600 transition-all duration-500 group-hover:w-full"></div>
           </div>
         ))}
       </div>

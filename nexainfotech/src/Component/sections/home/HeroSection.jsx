@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useLocation, Link } from "react-router-dom";
-import axios from "../../../Protected/axios";
+import axios from "../../../Protected/axiosPublic";
 import { ChevronLeftIcon, ChevronRightIcon, PlayIcon, PauseIcon } from '@heroicons/react/24/outline';
 
 // Configuration constants
@@ -261,7 +261,7 @@ export default function HeroSection({
               const currentHero = heroes[currentHeroIndex];
               // Support user defined custom style or fallback to old presets
               const customBadgeStyle = currentHero?.badgeStyle;
-              const styleClasses = customBadgeStyle ? customBadgeStyle : `bg-gradient-to-r ${BADGE_STYLES[badgeType]}`;
+              const styleClasses = customBadgeStyle ? customBadgeStyle : `bg-linear-to-r ${BADGE_STYLES[badgeType]}`;
 
               badgeGroup.push(
                 <span key={`badge-${index}`} className={`
@@ -295,7 +295,7 @@ export default function HeroSection({
             if (trimmedLine.startsWith('•') || trimmedLine.startsWith('-') || trimmedLine.startsWith('*')) {
               renderedLines.push(
                 <div key={`bullet-${index}`} className={`flex items-start gap-3 ${fontSizeClass} font-light ${align.justify}`}>
-                  <span className="text-cyan-400 mt-1 flex-shrink-0" aria-hidden="true">◆</span>
+                  <span className="text-cyan-400 mt-1 shrink-0" aria-hidden="true">◆</span>
                   <span className="opacity-90">{trimmedLine.substring(1).trim()}</span>
                 </div>
               );
@@ -332,7 +332,7 @@ export default function HeroSection({
   // Loading state
   if (loading) {
     return (
-      <div className={`${HEIGHT_CLASSES.large} bg-gradient-to-br from-[#0c0c16] to-[#1a1a2e] flex items-center justify-center`}>
+      <div className={`${HEIGHT_CLASSES.large} bg-linear-to-br from-[#0c0c16] to-[#1a1a2e] flex items-center justify-center`}>
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-cyan-400 animate-pulse">Loading hero section...</p>
@@ -344,7 +344,7 @@ export default function HeroSection({
   // Error state
   if (error || heroes.length === 0) {
     return (
-      <div className={`${HEIGHT_CLASSES.medium} bg-gradient-to-br from-red-900/20 to-red-800/10 flex items-center justify-center px-4`}>
+      <div className={`${HEIGHT_CLASSES.medium} bg-linear-to-br from-red-900/20 to-red-800/10 flex items-center justify-center px-4`}>
         <div className="text-center">
           <p className="text-red-400 text-lg mb-2">{error || "No hero section found"}</p>
           <button
@@ -529,7 +529,7 @@ export default function HeroSection({
                   to={currentHero.primaryButtonLink}
                   className="
                     group relative px-6 sm:px-8 py-2.5 sm:py-3.5 
-                    bg-gradient-to-r from-cyan-500 to-blue-600 
+                    bg-linear-to-r from-cyan-500 to-blue-600 
                     hover:from-cyan-400 hover:to-blue-500 
                     text-white rounded-full font-semibold 
                     transition-all duration-300 

@@ -23,7 +23,7 @@ export default function NotFoundSection() {
           animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 "
         }`}
       >
-        <h1 className="text-7xl md:text-9xl font-extrabold bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent animate-bounce mt-25">
+        <h1 className="text-7xl md:text-9xl font-extrabold bg-linear-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent animate-bounce mt-25">
           404
         </h1>
 
@@ -38,7 +38,7 @@ export default function NotFoundSection() {
 
         <Link
           to="/"
-          className="px-6 py-3 rounded-full bg-gradient-to-r from-[#004C7D] to-[#158EB0] font-semibold hover:-translate-y-1 transition inline-block"
+          className="px-6 py-3 rounded-full bg-linear-to-r from-[#004C7D] to-[#158EB0] font-semibold hover:-translate-y-1 transition inline-block"
         >
           Back To Home
         </Link>

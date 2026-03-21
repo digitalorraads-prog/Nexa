@@ -359,7 +359,7 @@ export default function UpdateBlog() {
           {/* Add Blog Button */}
           <button
             onClick={() => navigate("/admin/add-blog")}
-            className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 px-6 py-2 rounded-lg font-semibold transition flex items-center gap-2 shadow-lg"
+            className="bg-linear-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 px-6 py-2 rounded-lg font-semibold transition flex items-center gap-2 shadow-lg"
           >
             <PlusIcon className="w-5 h-5" />
             Add New Blog
@@ -458,7 +458,7 @@ export default function UpdateBlog() {
                     }}
                   />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                  <div className="w-full h-full bg-linear-to-br from-gray-800 to-gray-900 flex items-center justify-center">
                     <PhotoIcon className="w-16 h-16 text-gray-600" />
                   </div>
                 )}
@@ -629,7 +629,7 @@ export default function UpdateBlog() {
                     <button
                       type="submit"
                       disabled={loading || uploadingImage}
-                      className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 py-2 rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full bg-linear-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 py-2 rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {loading ? "Updating..." : "Update Blog"}
                     </button>

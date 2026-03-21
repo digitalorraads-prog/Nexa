@@ -41,8 +41,13 @@ function AdminLoginWrapper() {
 
   useEffect(() => {
     axios
-      .get("/api/admin/check-auth")
-      .then(() => setStatus("authenticated"))
+      .then((res) => {
+        if (res.data.authenticated) {
+          setStatus("authenticated");
+        } else {
+          setStatus("unauthenticated");
+        }
+      })
       .catch(() => setStatus("unauthenticated"));
   }, []);
 
@@ -62,8 +67,13 @@ function SeoLoginWrapper() {
 
   useEffect(() => {
     axios
-      .get("/api/seo/check-auth")
-      .then(() => setStatus("authenticated"))
+      .then((res) => {
+        if (res.data.authenticated) {
+          setStatus("authenticated");
+        } else {
+          setStatus("unauthenticated");
+        }
+      })
       .catch(() => setStatus("unauthenticated"));
   }, []);
 

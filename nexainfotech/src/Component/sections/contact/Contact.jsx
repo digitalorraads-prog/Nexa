@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "../../../Protected/axios"; // 👈 custom axios instance
+import axios from "../../../Protected/axiosPublic"; // 👈 Use public axios for public form
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -25,7 +25,7 @@ export default function Contact() {
     try {
       const response = await axios.post("/api/contact", formData);
       console.log("Response:", response.data);
-      alert(response.data.message || "Message Sent Successfully 🚀");
+      alert("Message Sent Successfully! 🚀");
       setFormData({
         name: "",
         phone: "",
@@ -80,13 +80,13 @@ export default function Contact() {
       </div>
 
       {/* Gradient orbs */}
-      <div className="gradient-orb fixed top-[-30%] right-[-10%] w-[600px] h-[600px] rounded-full bg-gradient-to-r from-cyan-400/15 via-blue-600/10 to-transparent blur-[60px] z-0 animate-orbFloat" />
-      <div className="gradient-orb-2 fixed bottom-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-r from-purple-500/12 via-cyan-400/8 to-transparent blur-[60px] z-0 animate-orbFloatReverse" />
+      <div className="gradient-orb fixed top-[-30%] right-[-10%] w-[600px] h-[600px] rounded-full bg-linear-to-r from-cyan-400/15 via-blue-600/10 to-transparent blur-[60px] z-0 animate-orbFloat" />
+      <div className="gradient-orb-2 fixed bottom-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-linear-to-r from-purple-500/12 via-cyan-400/8 to-transparent blur-[60px] z-0 animate-orbFloatReverse" />
 
       <div className="container max-w-6xl mx-auto relative z-10 flex items-center min-h-[calc(100vh-112px)]">
         <div className="glass-master w-full bg-[rgba(10,15,25,0.6)] backdrop-blur-[20px] border border-white/5 rounded-[48px] p-12 md:p-[60px] shadow-2xl relative overflow-hidden">
           {/* Shimmer line */}
-          <div className="absolute top-0 left-[-50%] w-[200%] h-px bg-gradient-to-r from-transparent via-white/10 via-cyan-400/30 to-transparent animate-shimmer" />
+          <div className="absolute top-0 left-[-50%] w-[200%] h-px bg-linear-to-r from-transparent via-white/10 via-cyan-400/30 to-transparent animate-shimmer" />
 
           {/* Header */}
           <div className="contact-header text-center max-w-[600px] mx-auto mb-12">
@@ -102,18 +102,18 @@ export default function Contact() {
             <p className="text-white/80 text-lg md:text-xl max-w-[450px] mx-auto">
               Got a question?  We'd love to hear from you.
             </p>
-            <div className="gradient-underline w-[120px] h-1 mx-auto mt-6 rounded bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-[size:300%] animate-gradientMove" />
+            <div className="gradient-underline w-[120px] h-1 mx-auto mt-6 rounded bg-linear-to-r from-cyan-400 via-blue-500 to-purple-500 bg-[size:300%] animate-gradientMove" />
           </div>
 
           {/* Contact Cards */}
           <div className="contact-cards grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
             {/* Call Card */}
             <div className="contact-card bg-white/3 border border-white/5 rounded-[28px] p-7 text-center transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/30 hover:shadow-[0_20px_30px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400 via-blue-500 to-transparent translate-x-[-100%] group-hover:translate-x-full transition-transform duration-1000" />
+              <div className="absolute inset-0 bg-linear-to-br from-cyan-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-0 left-0 w-full h-0.5 bg-linear-to-r from-transparent via-cyan-400 via-blue-500 to-transparent translate-x-[-100%] group-hover:translate-x-full transition-transform duration-1000" />
 
               <div className="card-icon w-[65px] h-[65px] mx-auto mb-[18px] bg-cyan-400/10 rounded-full flex items-center justify-center text-2xl text-cyan-400 border border-cyan-400/20 transition-all duration-400 relative group-hover:bg-transparent group-hover:text-white group-hover:scale-110 group-hover:rotate-180 group-hover:border-transparent">
-                <div className="absolute inset-[-3px] rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
+                <div className="absolute inset-[-3px] rounded-full bg-linear-to-br from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
                 <i className="fas fa-phone text-2xl"></i>
               </div>
               <h3 className="text-xl font-semibold mb-2 text-white">Call us</h3>
@@ -127,11 +127,11 @@ export default function Contact() {
 
             {/* Email Card */}
             <div className="contact-card bg-white/3 border border-white/5 rounded-[28px] p-7 text-center transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/30 hover:shadow-[0_20px_30px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400 via-blue-500 to-transparent translate-x-[-100%] group-hover:translate-x-full transition-transform duration-1000" />
+              <div className="absolute inset-0 bg-linear-to-br from-cyan-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-0 left-0 w-full h-0.5 bg-linear-to-r from-transparent via-cyan-400 via-blue-500 to-transparent translate-x-[-100%] group-hover:translate-x-full transition-transform duration-1000" />
 
               <div className="card-icon w-[65px] h-[65px] mx-auto mb-[18px] bg-cyan-400/10 rounded-full flex items-center justify-center text-2xl text-cyan-400 border border-cyan-400/20 transition-all duration-400 relative group-hover:bg-transparent group-hover:text-white group-hover:scale-110 group-hover:rotate-180 group-hover:border-transparent">
-                <div className="absolute inset-[-3px] rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
+                <div className="absolute inset-[-3px] rounded-full bg-linear-to-br from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
                 <i className="fas fa-envelope text-2xl"></i>
               </div>
               <h3 className="text-xl font-semibold mb-2 text-white">Email us</h3>
@@ -144,11 +144,11 @@ export default function Contact() {
 
             {/* WhatsApp Card */}
             <div className="contact-card bg-white/3 border border-white/5 rounded-[28px] p-7 text-center transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/30 hover:shadow-[0_20px_30px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400 via-blue-500 to-transparent translate-x-[-100%] group-hover:translate-x-full transition-transform duration-1000" />
+              <div className="absolute inset-0 bg-linear-to-br from-cyan-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-0 left-0 w-full h-0.5 bg-linear-to-r from-transparent via-cyan-400 via-blue-500 to-transparent translate-x-[-100%] group-hover:translate-x-full transition-transform duration-1000" />
 
               <div className="card-icon w-[65px] h-[65px] mx-auto mb-[18px] bg-cyan-400/10 rounded-full flex items-center justify-center text-2xl text-cyan-400 border border-cyan-400/20 transition-all duration-400 relative group-hover:bg-transparent group-hover:text-white group-hover:scale-110 group-hover:rotate-180 group-hover:border-transparent">
-                <div className="absolute inset-[-3px] rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
+                <div className="absolute inset-[-3px] rounded-full bg-linear-to-br from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
                 <i className="fab fa-whatsapp text-2xl"></i>
               </div>
               <h3 className="text-xl font-semibold mb-2 text-white">WhatsApp</h3>
@@ -235,9 +235,9 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-[18px] px-10 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-[length:200%] border-none rounded-[30px] text-white text-lg font-semibold cursor-pointer transition-all duration-400 relative overflow-hidden shadow-[0_10px_25px_-5px_rgba(34,211,238,0.3)] hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_20px_35px_-5px_rgba(34,211,238,0.5)] disabled:opacity-50 disabled:cursor-not-allowed group"
+                className="w-full py-[18px] px-10 bg-linear-to-r from-cyan-400 via-blue-500 to-purple-500 bg-[length:200%] border-none rounded-[30px] text-white text-lg font-semibold cursor-pointer transition-all duration-400 relative overflow-hidden shadow-[0_10px_25px_-5px_rgba(34,211,238,0.3)] hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_20px_35px_-5px_rgba(34,211,238,0.5)] disabled:opacity-50 disabled:cursor-not-allowed group"
               >
-                <span className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-all duration-600 group-hover:left-full" />
+                <span className="absolute top-0 left-[-100%] w-full h-full bg-linear-to-r from-transparent via-white/30 to-transparent transition-all duration-600 group-hover:left-full" />
                 <span className="flex items-center justify-center gap-3">
                   {loading ? (
                     <>

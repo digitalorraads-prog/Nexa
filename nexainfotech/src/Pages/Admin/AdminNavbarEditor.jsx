@@ -585,7 +585,7 @@ export default function NavbarEditor() {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-linear-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
               NAVBAR EDITOR
             </h1>
             <p className="text-gray-400 mt-2">
@@ -914,7 +914,7 @@ export default function NavbarEditor() {
               <button
                 onClick={addNavItem}
                 disabled={saving}
-                className="px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 rounded-lg font-medium transition disabled:opacity-50"
+                className="px-6 py-3 bg-linear-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 rounded-lg font-medium transition disabled:opacity-50"
               >
                 + ADD NAV ITEM
               </button>
@@ -968,7 +968,7 @@ export default function NavbarEditor() {
               <button
                 onClick={saveChanges}
                 disabled={saving}
-                className="w-full py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-xl font-bold text-lg transition disabled:opacity-50"
+                className="w-full py-4 bg-linear-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-xl font-bold text-lg transition disabled:opacity-50"
               >
                 {saving ? "SAVING TO DATABASE..." : "SAVE CHANGES TO DATABASE"}
               </button>

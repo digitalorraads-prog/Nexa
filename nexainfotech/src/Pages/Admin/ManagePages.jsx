@@ -239,7 +239,7 @@ export default function ManagePages() {
                 isActive: true
               });
             }}
-            className="mb-6 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 px-6 py-3 rounded-lg font-semibold transition flex items-center gap-2"
+            className="mb-6 bg-linear-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 px-6 py-3 rounded-lg font-semibold transition flex items-center gap-2"
           >
             <PlusIcon className="w-5 h-5" />
             Add New Page
@@ -328,7 +328,7 @@ export default function ManagePages() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 py-3 rounded-lg font-semibold transition disabled:opacity-50"
+                  className="flex-1 bg-linear-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 py-3 rounded-lg font-semibold transition disabled:opacity-50"
                 >
                   {loading ? "Saving..." : (editingPage ? "Update Page" : "Create Page")}
                 </button>

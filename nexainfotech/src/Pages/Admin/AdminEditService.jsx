@@ -701,7 +701,7 @@ export default function AdminEditService() {
                 <PencilIcon className="w-4 h-4 text-cyan-400" />
                 <span className="text-sm font-semibold text-cyan-400 tracking-wide uppercase">Service Editor</span>
               </div>
-              <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 mb-4">
+              <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-white to-gray-400 mb-4">
                 Edit Service Config
               </h1>
               <p className="text-gray-400 text-lg">Modify your service settings and rich visual content.</p>
@@ -723,7 +723,7 @@ export default function AdminEditService() {
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-8 relative z-10">
           {/* Basic Info Card */}
           <div className="bg-[#0a0a16]/80 backdrop-blur-2xl rounded-3xl border border-white/10 p-6 md:p-8 space-y-8 shadow-[0_8px_30px_rgb(0,0,0,0.5)] relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-600"></div>
+            <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-cyan-500 to-blue-600"></div>
 
             {/* Page Title */}
             <div className="group">
@@ -751,7 +751,7 @@ export default function AdminEditService() {
                 type="button"
                 onClick={toggleSlugType}
                 className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 ${slugType === 'simple'
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
+                  ? 'bg-linear-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
                   }`}
               >
@@ -762,7 +762,7 @@ export default function AdminEditService() {
                 type="button"
                 onClick={toggleSlugType}
                 className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 ${slugType === 'nested'
-                  ? 'bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg shadow-purple-500/25'
+                  ? 'bg-linear-to-r from-purple-500 to-pink-600 text-white shadow-lg shadow-purple-500/25'
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
                   }`}
               >
@@ -803,7 +803,7 @@ export default function AdminEditService() {
                   </div>
                 </div>
                 <div className="bg-purple-500/10 border border-purple-500/20 rounded-xl p-4 flex items-center gap-3">
-                  <GlobeAltIcon className="w-5 h-5 text-purple-400 flex-shrink-0" />
+                  <GlobeAltIcon className="w-5 h-5 text-purple-400 shrink-0" />
                   <p className="text-gray-300 text-sm">
                     Target URL structure: <span className="text-white font-mono font-bold">/services/{form.city || '[city]'}/{form.serviceName || '[service]'}</span>
                   </p>
@@ -866,8 +866,8 @@ export default function AdminEditService() {
             {/* URL Preview */}
             {(form.slug || (form.city && form.serviceName)) && (
               <div className={`p-4 lg:p-5 rounded-xl border backdrop-blur-md transition-all ${originalData?.slug !== (slugType === 'nested' ? generateNestedSlug() : form.slug)
-                ? 'bg-gradient-to-r from-yellow-900/40 to-orange-900/30 border-yellow-500/30 shadow-[0_4px_20px_rgba(234,179,8,0.15)]'
-                : 'bg-gradient-to-r from-cyan-900/30 to-blue-900/30 border-cyan-500/20'
+                ? 'bg-linear-to-r from-yellow-900/40 to-orange-900/30 border-yellow-500/30 shadow-[0_4px_20px_rgba(234,179,8,0.15)]'
+                : 'bg-linear-to-r from-cyan-900/30 to-blue-900/30 border-cyan-500/20'
                 }`}>
                 <div className={`flex items-center gap-2 text-sm font-semibold mb-2 uppercase tracking-wide ${originalData?.slug !== (slugType === 'nested' ? generateNestedSlug() : form.slug) ? 'text-yellow-400' : 'text-cyan-300'
                   }`}>
@@ -888,7 +888,7 @@ export default function AdminEditService() {
 
                 {originalData?.slug !== (slugType === 'nested' ? generateNestedSlug() : form.slug) && (
                   <div className="flex items-start gap-3 mt-4 text-yellow-200 text-sm bg-yellow-500/20 p-3 rounded-lg border border-yellow-500/30">
-                    <ExclamationTriangleIcon className="w-5 h-5 flex-shrink-0 text-yellow-500 mt-0.5" />
+                    <ExclamationTriangleIcon className="w-5 h-5 shrink-0 text-yellow-500 mt-0.5" />
                     <div>
                       <p className="font-semibold mb-1">URL Path Modification Detected</p>
                       <p>Current active URL is: <code className="font-mono bg-black/40 px-1.5 py-0.5 rounded text-white">{originalData?.slug}</code></p>
@@ -949,7 +949,7 @@ export default function AdminEditService() {
             <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-purple-500 to-pink-600"></div>
 
             <div className="flex items-center gap-4 border-b border-white/10 pb-6">
-              <div className="p-3 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-xl border border-purple-500/30">
+              <div className="p-3 bg-linear-to-br from-purple-500/20 to-pink-500/20 rounded-xl border border-purple-500/30">
                 <PaintBrushIcon className="w-6 h-6 text-purple-400" />
               </div>
               <div>
@@ -1285,7 +1285,7 @@ export default function AdminEditService() {
                       />
                       <label
                         htmlFor="imageUpload"
-                        className={`w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 px-6 py-4 rounded-xl text-center cursor-pointer flex items-center justify-center gap-3 transition-all font-bold shadow-lg shadow-orange-500/20 ${uploading ? 'opacity-70 cursor-not-allowed scale-[0.98]' : 'hover:scale-[1.02]'
+                        className={`w-full bg-linear-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 px-6 py-4 rounded-xl text-center cursor-pointer flex items-center justify-center gap-3 transition-all font-bold shadow-lg shadow-orange-500/20 ${uploading ? 'opacity-70 cursor-not-allowed scale-[0.98]' : 'hover:scale-[1.02]'
                           }`}
                       >
                         {uploading ? (
@@ -1339,12 +1339,12 @@ export default function AdminEditService() {
           {/* Live Preview Console */}
           <div className="bg-[#050508] rounded-3xl border border-white/5 p-6 md:p-8 relative overflow-hidden group shadow-2xl mt-8">
             {/* Glowing borders */}
-            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent opacity-50"></div>
-            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent opacity-50"></div>
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-linear-to-r from-transparent via-cyan-500/50 to-transparent opacity-50"></div>
+            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-linear-to-r from-transparent via-cyan-500/50 to-transparent opacity-50"></div>
 
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-lg border border-cyan-500/30">
+                <div className="p-2 bg-linear-to-br from-cyan-500/20 to-blue-600/20 rounded-lg border border-cyan-500/30">
                   <ComputerDesktopIcon className="w-6 h-6 text-cyan-400" />
                 </div>
                 <div>
@@ -1485,7 +1485,7 @@ export default function AdminEditService() {
               className={`flex-1 group relative overflow-hidden rounded-xl p-0.5 transition-all duration-300 hover:scale-[1.02] shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] disabled:opacity-50 disabled:cursor-not-allowed ${activeButton === 'submit' ? 'animate-pulse' : ''
                 }`}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 opacity-100 group-hover:from-cyan-400 group-hover:via-blue-400 group-hover:to-cyan-400 transition-colors"></div>
+              <div className="absolute inset-0 bg-linear-to-r from-cyan-500 via-blue-500 to-cyan-500 opacity-100 group-hover:from-cyan-400 group-hover:via-blue-400 group-hover:to-cyan-400 transition-colors"></div>
               <div className="relative bg-[#050508] px-8 py-4 rounded-[10px] flex items-center justify-center gap-3 transition-colors group-hover:bg-opacity-0">
                 {submitting ? (
                   <>

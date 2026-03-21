@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "../../../Protected/axios"; // ✅ Correct import path
+import axios from "../../../Protected/axiosPublic";
+ // ✅ Correct import path
 
 export default function SingleBlog() {
   const { id } = useParams();
@@ -45,7 +46,7 @@ export default function SingleBlog() {
           <p>{error}</p>
           <button
             onClick={() => navigate(-1)}
-            className="mt-6 px-6 py-2 bg-gradient-to-r from-[#004C7D] to-[#158EB0] rounded-full hover:scale-105 transition-transform"
+            className="mt-6 px-6 py-2 bg-linear-to-r from-[#004C7D] to-[#158EB0] rounded-full hover:scale-105 transition-transform"
           >
             ← Go Back
           </button>
@@ -61,7 +62,7 @@ export default function SingleBlog() {
           <p>Blog not found</p>
           <button
             onClick={() => navigate(-1)}
-            className="mt-6 px-6 py-2 bg-gradient-to-r from-[#004C7D] to-[#158EB0] rounded-full hover:scale-105 transition-transform"
+            className="mt-6 px-6 py-2 bg-linear-to-r from-[#004C7D] to-[#158EB0] rounded-full hover:scale-105 transition-transform"
           >
             ← Go Back
           </button>

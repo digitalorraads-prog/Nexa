@@ -585,7 +585,7 @@ export default function ServicesLocation({
                 onClick={() => handleCitySelect(locationId, city.id)}
                 className={`w-full text-left px-3 py-2 rounded-lg transition-all duration-200 flex items-center gap-2
                   ${activeLocation === city.id 
-                    ? 'bg-gradient-to-r ' + location.color + ' text-white' 
+                    ? 'bg-linear-to-r ' + location.color + ' text-white' 
                     : 'hover:bg-white/10 text-gray-300'
                   }`}
               >
@@ -651,7 +651,7 @@ export default function ServicesLocation({
 
           <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-4 px-2">
             Our Services in{" "}
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent bg-size-200 animate-gradient">
+            <span className="bg-linear-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent bg-size-200 animate-gradient">
               {countryName === "Global" ? "Major Cities" : countryName}
             </span>
           </h2>
@@ -677,7 +677,7 @@ export default function ServicesLocation({
                 className={`group relative px-4 md:px-6 py-2 md:py-3 rounded-full backdrop-blur-sm border transition-all duration-300 text-sm md:text-base
                   ${activeHeadCity === "newyork" || activeHeadCity === "california" || 
                     (activeCityDetails && (activeCityDetails.headCity === "newyork" || activeCityDetails.headCity === "california"))
-                    ? 'bg-gradient-to-r from-cyan-400 to-blue-500 border-white/20 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
+                    ? 'bg-linear-to-r from-cyan-400 to-blue-500 border-white/20 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
                     : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-cyan-400/30'
                   }`}
               >
@@ -703,7 +703,7 @@ export default function ServicesLocation({
                 onClick={() => handleCityClick("london")}
                 className={`group relative px-4 md:px-6 py-2 md:py-3 rounded-full backdrop-blur-sm border transition-all duration-300 text-sm md:text-base
                   ${activeHeadCity === "gblondon" || (activeCityDetails && activeCityDetails.headCity === "gblondon")
-                    ? 'bg-gradient-to-r from-blue-400 to-purple-500 border-white/20 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
+                    ? 'bg-linear-to-r from-blue-400 to-purple-500 border-white/20 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
                     : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-cyan-400/30'
                   }`}
               >
@@ -728,7 +728,7 @@ export default function ServicesLocation({
                 onClick={() => handleCityClick("dubai")}
                 className={`group relative px-4 md:px-6 py-2 md:py-3 rounded-full backdrop-blur-sm border transition-all duration-300 text-sm md:text-base
                   ${activeHeadCity === "aedubai" || (activeCityDetails && activeCityDetails.headCity === "aedubai")
-                    ? 'bg-gradient-to-r from-purple-400 to-pink-500 border-white/20 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
+                    ? 'bg-linear-to-r from-purple-400 to-pink-500 border-white/20 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
                     : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-cyan-400/30'
                   }`}
               >
@@ -753,7 +753,7 @@ export default function ServicesLocation({
                 onClick={() => handleCityClick("singapore")}
                 className={`group relative px-4 md:px-6 py-2 md:py-3 rounded-full backdrop-blur-sm border transition-all duration-300 text-sm md:text-base
                   ${activeHeadCity === "sgsingapore" || (activeCityDetails && activeCityDetails.headCity === "sgsingapore")
-                    ? 'bg-gradient-to-r from-pink-400 to-rose-500 border-white/20 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
+                    ? 'bg-linear-to-r from-pink-400 to-rose-500 border-white/20 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
                     : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-cyan-400/30'
                   }`}
               >
@@ -778,7 +778,7 @@ export default function ServicesLocation({
                 onClick={() => handleCityClick("sydney")}
                 className={`group relative px-4 md:px-6 py-2 md:py-3 rounded-full backdrop-blur-sm border transition-all duration-300 text-sm md:text-base
                   ${activeHeadCity === "ausydney" || (activeCityDetails && activeCityDetails.headCity === "ausydney")
-                    ? 'bg-gradient-to-r from-rose-400 to-orange-500 border-white/20 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
+                    ? 'bg-linear-to-r from-rose-400 to-orange-500 border-white/20 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
                     : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-cyan-400/30'
                   }`}
               >
@@ -803,7 +803,7 @@ export default function ServicesLocation({
                 onClick={() => handleCityClick("toronto")}
                 className={`group relative px-4 md:px-6 py-2 md:py-3 rounded-full backdrop-blur-sm border transition-all duration-300 text-sm md:text-base
                   ${activeHeadCity === "catoronto" || (activeCityDetails && activeCityDetails.headCity === "catoronto")
-                    ? 'bg-gradient-to-r from-orange-400 to-yellow-500 border-white/20 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
+                    ? 'bg-linear-to-r from-orange-400 to-yellow-500 border-white/20 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
                     : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-cyan-400/30'
                   }`}
               >
@@ -855,13 +855,13 @@ export default function ServicesLocation({
                 onClick={() => handleServiceClick(service.slug)}
                 className="cursor-pointer"
               >
-                <div className="group relative p-4 md:p-6 bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden
+                <div className="group relative p-4 md:p-6 bg-linear-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden
                   hover:scale-105 hover:-translate-y-2 transition-all duration-300
                   hover:shadow-[0_20px_40px_-15px_rgba(6,182,212,0.5)]">
                   
                   {/* Location-based gradient on hover */}
                   {activeCityDetails && (
-                    <div className={`absolute inset-0 bg-gradient-to-r ${activeCityDetails.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
+                    <div className={`absolute inset-0 bg-linear-to-r ${activeCityDetails.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
                   )}
                   
                   <div className="flex items-start gap-3 md:gap-4">
@@ -879,7 +879,7 @@ export default function ServicesLocation({
 
                     <div className="flex-1">
                       {/* Service Name */}
-                      <h3 className="text-base md:text-lg font-bold mb-1 md:mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-300">
+                      <h3 className="text-base md:text-lg font-bold mb-1 md:mb-2 group-hover:text-transparent group-hover:bg-linear-to-r group-hover:from-cyan-400 group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-300">
                         {service.name}
                       </h3>
 
@@ -903,7 +903,7 @@ export default function ServicesLocation({
                   {/* Progress Line */}
                   {activeCityDetails && (
                     <div className="absolute bottom-0 left-0 w-full h-0.5 bg-white/5">
-                      <div className={`h-full w-0 bg-gradient-to-r ${activeCityDetails.color} transition-all duration-500 group-hover:w-full`}></div>
+                      <div className={`h-full w-0 bg-linear-to-r ${activeCityDetails.color} transition-all duration-500 group-hover:w-full`}></div>
                     </div>
                   )}
                 </div>
@@ -921,7 +921,7 @@ export default function ServicesLocation({
         >
           <button 
             onClick={() => navigate('/contact')}
-            className="group relative px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full font-semibold text-sm md:text-base overflow-hidden"
+            className="group relative px-6 md:px-8 py-3 md:py-4 bg-linear-to-r from-cyan-500 to-blue-600 rounded-full font-semibold text-sm md:text-base overflow-hidden"
           >
             <span className="relative z-10 flex items-center gap-2">
               Get Started Today
@@ -929,7 +929,7 @@ export default function ServicesLocation({
                 {countryFlag}
               </span>
             </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-linear-to-r from-blue-600 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </button>
         </motion.div>
       </div>
