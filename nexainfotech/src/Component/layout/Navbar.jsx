@@ -12,6 +12,7 @@ export default function Navbar() {
   const [activeSubDropdown, setActiveSubDropdown] = useState(null);
   const [activeSubSubDropdown, setActiveSubSubDropdown] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isSeo, setIsSeo] = useState(false);
   const [navItems, setNavItems] = useState([]);
   const [loading, setLoading] = useState(true);
 

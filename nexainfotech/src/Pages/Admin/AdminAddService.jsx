@@ -1310,7 +1310,7 @@ export default function AdminAddService() {
       </section>
 
       {/* Styles */}
-      <style jsx>{`
+      <style>{`
         @keyframes slideIn {
           from {
             transform: translateX(100%);

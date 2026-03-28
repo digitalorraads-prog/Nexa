@@ -41,6 +41,7 @@ function AdminLoginWrapper() {
 
   useEffect(() => {
     axios
+      .get("/api/admin/check-auth")
       .then((res) => {
         if (res.data.authenticated) {
           setStatus("authenticated");
@@ -67,6 +68,7 @@ function SeoLoginWrapper() {
 
   useEffect(() => {
     axios
+      .get("/api/seo/check-auth")
       .then((res) => {
         if (res.data.authenticated) {
           setStatus("authenticated");

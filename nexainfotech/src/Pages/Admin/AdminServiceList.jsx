@@ -979,7 +979,7 @@ export default function AdminServiceList() {
       )}
 
       {/* Add animation CSS */}
-      <style jsx>{`
+      <style>{`
         @keyframes fadeIn {
           from {
             opacity: 0;

@@ -279,7 +279,7 @@ export default function Contact() {
       </div>
 
       {/* Keyframe animations */}
-      <style jsx>{`
+        <style>{`
         @keyframes floatParticle {
           0% { transform: translateY(100vh) translateX(0); opacity: 0; }
           10% { opacity: 0.8; }
